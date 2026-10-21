@@ -36,16 +36,16 @@
 <li>Membuang item selalu meminta konfirmasi.</li>
 </ul>
 <h3 id="efek-alat">Efek alat</h3>
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th><code>ToolEffect</code></th><th>Saat dipakai</th></tr></thead>
 <tbody>
 <tr><td><code>expand_inventory</code></td><td><code>inventory_capacity += value</code>, hasil dipotong ke kapasitas maksimum; ditolak jika sudah maksimum: item tidak terpakai dan muncul toast <code>sys.bag_max</code> ("Kapasitas tas sudah maksimum.")</td></tr>
 <tr><td><code>place_campfire</code> / <code>place_anvil</code></td><td>Bila batas stasiun <code>current_zone</code> belum tercapai dan ada petak valid dalam jangkauan: menu ditutup, masuk mode taruh di dunia (<a href="SYS-09.html">Stasiun</a>). Bila penuh: toast <code>sys.station_limit</code>; bila tanpa petak valid: toast <code>sys.place_invalid_blocked</code>. Dalam kedua kasus mode taruh tidak dibuka dan alat tidak terpakai</td></tr>
 <tr><td><code>reset_stats</code></td><td>Respec (<a href="SYS-01.html#respec">Respec</a>); ditolak tanpa terpakai bila <code>allocated_points</code> semua 0 (toast <code>sys.respec_nothing</code>)</td></tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="rumus-angka">Rumus &amp; angka</h2>
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Aturan</th><th>Nilai</th></tr></thead>
 <tbody>
 <tr><td>Kapasitas awal</td><td>40</td></tr>
@@ -53,7 +53,7 @@
 <tr><td>Kapasitas maksimum</td><td>80</td></tr>
 <tr><td>Batas tumpuk bahan, batu elemen, makanan, alat</td><td>99</td></tr>
 </tbody>
-</table>
+</table></div>
 </div>
 </main>
 <footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>

@@ -70,7 +70,7 @@ a { color: var(--accent_cyan); text-decoration: none; }
 a:hover { text-decoration: underline; }
 a:focus-visible, input:focus-visible { outline: 2px solid var(--accent_cyan); outline-offset: 2px; }
 
-.wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--gap); }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--gap); overflow-wrap: break-word; }
 
 .skip { position: absolute; left: -9999px; top: 0; background: var(--bg_panel); padding: 8px 12px; z-index: 20; }
 .skip:focus { left: 8px; top: 8px; }
@@ -82,7 +82,7 @@ a:focus-visible, input:focus-visible { outline: 2px solid var(--accent_cyan); ou
 .brand:hover { text-decoration: none; color: var(--accent_cyan); }
 .site-nav { flex: 1 1 auto; min-width: 0; overflow-x: auto; }
 .nav-links { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; white-space: nowrap; }
-.nav-links a { display: block; padding: 10px 12px; min-height: 44px; color: var(--text_secondary); border-radius: var(--radius); }
+.nav-links a { display: block; white-space: nowrap; padding: 10px 12px; min-height: 44px; color: var(--text_secondary); border-radius: var(--radius); }
 .nav-links a:hover { color: var(--text_primary); text-decoration: none; background: var(--bg_panel_alt); }
 .nav-links a[aria-current="page"] { color: var(--accent_cyan); border-bottom: 2px solid var(--accent_cyan); border-radius: var(--radius) var(--radius) 0 0; }
 
@@ -102,9 +102,9 @@ a:focus-visible, input:focus-visible { outline: 2px solid var(--accent_cyan); ou
 .search-input::placeholder { color: var(--text_disabled); }
 .search-results {
 	position: absolute;
-	right: 0;
+	left: 0;
 	top: calc(100% + 4px);
-	width: min(360px, calc(100vw - 2 * var(--gap)));
+	width: 100%;
 	max-height: 60vh;
 	overflow-y: auto;
 	margin: 0;
@@ -116,9 +116,10 @@ a:focus-visible, input:focus-visible { outline: 2px solid var(--accent_cyan); ou
 	z-index: 30;
 }
 .search-results[hidden] { display: none; }
-.search-results a { display: flex; justify-content: space-between; gap: 12px; padding: 8px 10px; color: var(--text_primary); border-radius: var(--radius); }
+.search-results a { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 8px 10px; color: var(--text_primary); border-radius: var(--radius); }
 .search-results a:hover { background: var(--bg_panel_alt); text-decoration: none; }
-.search-kind { color: var(--text_secondary); font-size: 13px; white-space: nowrap; }
+.search-name { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.search-kind { flex: none; color: var(--text_secondary); font-size: 13px; white-space: nowrap; }
 .search-msg { padding: 8px 10px; color: var(--text_secondary); font-size: 14px; }
 
 /* Breadcrumb */
@@ -137,7 +138,7 @@ h4 { font-size: 15px; margin: 16px 0 6px; }
 p { margin: 0 0 12px; }
 ul, ol { padding-left: 24px; margin: 0 0 12px; }
 blockquote { margin: 0 0 12px; padding: 8px 14px; background: var(--bg_panel); border-left: 3px solid var(--accent_purple); color: var(--text_secondary); }
-code { font-family: var(--font_mono); font-size: 0.9em; background: var(--bg_panel_alt); padding: 1px 5px; border-radius: 4px; }
+code { overflow-wrap: break-word; font-family: var(--font_mono); font-size: 0.9em; background: var(--bg_panel_alt); padding: 1px 5px; border-radius: 4px; }
 pre { font-family: var(--font_mono); background: var(--bg_panel); border: 1px solid var(--border_default); border-radius: var(--radius); padding: 12px; overflow-x: auto; }
 pre code { background: none; padding: 0; }
 .lead { color: var(--text_secondary); font-size: 18px; }
@@ -155,7 +156,7 @@ pre code { background: none; padding: 0; }
 }
 
 .page-head { display: flex; align-items: center; gap: var(--gap); margin: 16px 0 8px; }
-.page-head h1 { margin: 0; }
+.page-head h1 { margin: 0; min-width: 0; }
 .page-head .sprite { flex: none; }
 
 /* Kartu */
@@ -256,8 +257,9 @@ img.sprite { max-width: none; }
 	h1 { font-size: 22px; }
 	h2 { font-size: 18px; }
 	.header-row { flex-direction: column; align-items: stretch; }
-	.search { flex: 1 1 auto; }
-	.search-results { left: 0; right: auto; }
+	.nav-links { flex-wrap: wrap; white-space: normal; }
+	.search { flex: none; width: 100%; min-width: 0; max-width: 100%; }
+	.page-head { flex-wrap: wrap; }
 	.card-grid { grid-template-columns: 1fr; }
 	.stat-table th { width: 45%; }
 	th, td { padding: 8px; }

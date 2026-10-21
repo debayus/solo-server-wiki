@@ -18,7 +18,7 @@
 <p>Empat stat utama dinaikkan lewat poin level up; stat turunan dihitung dari stat utama dan perlengkapan.</p>
 <h2 id="aturan">Aturan</h2>
 <h3 id="stat-utama">Stat utama</h3>
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Stat</th><th>Nama</th><th>Pengaruh</th></tr></thead>
 <tbody>
 <tr><td>STR</td><td>Kekuatan</td><td>ATK</td></tr>
@@ -26,13 +26,13 @@
 <tr><td>VIT</td><td>Vitalitas</td><td>HP maks, DEF</td></tr>
 <tr><td>INT</td><td>Kecerdasan</td><td>Durasi buff makanan, resist elemen</td></tr>
 </tbody>
-</table>
+</table></div>
 <h3 id="respec">Respec</h3>
 <p>Hanya dengan item <a href="../item/tool_reset_fragment.html">Fragmen Reset</a>: semua poin di <code>allocated_points</code> ditambahkan ke <code>unspent_points</code>, lalu <code>allocated_points</code> dikosongkan (semua 0) dan stat utama kembali ke nilai awal; lalu Level Up dibuka dalam mode respec. Bila <code>allocated_points</code> semua 0, <a href="../item/tool_reset_fragment.html">Fragmen Reset</a> ditolak tanpa terpakai, dengan toast <code>sys.respec_nothing</code> ("Tidak ada poin untuk direset.").</p>
 <h2 id="rumus-angka">Rumus &amp; angka</h2>
 <h3 id="stat-turunan">Stat turunan</h3>
 <p>Semua angka di bagian ini.</p>
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Stat</th><th>Rumus</th></tr></thead>
 <tbody>
 <tr><td>HP maks</td><td><code>100 + VIT × 10</code></td></tr>
@@ -44,7 +44,7 @@
 <tr><td>Resist elemen X (%)</td><td><code>Σ resist_X dari armor + INT × 0.5</code>, maks 75</td></tr>
 <tr><td>Durasi buff</td><td><code>base_duration_sec × (1 + INT × 0.01)</code></td></tr>
 </tbody>
-</table>
+</table></div>
 <p><code>weapon_atk_final</code> dan <code>armor_def_final</code> sudah termasuk pengali upgrade (<a href="SYS-06.html">Upgrade &amp; Evolusi</a>). <code>weapon_crit_bonus</code> = <code>crit_bonus</code> senjata yang dipakai (0 jika tanpa senjata). Urutan perhitungan:</p>
 <ol>
 <li>Nilai perlengkapan (sudah termasuk upgrade) + bonus set <code>flat</code> (<a href="SYS-07.html">Perlengkapan &amp; Bonus Set</a>) untuk ATK, DEF, Crit, dan Resist. Bonus <code>flat</code> untuk HP maks dan Stamina maks ditambahkan langsung setelah rumus di langkah 2. Bonus <code>percent</code> hanya berlaku untuk ATK, DEF, HP maks, dan Stamina maks; Crit dan Resist hanya menerima bonus <code>flat</code>.</li>
@@ -63,7 +63,7 @@
 <p>Saat HP maks naik atau turun (buff, perlengkapan), HP saat ini tidak berubah, kecuali dipotong bila melebihi HP maks baru. Aturan yang sama berlaku untuk Stamina.</p>
 <h3 id="level-xp">Level &amp; XP</h3>
 <p>Semua angka di bagian ini.</p>
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Aturan</th><th>Nilai</th></tr></thead>
 <tbody>
 <tr><td>Level awal</td><td>1</td></tr>
@@ -72,7 +72,7 @@
 <tr><td>Poin stat per level</td><td>3</td></tr>
 <tr><td>Stat utama awal</td><td>STR 5, AGI 5, VIT 5, INT 5</td></tr>
 </tbody>
-</table>
+</table></div>
 <p>Contoh angka dari rumus ini: Karakter Contoh.</p>
 </div>
 </main>

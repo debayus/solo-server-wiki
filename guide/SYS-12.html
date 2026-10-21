@@ -19,7 +19,7 @@
 <h2 id="aturan">Aturan</h2>
 <h3 id="penemuan-resep">Penemuan resep</h3>
 <p>Berlaku untuk resep crafting dan resep masakan. Bahan dianggap "pernah didapat" jika ada di <code>codex_items</code>, yaitu pernah masuk tas (<a href="SYS-12.html#bahan">Bahan</a>). Batu elemen (slot 3) dihitung sebagai bahan untuk tahap Petunjuk dan Bahan lengkap; resep dengan <code>stone: null</code> tidak punya bahan slot 3.</p>
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Tahap</th><th>Syarat</th><th>Tampilan di daftar resep</th></tr></thead>
 <tbody>
 <tr><td>Tersembunyi</td><td>Belum ada bahan resep yang pernah didapat</td><td>Hanya <code>???</code></td></tr>
@@ -27,14 +27,14 @@
 <tr><td>Bahan lengkap</td><td>Semua item slot 1–3 resep ada di <code>codex_items</code> (tidak harus bersamaan)</td><td>Semua ikon bahan tampil, bisa diisi otomatis; nama <code>???</code></td></tr>
 <tr><td>Terbuka</td><td>Pernah berhasil dibuat</td><td>Bahan dan hasil tampil</td></tr>
 </tbody>
-</table>
+</table></div>
 <ul>
 <li>Resep masuk <code>known_recipes</code> hanya saat tahap <strong>Terbuka</strong>, yaitu setelah pertama kali berhasil dibuat. Notifikasi: toast <code>sys.recipe_discovered</code> (<code>[SISTEM] Resep baru ditemukan: {name}</code>).</li>
 <li>Kombinasi yang cocok dengan resep tahap apa pun boleh dibuat; hasilnya baru terlihat setelah dibuat (coba-coba).</li>
 <li>Tahap Petunjuk dan Bahan lengkap dihitung dari <code>codex_items</code>, tidak perlu disimpan.</li>
 </ul>
 <h3 id="pembukaan-info-monster">Pembukaan info monster</h3>
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Info</th><th>Terbuka saat</th></tr></thead>
 <tbody>
 <tr><td>Nama, art, elemen, level, habitat</td><td>Monster pertama kali terlihat (lihat di bawah)</td></tr>
@@ -42,7 +42,7 @@
 <tr><td>Drop tertentu</td><td>Item itu pernah didapat dari monster itu, yaitu pernah keluar saat drop diundi ketika monster itu mati atau bagiannya patah (<a href="SYS-13.html#kematian-monster">Kematian monster</a>), meski belum dipungut; dicatat di <code>seen_drops</code> (peluang <strong>dasar</strong> tampil setelah kill ≥ 10, ditambah ikon bulan "×1.2 saat malam" dari <a href="SYS-03.html#rumus-angka">Rumus &amp; angka</a>)</td></tr>
 <tr><td>Bagian tubuh</td><td>Nama terlihat sejak awal; bonus drop tampil setelah pernah dipatahkan</td></tr>
 </tbody>
-</table>
+</table></div>
 <p>Monster "terlihat" bila node monster itu pertama kali masuk area layar kamera dan tidak tersembunyi oleh bahaya jarak pandang (<a href="SYS-16.html#bahaya-lingkungan">Bahaya lingkungan</a>), atau saat pemain menyerang atau diserang monster itu. Saat itu entri <code>CodexMonsterEntry</code> dibuat; adanya entri berarti monster itu sudah terlihat.</p>
 <h3 id="kunci">Kunci</h3>
 <p>Tab Kunci di Codex menampilkan 6 slot Fragmen Kunci Admin (boss Z1–Z6). Slot terisi bila boss itu ada di <code>boss_first_kills</code>, beserta nama boss dan zonanya; slot kosong menampilkan <code>???</code> dan nama zona bila zona itu ada di <code>visited_zones</code>. Status di bawah slot: "Gerbang terkunci (n/6)", atau "Gerbang terbuka" setelah <code>gate_opened</code>.</p>
