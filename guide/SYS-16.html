@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zona, Bahaya &amp; Ending - Solo Server Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css">
+</head>
+<body data-root="../">
+<a class="skip" href="#isi">Lewati ke isi</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<div class="wrap">
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Zona, Bahaya &amp; Ending</li></ol></nav>
+<main id="isi">
+<div class="page-head"><h1>Zona, Bahaya &amp; Ending</h1></div>
+<p class="muted num">SYS-16</p>
+<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
+<p>Batas zona dan peringatannya, bahaya lingkungan tiap zona, Fragmen Kunci Admin yang membuka Inti Server, dan ending "Logout". Daftar zona: <a href="../zone/index.html">Katalog Zona</a>.</p>
+<h2 id="aturan">Aturan</h2>
+<h3 id="masuk-zona">Masuk zona</h3>
+<ul>
+<li>Batas zona digambar tangan di peta. Saat pemain masuk zona baru: toast <code>[SISTEM] Memasuki: &lt;nama zona&gt; (Lv a–b)</code>.</li>
+<li>Toast yang sama juga muncul saat sesi dimulai, untuk zona tempat pemain berada (zona awal). Zona itu sudah ada di <code>visited_zones</code>, sehingga tanpa awalan <code>Zona baru:</code>.</li>
+<li>Jika level pemain di bawah batas bawah zona, toast berwarna <code>warning</code> dengan teks tambahan <code>. Bahaya: level terlalu rendah</code>.</li>
+<li>Zona yang pertama kali dimasuki dicatat di <code>visited_zones</code>; toast masuk zona pertama kali diberi awalan <code>Zona baru: </code>.</li>
+<li>Format teks: [awalan <code>Zona baru: </code> bila pertama kali] + <code>Memasuki: &lt;nama&gt; (Lv a–b)</code> + [bila level di bawah batas bawah: <code>. Bahaya: level terlalu rendah</code>]. Teks ada di <code>strings_ui.csv</code>, kunci berawalan <code>sys.zone</code>: satu untuk teks masuk, satu untuk varian bahaya (sudah memuat akhirannya), dan satu untuk awalan zona baru.</li>
+</ul>
+<h3 id="bahaya-lingkungan">Bahaya lingkungan</h3>
+<table>
+<thead><tr><th>Bahaya</th><th>Zona</th><th>Efek</th><th>Penangkal</th></tr></thead>
+<tbody>
+<tr><td>Air dalam</td><td>Rawa</td><td>Kecepatan ×0.6, tidak bisa menghindar</td><td>— (hindari petak air dalam)</td></tr>
+<tr><td>Gelap</td><td>Gua Kristal</td><td>Jarak pandang dibatasi radius 128 px di sekitar pemain</td><td>Kristal bercahaya di peta memberi area terang</td></tr>
+<tr><td>Panas</td><td>Kawah Lava</td><td>Lihat <a href="SYS-03.html#zona-panas-lava">Zona panas (lava)</a></td><td>Resist Api</td></tr>
+<tr><td>Sambaran petir</td><td>Puncak Badai, hanya malam</td><td>Penanda muncul di dekat pemain, 1.5 dtk kemudian petir menyambar radius 48 px: damage elemen Petir 15% HP maks</td><td>Menghindar keluar dari penanda; Resist Petir</td></tr>
+<tr><td>Silau</td><td>Reruntuhan Cahaya, hanya siang</td><td>Monster lebih dari 96 px dari pemain tidak terlihat</td><td>—</td></tr>
+<tr><td>Gerbang terkunci</td><td>Inti Server</td><td>Bagian dalam hanya bisa dimasuki dengan 6 Fragmen Kunci Admin</td><td><a href="SYS-16.html#fragmen-kunci-admin">Fragmen Kunci Admin</a></td></tr>
+</tbody>
+</table>
+<p>Bahaya jarak pandang (gelap dan silau) tidak berlaku di dalam arena boss; arena selalu terlihat penuh.</p>
+<p>Damage sambaran petir memakai resist pemain seperti serangan monster (<a href="SYS-13.html#damage">Damage</a>), tanpa DEF.</p>
+<h3 id="fragmen-kunci-admin">Fragmen Kunci Admin</h3>
+<ul>
+<li>Enam fragmen, satu per boss Z1–Z6, dijatuhkan saat kill pertama boss itu (<a href="SYS-15.html#boss">Boss</a>).</li>
+<li>Jenis item <code>key</code>: tidak bisa dibuang, tidak menumpuk, tidak memakan slot tas (disimpan di <code>held_keys</code>).</li>
+<li>Mengetuk gerbang Inti Server dengan keenam fragmen: fragmen dipasang (dihapus dari <code>held_keys</code>), gerbang terbuka permanen, toast <code>[SISTEM] Akses administrator diberikan.</code>.</li>
+<li>Mengetuk gerbang tanpa fragmen lengkap: toast <code>[SISTEM] Akses ditolak. Fragmen: n/6.</code>.</li>
+</ul>
+<h3 id="ending">Ending</h3>
+<ul>
+<li>Semua drop dari pertarungan melawan boss terakhir selama <code>game_cleared = false</code> (termasuk <code>bonus_drops</code> bagian tubuh, juga dari percobaan yang gagal) langsung masuk tas sebelum ending dimulai; bila tas penuh, jatuh di arena sebagai item tanah permanen (<a href="SYS-13.html#kematian-monster">Kematian monster</a>). Kill berikutnya di post-game memakai aturan drop biasa.</li>
+<li>Hanya <strong>kill pertama</strong> boss terakhir (saat <code>game_cleared</code> masih <code>false</code>) yang memulai ending; kill berikutnya di post-game tidak.</li>
+<li>Layar: Ending. Layar Judul: Layar Judul.</li>
+<li>Mengalahkan boss terakhir (Administrator Rusak) memulai urutan ending berupa <strong>teks Sistem saja</strong> (bukan cutscene, sesuai <a href="../index.html">Di luar cakupan</a>): layar memudar, log Sistem bergulir, daftar kredit.</li>
+<li>Saat ending dimulai: <code>game_cleared = true</code>, lalu autosave (Autosave).</li>
+<li>Di akhir, pemain memilih:
+<ul>
+<li><strong>Logout</strong>: kembali ke layar judul.</li>
+<li><strong>Tetap di server</strong>: lanjut bermain (post-game) dari api unggun bagian dalam Inti Server (<a href="../zone/zone_server_core.html">Peta</a>). <code>respawn_point</code> otomatis diset ke titik respawn api unggun bagian dalam (<a href="../zone/zone_server_core.html">Peta</a>) tanpa perlu mengetuknya (pengecualian aturan pembaruan di <a href="SYS-08.html">Kematian &amp; Respawn</a>).</li>
+</ul>
+</li>
+<li>Post-game: semua boss tetap bisa dilawan ulang (<a href="SYS-15.html#boss">Boss</a>); Codex menampilkan persentase kelengkapan.</li>
+<li>Memilih Logout lalu memuat save: permainan lanjut sebagai post-game.</li>
+</ul>
+<h2 id="rumus-angka">Rumus &amp; angka</h2>
+<p>Semua angka di bagian ini.</p>
+<table>
+<thead><tr><th>Aturan</th><th>Nilai</th></tr></thead>
+<tbody>
+<tr><td>Kecepatan di air dalam</td><td>×0.6</td></tr>
+<tr><td>Radius pandang di Gua Kristal</td><td>128 px</td></tr>
+<tr><td>Radius terang kristal bercahaya</td><td>64 px</td></tr>
+<tr><td>Jeda antar sambaran petir</td><td>Acak 20–40 dtk</td></tr>
+<tr><td>Peringatan sambaran</td><td>1.5 dtk</td></tr>
+<tr><td>Radius sambaran</td><td>48 px</td></tr>
+<tr><td>Damage sambaran</td><td>15% HP maks, elemen Petir</td></tr>
+<tr><td>Radius terlihat saat silau</td><td>96 px</td></tr>
+</tbody>
+</table>
+</div>
+</main>
+<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+</div>
+<script src="../assets/search.js"></script>
+</body>
+</html>

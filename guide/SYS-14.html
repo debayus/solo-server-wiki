@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pengumpulan Bahan - Solo Server Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css">
+</head>
+<body data-root="../">
+<a class="skip" href="#isi">Lewati ke isi</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<div class="wrap">
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Pengumpulan Bahan</li></ol></nav>
+<main id="isi">
+<div class="page-head"><h1>Pengumpulan Bahan</h1></div>
+<p class="muted num">SYS-14</p>
+<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
+<p>Titik bahan (tambang, tanaman, kayu) di peta memberi bahan yang tidak berasal dari monster, lalu tumbuh kembali setelah beberapa waktu. Mendukung pilar Survival dan Crafting.</p>
+<h2 id="aturan">Aturan</h2>
+<ul>
+<li>Titik bahan diletakkan tangan di peta tiap zona. Jenis dan jumlahnya ditulis di katalog zona (<code>CNT-Z1</code> … <code>CNT-Z7</code>).</li>
+<li>Pengumpulan <strong>tidak butuh alat</strong>.</li>
+<li>Pemain mengetuk titik bahan → berjalan ke sana → bilah progres selama <code>gather_time_sec</code> → hasil diundi dari <code>yields</code> lalu masuk tas.</li>
+<li>Titik bahan <strong>bukan penghalang navigasi</strong>. Pemain berhenti begitu masuk jarak interaksi (<a href="SYS-14.html#rumus-angka">Rumus &amp; angka</a>); progres mulai saat itu.</li>
+<li>Stamina dicek saat pemain tiba (awal progres) dan dipotong saat progres selesai. Bila kurang, pengumpulan ditolak dengan toast <code>sys.stamina_low</code> ("Stamina tidak cukup.").</li>
+<li>Bila Stamina turun di bawah biaya selama progres (mis. akibat Lapar atau lari sebelumnya), pengumpulan tetap selesai dan Stamina dipotong ke minimum 0.</li>
+<li>Setelah dikumpulkan, titik bahan habis (tampil redup) sampai waktu tumbuh kembali lewat.</li>
+<li>Mengetuk titik bahan yang habis: pemain tidak berjalan, muncul toast <code>sys.node_depleted</code> ("Titik bahan belum pulih."), dan target lepas.</li>
+<li>Undian <code>yields</code>: tiap entri diundi <strong>independen</strong> dengan aturan jumlah yang sama seperti drop monster (<a href="SYS-13.html#kematian-monster">Kematian monster</a>), tanpa bonus malam (<a href="SYS-03.html#rumus-angka">Rumus &amp; angka</a>). Bila semua entri gagal (hasil kosong), Stamina tetap terpakai, titik tetap habis, dan muncul toast <code>sys.gather_empty</code> ("Tidak ada yang didapat.").</li>
+<li>Tas penuh (<a href="SYS-11.html#tas-penuh-dan-menumpuk">Tas penuh dan menumpuk</a>): hasil, atau sisa yang tidak muat, jatuh ke tanah sebagai item tanah (<a href="SYS-13.html#kematian-monster">Kematian monster</a>), disebar acak dalam radius sebar (<a href="SYS-13.html#makhluk">Makhluk</a>) dari pemain.</li>
+<li>Bahan yang masuk tas tercatat di <code>codex_items</code> (<a href="SYS-12.html#bahan">Bahan</a>).</li>
+<li>Progres batal tanpa memakai Stamina bila pemain bergerak atau diserang. "Diserang" hanya berarti menerima damage dari serangan monster; damage Lapar 0, Zona Panas, dan petir tidak membatalkan.</li>
+<li>Menu dibuka saat progres: progres dijeda bersama game, lalu dilanjutkan saat menu ditutup.</li>
+<li>Stamina tidak pulih selama progres pengumpulan.</li>
+</ul>
+<h3 id="pertumbuhan-kembali">Pertumbuhan kembali</h3>
+<ul>
+<li>Pertumbuhan kembali dicek saat zona dimuat dan setiap 1 menit game.</li>
+<li>Titik pulih bila <code>waktu_absolut ≥ depleted_at + respawn_game_min</code>, dengan <code>depleted_at</code> = nilai di <code>depleted_nodes</code> (State pemain); lalu entrinya dihapus dari <code>depleted_nodes</code>.</li>
+</ul>
+<h2 id="rumus-angka">Rumus &amp; angka</h2>
+<p>Semua angka di bagian ini.</p>
+<table>
+<thead><tr><th>Aturan</th><th>Nilai default</th></tr></thead>
+<tbody>
+<tr><td><code>gather_time_sec</code></td><td>1.5 dtk</td></tr>
+<tr><td>Stamina per pengumpulan</td><td>5</td></tr>
+<tr><td><code>respawn_game_min</code></td><td>120 menit game (= 2 menit nyata, <a href="SYS-03.html#rumus-angka">Rumus &amp; angka</a>)</td></tr>
+<tr><td>Jarak interaksi titik bahan</td><td>32 px, antar-tepi collision (pemain dan titik bahan)</td></tr>
+</tbody>
+</table>
+</div>
+</main>
+<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+</div>
+<script src="../assets/search.js"></script>
+</body>
+</html>

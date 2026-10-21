@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kematian &amp; Respawn - Solo Server Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css">
+</head>
+<body data-root="../">
+<a class="skip" href="#isi">Lewati ke isi</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<div class="wrap">
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Kematian &amp; Respawn</li></ol></nav>
+<main id="isi">
+<div class="page-head"><h1>Kematian &amp; Respawn</h1></div>
+<p class="muted num">SYS-08</p>
+<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
+<p>Mati tidak menghilangkan item; pemain hidup kembali di api unggun terakhir.</p>
+<h2 id="aturan">Aturan</h2>
+<ul>
+<li>Terjadi saat <code>hp ≤ 0</code>. Urutan lengkapnya: <a href="SYS-08.html#urutan-kematian">Urutan kematian</a>.</li>
+<li><code>respawn_point</code> diperbarui setiap kali pemain mengetuk Api Unggun di dunia, dengan nilai posisi pemain saat tiba dalam jarak aktif (<a href="SYS-09.html#rumus-angka">Rumus &amp; angka</a>) dan layar Memasak terbuka, disertai notifikasi <code>sys.respawn_saved</code> (<code>[SISTEM] Titik sinkron disimpan.</code>) Memasak tidak diperlukan.</li>
+<li>Pengecualian aturan pembaruan: memilih "Tetap di server" di akhir ending otomatis mengeset <code>respawn_point</code> ke titik respawn api unggun bagian dalam (<a href="../zone/zone_server_core.html">Peta</a>, <a href="SYS-16.html#ending">Ending</a>).</li>
+<li>Respawn di <code>respawn_point</code>. Nilai awal: titik awal Z1 (<a href="../zone/zone_forest.html">Peta</a>, Keadaan awal).</li>
+<li>Setelah respawn: HP penuh, Stamina penuh, Lapar = 50 (walau sebelumnya lebih tinggi), <strong>semua buff hilang</strong>. Urutan reset: <a href="SYS-08.html#urutan-kematian">Urutan kematian</a>.</li>
+<li><strong>Tidak ada item, XP, atau level yang hilang.</strong></li>
+<li>Penyimpanan otomatis tidak terjadi saat pemain mati; <code>player_respawned</code> hanya membersihkan <code>player_dead</code> dan tidak menyimpan (Autosave).</li>
+</ul>
+<h2 id="urutan-kematian">Urutan kematian</h2>
+<ol>
+<li><code>hp ≤ 0</code>: <code>player_died</code> dipancarkan. Pemain langsung kebal dan input dikunci.</li>
+<li><strong>Pudar keluar</strong> (<code>death_fade_out</code>): layar memudar ke hitam. Monster yang sedang Kejar atau Serang melepas target dan Kembali (<a href="SYS-13.html#perilaku-monster">Perilaku monster</a>). Boss di arena ikut Kembali dan pulih; <code>boss_fight_active</code> menjadi false (Autosave).</li>
+<li><strong>Tahan</strong> (<code>death_hold</code>): layar hitam, teks Sistem <code>sys.disconnected</code> ("[SISTEM] Koneksi terputus. Menyambung ulang...").</li>
+<li><strong>Teleport + reset</strong> (tepat di akhir tahan, layar masih hitam): pemain dipindahkan ke <code>respawn_point</code>. Urutan reset nilai:
+<ol>
+<li>hapus semua buff;</li>
+<li>hitung ulang stat turunan (<a href="SYS-01.html#stat-turunan">Stat turunan</a>);</li>
+<li>HP = HP maks baru, Stamina = Stamina maks baru, Lapar = 50;</li>
+<li><code>stats_changed</code> dipancarkan sekali.</li>
+</ol>
+</li>
+<li><code>player_respawned</code> dipancarkan; <code>player_dead</code> dibersihkan (tanpa menyimpan).</li>
+<li><strong>Pudar masuk</strong> (<code>death_fade_in</code>): layar kembali terlihat. Kebal dan kunci input berakhir tepat saat pudar masuk selesai; tidak ada kebal tambahan setelah respawn.</li>
+</ol>
+<p>Durasi ketiga tahap adalah token <code>death_fade_out</code>, <code>death_hold</code>, dan <code>death_fade_in</code> di Token alfa dan durasi (angka hanya ada di sana).</p>
+<p>Aturan selama urutan (dari <code>player_died</code> sampai pudar masuk selesai):</p>
+<ul>
+<li>Pemain kebal terhadap semua damage: monster, Lapar (HP turun saat Lapar 0), panas, dan petir (<a href="SYS-03.html">Survival</a>, <a href="SYS-16.html#bahaya-lingkungan">Bahaya lingkungan</a>). Input pemain diabaikan.</li>
+<li>Jam game dan timer spawn tetap berjalan (tidak di-pause); durasi urutan memakai waktu nyata.</li>
+<li>Bila <code>reduce_effects</code> aktif, efek glitch pada layar dan teks dilewati; pudar tetap berlangsung (Efek glitch).</li>
+<li>HUD disembunyikan selama urutan dan muncul lagi setelah <code>player_respawned</code> (HUD).</li>
+</ul>
+<p>Respawn ke zona lain: bila <code>respawn_point</code> berada di zona yang berbeda dari tempat pemain mati, respawn diperlakukan seperti masuk zona biasa (<a href="SYS-16.html#masuk-zona">Masuk zona</a>): zona itu dimuat, toast masuk zona muncul, zona dicatat di <code>visited_zones</code>, dan autosave <code>entered_zone</code> dicoba (Autosave). Penanda masuk zona dipancarkan setelah <code>player_respawned</code> agar autosave tidak tertahan; mekanismenya di Alur scene.</p>
+<p>Layar: HUD (HUD). Api Unggun yang ditaruh lewat Mode Taruh (Interaksi) berfungsi sama seperti Api Unggun bawaan peta, termasuk memperbarui <code>respawn_point</code> saat diketuk (<a href="SYS-09.html#aturan">Aturan</a>).</p>
+</div>
+</main>
+<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+</div>
+<script src="../assets/search.js"></script>
+</body>
+</html>

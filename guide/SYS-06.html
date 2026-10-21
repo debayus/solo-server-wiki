@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Upgrade &amp; Evolusi - Solo Server Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css">
+</head>
+<body data-root="../">
+<a class="skip" href="#isi">Lewati ke isi</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<div class="wrap">
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Upgrade &amp; Evolusi</li></ol></nav>
+<main id="isi">
+<div class="page-head"><h1>Upgrade &amp; Evolusi</h1></div>
+<p class="muted num">SYS-06</p>
+<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
+<p>Senjata dan armor dinaikkan dari +0 ke +5; di +5 bisa berevolusi menjadi item baru.</p>
+<h2 id="aturan">Aturan</h2>
+<ul>
+<li>Upgrade <strong>selalu berhasil</strong> (tidak ada peluang gagal).</li>
+<li>"Bahan rarity sama" / "rarity lebih tinggi" = bahan apa pun (<code>type: material</code>) dengan rarity tersebut; pemain memilih bahannya, dan ×N boleh campuran beberapa jenis bahan dengan rarity itu. Sumbernya bahan boss dan bahan monster zona yang lebih tinggi (rarity bahan per zona: <a href="../zone/index.html">Tier per zona</a>).</li>
+<li>Pengali upgrade hanya berlaku untuk <code>base_atk</code> (senjata) dan <code>base_def</code> (armor). <code>crit_bonus</code> dan <code>resists</code> tidak berubah.</li>
+<li><strong>Evolusi</strong>: hanya di +5 dan jika <code>evolves_to</code> ada. Hasilnya adalah item <code>evolves_to</code> di +0, dengan rarity dari data item itu. Jika item sedang dipakai, hasil evolusi tetap terpasang.</li>
+<li>Evolusi memakai bahan <code>evolve_cost</code> item itu (WeaponData); tombol EVOLUSI nonaktif bila bahan kurang. Bahan tabel upgrade tidak dipakai saat evolusi.</li>
+<li>"Batu elemen" di tabel upgrade = batu elemen apa pun (<code>type: element_stone</code>); pemain memilih, dan ×N boleh campuran jenis batu. Batu yang disebut di <code>evolve_cost</code> harus sesuai ID-nya.</li>
+<li>Penulis data wajib membuat rarity <code>evolves_to</code> satu tingkat lebih tinggi. Item Legendary tidak boleh punya <code>evolves_to</code>.</li>
+<li>"Bahan rarity lebih tinggi" di +4 dan +5 = bahan dengan rarity <strong>tepat satu tingkat di atas</strong> rarity item (Common → Rare, Rare → Epic, Epic → Legendary), bukan sekadar lebih tinggi dari itu. Untuk item Legendary, bahannya bahan Legendary.</li>
+<li>Biaya upgrade diambil dari stack yang dipilih tiap slot biaya di Upgrade / Evolusi (menyimpan <code>uid</code> stack; pengecualian dari aturan stack terkecil <a href="SYS-11.html#urutan-slot-cepat-dan-buang">Urutan, slot cepat, dan buang</a>). Bila stack pengisi berkurang sehingga tidak cukup untuk semua slot yang memakainya, slot dikosongkan mulai dari yang paling kanan, lalu diisi otomatis ulang; biaya evolusi memakai aturan.</li>
+<li>Butuh Landasan Data dalam jangkauan (<a href="SYS-09.html">Stasiun</a>).</li>
+<li>Layar: Upgrade / Evolusi.</li>
+</ul>
+<h2 id="rumus-angka">Rumus &amp; angka</h2>
+<h3 id="tabel-upgrade">Tabel upgrade</h3>
+<p>Semua angka di bagian ini.</p>
+<table>
+<thead><tr><th>Level</th><th>Pengali stat dasar</th><th>Bahan</th></tr></thead>
+<tbody>
+<tr><td>+0</td><td>×1.00</td><td>—</td></tr>
+<tr><td>+1</td><td>×1.10</td><td>Bahan rarity sama ×2</td></tr>
+<tr><td>+2</td><td>×1.20</td><td>Bahan rarity sama ×3</td></tr>
+<tr><td>+3</td><td>×1.35</td><td>Bahan rarity sama ×4 + batu elemen ×1</td></tr>
+<tr><td>+4</td><td>×1.50</td><td>Bahan rarity lebih tinggi ×2 + batu elemen ×2</td></tr>
+<tr><td>+5</td><td>×1.70</td><td>Bahan rarity lebih tinggi ×3 + batu elemen ×3</td></tr>
+</tbody>
+</table>
+<p><code>stat_final = round(stat_dasar × pengali)</code>. <code>round</code> = pembulatan setengah menjauhi nol (perilaku <code>round()</code> GDScript), mis. 15 × 1.10 = 16.5 → 17.</p>
+</div>
+</main>
+<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+</div>
+<script src="../assets/search.js"></script>
+</body>
+</html>

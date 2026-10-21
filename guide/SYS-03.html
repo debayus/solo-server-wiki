@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Survival - Solo Server Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css">
+</head>
+<body data-root="../">
+<a class="skip" href="#isi">Lewati ke isi</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<div class="wrap">
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Survival</li></ol></nav>
+<main id="isi">
+<div class="page-head"><h1>Survival</h1></div>
+<p class="muted num">SYS-03</p>
+<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
+<p>Lapar, Stamina, siklus siang/malam, dan zona panas yang menekan pemain untuk berburu dan memasak.</p>
+<h2 id="aturan">Aturan</h2>
+<h3 id="tidak-bertarung">Tidak bertarung</h3>
+<ul>
+<li>Pemain <strong>tidak bertarung</strong> bila tidak punya target dan tidak ada monster yang sedang mengejar atau menyerangnya (status Kejar atau Serang, <a href="SYS-13.html#perilaku-monster">Perilaku monster</a>).</li>
+<li>Definisi ini satu-satunya sumber; dipakai untuk pemulihan HP alami (di bawah) dan pembukaan otomatis Level Up (jeda: <a href="SYS-03.html#rumus-angka">Rumus &amp; angka</a>; tampilan: State khusus).</li>
+</ul>
+<h3 id="pemulihan-hp-alami">Pemulihan HP alami</h3>
+<ul>
+<li>HP pulih sendiri bila pemain tidak bertarung selama waktu tunggu <strong>dan</strong> Lapar di atas ambang (angka: <a href="SYS-03.html#rumus-angka">Rumus &amp; angka</a>).</li>
+<li>Pemulihan berhenti seketika saat pemain kembali bertarung atau Lapar turun ke ambang atau di bawahnya; waktu tunggu dihitung ulang dari awal.</li>
+<li>Pemulihan tidak berlaku selama pemain menerima damage Zona Panas (<code>resist_fire</code> di bawah ambang, lihat Zona panas di bawah).</li>
+</ul>
+<h3 id="stamina">Stamina</h3>
+<ul>
+<li>Stamina dipakai untuk lari, menghindar, dan mengumpulkan bahan (biaya: <a href="SYS-13.html#pemain">Pemain</a>, <a href="SYS-14.html#rumus-angka">Rumus &amp; angka</a>).</li>
+<li>Stamina pulih saat diam atau berjalan; tidak pulih saat lari, menghindar, atau mengumpulkan bahan (<a href="SYS-14.html">Pengumpulan Bahan</a>).</li>
+</ul>
+<h3 id="zona-panas-lava">Zona panas (lava)</h3>
+<ul>
+<li>Area dengan tag <code>heat_zone</code>.</li>
+<li>Jika <code>resist_fire &lt; 30%</code>: peringatan <strong>"Panas"</strong> di HUD dan HP turun.</li>
+<li>Jika <code>resist_fire ≥ 30%</code>: peringatan tetap tampil redup, HP tidak turun.</li>
+<li>Tampilan peringatan: HUD.</li>
+</ul>
+<h2 id="rumus-angka">Rumus &amp; angka</h2>
+<table>
+<thead><tr><th>Aturan</th><th>Nilai</th></tr></thead>
+<tbody>
+<tr><td>Lapar turun</td><td>1 poin / 15 detik</td></tr>
+<tr><td>Lapar = 0</td><td>HP turun 1 / detik</td></tr>
+<tr><td>Stamina pulih</td><td>10 / detik (syarat: <a href="SYS-03.html#stamina">Stamina</a>)</td></tr>
+<tr><td>HP pulih alami</td><td>1% HP maks / detik</td></tr>
+<tr><td>Waktu tunggu pulih HP</td><td>5 detik tidak bertarung</td></tr>
+<tr><td>Ambang Lapar pulih HP</td><td>Lapar &gt; 50</td></tr>
+<tr><td>1 hari game</td><td>24 menit nyata (1 menit nyata = 1 jam game)</td></tr>
+<tr><td>Siang</td><td>06:00–18:00</td></tr>
+<tr><td>Malam</td><td>18:00–06:00: ATK dan HP monster ×1.2; peluang semua drop monster, termasuk <code>bonus_drops</code> bagian tubuh, ×1.2 (maks 1.0); tidak berlaku untuk <code>yields</code> titik bahan</td></tr>
+<tr><td>Zona panas tanpa resist</td><td>HP turun 2 / detik</td></tr>
+<tr><td>Ambang resist api zona panas</td><td>30%</td></tr>
+<tr><td>Jeda buka otomatis Level Up</td><td>3 dtk tidak bertarung (State khusus)</td></tr>
+</tbody>
+</table>
+</div>
+</main>
+<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+</div>
+<script src="../assets/search.js"></script>
+</body>
+</html>

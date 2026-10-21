@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stat &amp; Level - Solo Server Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css">
+</head>
+<body data-root="../">
+<a class="skip" href="#isi">Lewati ke isi</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<div class="wrap">
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Stat &amp; Level</li></ol></nav>
+<main id="isi">
+<div class="page-head"><h1>Stat &amp; Level</h1></div>
+<p class="muted num">SYS-01</p>
+<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
+<p>Empat stat utama dinaikkan lewat poin level up; stat turunan dihitung dari stat utama dan perlengkapan.</p>
+<h2 id="aturan">Aturan</h2>
+<h3 id="stat-utama">Stat utama</h3>
+<table>
+<thead><tr><th>Stat</th><th>Nama</th><th>Pengaruh</th></tr></thead>
+<tbody>
+<tr><td>STR</td><td>Kekuatan</td><td>ATK</td></tr>
+<tr><td>AGI</td><td>Kelincahan</td><td>Crit, Stamina maks</td></tr>
+<tr><td>VIT</td><td>Vitalitas</td><td>HP maks, DEF</td></tr>
+<tr><td>INT</td><td>Kecerdasan</td><td>Durasi buff makanan, resist elemen</td></tr>
+</tbody>
+</table>
+<h3 id="respec">Respec</h3>
+<p>Hanya dengan item <a href="../item/tool_reset_fragment.html">Fragmen Reset</a>: semua poin di <code>allocated_points</code> ditambahkan ke <code>unspent_points</code>, lalu <code>allocated_points</code> dikosongkan (semua 0) dan stat utama kembali ke nilai awal; lalu Level Up dibuka dalam mode respec. Bila <code>allocated_points</code> semua 0, <a href="../item/tool_reset_fragment.html">Fragmen Reset</a> ditolak tanpa terpakai, dengan toast <code>sys.respec_nothing</code> ("Tidak ada poin untuk direset.").</p>
+<h2 id="rumus-angka">Rumus &amp; angka</h2>
+<h3 id="stat-turunan">Stat turunan</h3>
+<p>Semua angka di bagian ini.</p>
+<table>
+<thead><tr><th>Stat</th><th>Rumus</th></tr></thead>
+<tbody>
+<tr><td>HP maks</td><td><code>100 + VIT × 10</code></td></tr>
+<tr><td>Stamina maks</td><td><code>100 + AGI × 5</code></td></tr>
+<tr><td>Lapar maks</td><td><code>100</code> (tetap)</td></tr>
+<tr><td>ATK</td><td><code>weapon_atk_final + STR × 2</code></td></tr>
+<tr><td>DEF</td><td><code>Σ armor_def_final + VIT × 1</code></td></tr>
+<tr><td>Crit (%)</td><td><code>5 + AGI × 0.5 + weapon_crit_bonus</code>, maks 50</td></tr>
+<tr><td>Resist elemen X (%)</td><td><code>Σ resist_X dari armor + INT × 0.5</code>, maks 75</td></tr>
+<tr><td>Durasi buff</td><td><code>base_duration_sec × (1 + INT × 0.01)</code></td></tr>
+</tbody>
+</table>
+<p><code>weapon_atk_final</code> dan <code>armor_def_final</code> sudah termasuk pengali upgrade (<a href="SYS-06.html">Upgrade &amp; Evolusi</a>). <code>weapon_crit_bonus</code> = <code>crit_bonus</code> senjata yang dipakai (0 jika tanpa senjata). Urutan perhitungan:</p>
+<ol>
+<li>Nilai perlengkapan (sudah termasuk upgrade) + bonus set <code>flat</code> (<a href="SYS-07.html">Perlengkapan &amp; Bonus Set</a>) untuk ATK, DEF, Crit, dan Resist. Bonus <code>flat</code> untuk HP maks dan Stamina maks ditambahkan langsung setelah rumus di langkah 2. Bonus <code>percent</code> hanya berlaku untuk ATK, DEF, HP maks, dan Stamina maks; Crit dan Resist hanya menerima bonus <code>flat</code>.</li>
+<li>Rumus di tabel atas.</li>
+<li>Bonus set <code>percent</code>.</li>
+<li>Buff makanan aktif.</li>
+<li>Batas maksimum Crit (50) dan Resist (75) diterapkan pada nilai akhir setelah langkah 4.</li>
+</ol>
+<p>Aturan pembulatan dan penjumlahan bonus:</p>
+<ul>
+<li>Bonus <code>percent</code> dalam satu langkah (langkah 3 atau langkah 4) dijumlahkan dulu, lalu dikalikan <strong>sekali</strong>: <code>nilai × (100 + Σpercent) / 100</code>. Percent langkah 3 dan percent langkah 4 tetap dua perkalian terpisah.</li>
+<li>Pada langkah 4, bonus <code>flat</code> buff ditambahkan lebih dulu, lalu bonus <code>percent</code> buff dikalikan: <code>(nilai + Σflat) × (100 + Σpercent) / 100</code>.</li>
+<li>ATK, DEF, HP maks, dan Stamina maks dibulatkan (<code>round</code>.5 menjauhi nol) <strong>sekali</strong>, setelah langkah 4. Tidak ada pembulatan antar-langkah.</li>
+<li>Crit dan Resist tetap desimal (tidak dibulatkan); batas maksimumnya diterapkan di langkah 5.</li>
+</ul>
+<p>Saat HP maks naik atau turun (buff, perlengkapan), HP saat ini tidak berubah, kecuali dipotong bila melebihi HP maks baru. Aturan yang sama berlaku untuk Stamina.</p>
+<h3 id="level-xp">Level &amp; XP</h3>
+<p>Semua angka di bagian ini.</p>
+<table>
+<thead><tr><th>Aturan</th><th>Nilai</th></tr></thead>
+<tbody>
+<tr><td>Level awal</td><td>1</td></tr>
+<tr><td>Level maks</td><td>50 (XP tidak bertambah lagi; tampilan: State khusus)</td></tr>
+<tr><td>XP ke level berikutnya</td><td><code>round(100 × level ^ 1.5)</code></td></tr>
+<tr><td>Poin stat per level</td><td>3</td></tr>
+<tr><td>Stat utama awal</td><td>STR 5, AGI 5, VIT 5, INT 5</td></tr>
+</tbody>
+</table>
+<p>Contoh angka dari rumus ini: Karakter Contoh.</p>
+</div>
+</main>
+<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+</div>
+<script src="../assets/search.js"></script>
+</body>
+</html>

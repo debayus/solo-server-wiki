@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pertarungan - Solo Server Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css">
+</head>
+<body data-root="../">
+<a class="skip" href="#isi">Lewati ke isi</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<div class="wrap">
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Pertarungan</li></ol></nav>
+<main id="isi">
+<div class="page-head"><h1>Pertarungan</h1></div>
+<p class="muted num">SYS-13</p>
+<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
+<p>Serangan otomatis ke target, rumus damage dengan DEF dan elemen, stat monster dari kurva level, mematahkan bagian tubuh, dan XP dari kill. Mendukung pilar Berburu.</p>
+<h2 id="aturan">Aturan</h2>
+<h3 id="alur-serangan">Alur serangan</h3>
+<ul>
+<li>Pemain menyerang otomatis selama target berada dalam jangkauan (<a href="SYS-13.html#pemain">Pemain</a>). Jangkauan diukur antar-tepi collision (<a href="SYS-13.html#makhluk">Makhluk</a>), bukan antar-pusat.</li>
+<li>Serangan pertama setelah target masuk jangkauan (pemain maupun monster) didahului ancang-ancang. Damage diterapkan setelah menunggu nilai yang <strong>lebih lama</strong> dari ancang-ancang dan sisa jeda serangan, sehingga keluar-masuk jangkauan tidak mempercepat serangan. Durasi: <a href="SYS-13.html#makhluk">Makhluk</a>.</li>
+<li>Target lepas bila:
+<ul>
+<li>target mati;</li>
+<li>pemain mengetuk tanah;</li>
+<li>pemain menekan lama (lari, <a href="SYS-10.html">Kontrol</a>);</li>
+<li>pemain mengetuk monster lain (target berpindah);</li>
+<li>pemain mengetuk objek (<a href="SYS-10.html">Kontrol</a>);</li>
+<li>pemain mati;</li>
+<li>target berstatus Kembali: karena melewati jarak kejar, mencapai tepi area spawn (<code>territorial</code>), atau pemain mati; untuk boss, karena pemain keluar arena (<a href="SYS-13.html#perilaku-monster">Perilaku monster</a>);</li>
+<li>target despawn (mis. zonanya dibuang dari memori, <a href="SYS-15.html#area-spawn-biasa">Area spawn biasa</a>).</li>
+</ul>
+</li>
+<li>Menghindar tidak melepas target: setelah dash, bila target masih ada, pemain otomatis mendekat lagi lalu menyerang (<a href="SYS-10.html#menghindar">Menghindar</a>).</li>
+<li>Monster berstatus Kembali tidak bisa ditarget: mengetuknya diabaikan (pemain tidak bergerak dan ketukan tidak dihitung sebagai ketuk tanah).</li>
+<li>Elemen serangan pemain = elemen senjata (<code>none</code> tanpa senjata). Elemen serangan monster = elemen monster.</li>
+<li>Monster tidak bisa crit.</li>
+<li>Saat menghindar, pemain kebal selama durasi kebal.</li>
+</ul>
+<h3 id="damage">Damage</h3>
+<pre><code>mitigasi  = 100 / (100 + DEF_target)
+damage    = max(1, round(ATK_penyerang × mitigasi × pengali_elemen × pengali_crit))</code></pre>
+<ul>
+<li><code>pengali_elemen</code> (pemain → monster): tabel <a href="SYS-02.html#rumus-angka">Rumus &amp; angka</a>.</li>
+<li>Monster → pemain: <code>pengali_elemen</code> diganti <code>(1 − resist_X / 100)</code>, dengan X = elemen monster dan resist dari <a href="SYS-01.html#stat-turunan">Stat turunan</a>. Monster tanpa elemen: ×1.0.</li>
+<li><code>pengali_crit</code> = 1.5 bila crit (peluang = Crit pemain), selain itu 1.0.</li>
+<li>Bonus malam sudah termasuk di ATK monster (<a href="SYS-13.html#stat-monster">Stat monster</a>), jadi tidak ada pengali malam di rumus damage.</li>
+<li><code>round</code> = pembulatan setengah menjauhi nol, sama seperti <a href="SYS-06.html#tabel-upgrade">Tabel upgrade</a>.</li>
+</ul>
+<h3 id="stat-monster">Stat monster</h3>
+<p>Monster tidak menyimpan HP/ATK/DEF mentah. Nilainya dihitung dari level dan pengali di data monster:</p>
+<pre><code>HP  = round((100 + 12 × level) × hp_mult  × pengali_rank_hp  × pengali_malam)
+ATK = round((10 + 2.4 × level) × atk_mult × pengali_rank_atk × pengali_malam)
+DEF = round((2 × level)        × def_mult × pengali_rank_def)</code></pre>
+<p><code>pengali_malam</code> = ×1.2 untuk HP dan ATK bila monster <strong>muncul</strong> saat malam (<a href="SYS-03.html#rumus-angka">Rumus &amp; angka</a>), selain itu ×1.0. Nilainya dikunci saat monster muncul; monster yang sudah hidup tidak berubah saat siang/malam berganti. HP hasil rumus ini adalah <strong>HP maks saat muncul</strong>.</p>
+<h3 id="bagian-tubuh">Bagian tubuh</h3>
+<ul>
+<li>Bagian yang dibidik dipilih lewat tombol daftar bagian di <code>TargetFrame</code> (Komponen); tidak ada data posisi sprite. Target yang baru diketuk membidik tubuh (bukan bagian). Bagian yang sudah patah tidak tampil dan tidak bisa dipilih.</li>
+<li>Saat pemain membidik bagian tubuh, setiap damage ke monster juga mengurangi HP bagian itu.</li>
+<li>HP bagian = <code>round(HP maks saat muncul × hp_ratio)</code>.</li>
+<li>Saat HP bagian habis, bagian patah: <code>bonus_drops</code> langsung diundi dan jatuh ke tanah, entri Codex diperbarui (<a href="SYS-12.html#pembukaan-info-monster">Pembukaan info monster</a>). Pengecualian: saat melawan boss terakhir dengan <code>game_cleared = false</code>, hasilnya langsung masuk tas sebagai drop unik (<a href="SYS-13.html#kematian-monster">Kematian monster</a>).</li>
+<li>Bagian yang patah tidak bisa dibidik lagi; bidikan kembali ke tubuh.</li>
+<li>Bila satu pukulan mematahkan bagian sekaligus membunuh monster, bagian dianggap patah lebih dulu: <code>bonus_drops</code> tetap keluar.</li>
+<li>Saat monster pulih (<a href="SYS-13.html#perilaku-monster">Perilaku monster</a>), bagian yang sudah patah tetap patah (tidak memberi <code>bonus_drops</code> lagi); bagian yang belum patah ikut pulih ke HP penuh.</li>
+</ul>
+<h3 id="perilaku-monster">Perilaku monster</h3>
+<table>
+<thead><tr><th><code>behavior</code></th><th>Perilaku</th></tr></thead>
+<tbody>
+<tr><td><code>passive</code></td><td>Tidak menyerang sampai diserang; setelah diserang mengejar seperti <code>aggressive</code> sampai jarak kejar (tidak kabur). <code>aggro_radius</code> diabaikan</td></tr>
+<tr><td><code>aggressive</code></td><td>Mengejar pemain yang masuk radius aggro</td></tr>
+<tr><td><code>territorial</code></td><td>Seperti <code>aggressive</code>, tetapi hanya masuk Kejar bila pemain berada di dalam area spawn-nya (dan dalam radius aggro); berhenti mengejar di tepi area, dan berkeliaran idle hanya di dalam area</td></tr>
+</tbody>
+</table>
+<p><strong>Semua monster yang diserang pemain masuk Kejar</strong>, termasuk <code>aggressive</code> dan <code>territorial</code> yang diserang dari luar radius aggro (atau, untuk <code>territorial</code>, saat pemain di luar area spawn-nya). <code>territorial</code> tetap berhenti di tepi area lalu Kembali.</p>
+<p><strong>Boss tidak bisa aggro bila pemain di luar arena</strong>: boss tidak masuk Kejar dari Idle maupun Kembali walau diserang atau diprovokasi dari luar arena; ia tetap Idle atau Kembali (<a href="SYS-15.html#boss">Boss</a>).</p>
+<p><strong>Titik spawn</strong> = posisi monster itu muncul (bukan pusat area). Semua monster memakai status AI di bawah. Boss tidak memakai jarak kejar atau tepi area; pemicu Kembali-nya adalah pemain keluar arena (<a href="SYS-15.html#boss">Boss</a>), dan ia kembali ke tengah arena.</p>
+<table>
+<thead><tr><th>Status</th><th>Masuk bila</th><th>Perilaku</th><th>Keluar bila</th></tr></thead>
+<tbody>
+<tr><td>Idle</td><td>Muncul; atau tiba di titik spawn setelah kembali</td><td>Berjalan ke titik acak dalam radius jelajah dari titik spawn pada kecepatan jalan monster, diam sebentar, ulangi</td><td>Semua <code>behavior</code>: monster diserang pemain. <code>aggressive</code>/<code>territorial</code>: pemain masuk radius aggro. Menjadi Kejar</td></tr>
+<tr><td>Kejar</td><td>Pemicu aggro di atas</td><td>Mengejar pemain pada kecepatan kejar</td><td>Pemain dalam jangkauan serang → Serang. Jarak dari titik spawn melewati jarak kejar (monster <code>normal</code>), atau <code>territorial</code> mencapai tepi area spawn, atau boss: pemain keluar arena, atau pemain mati → Kembali</td></tr>
+<tr><td>Serang</td><td>Pemain dalam jangkauan serang (antar-tepi collision)</td><td>Ancang-ancang lalu serangan tiap jeda serangan monster</td><td>Pemain keluar jangkauan → Kejar. Pemain mati → Kembali</td></tr>
+<tr><td>Kembali</td><td>Alasan Kejar → Kembali di atas</td><td>Berjalan ke titik spawn (boss: tengah arena) pada kecepatan kembali; kebal, tidak bisa ditarget, target lepas, tidak bisa aggro</td><td>Tiba di titik spawn (boss: tengah arena): HP pulih penuh (bagian tubuh: <a href="SYS-13.html#bagian-tubuh">Bagian tubuh</a>) → Idle</td></tr>
+</tbody>
+</table>
+<ul>
+<li>Saat pemain mati, semua monster yang sedang Kejar atau Serang melepas target, Kembali, dan pulih.</li>
+<li>Monster berstatus Kembali tidak dihitung mengejar atau menyerang pemain, jadi tidak menghalangi status tidak bertarung (<a href="SYS-03.html#tidak-bertarung">Tidak bertarung</a>).</li>
+<li>Angka (radius jelajah, jeda diam, kecepatan, jangkauan, ancang-ancang): <a href="SYS-13.html#monster">Monster</a> dan <a href="SYS-13.html#makhluk">Makhluk</a>.</li>
+</ul>
+<h3 id="kematian-monster">Kematian monster</h3>
+<ul>
+<li>Drop diundi dari <code>drops</code> di data monster (MonsterData) saat monster mati, dan dari <code>bonus_drops</code> saat bagian patah. Setiap <code>DropEntry</code> diundi <strong>independen</strong> dengan peluang <code>chance</code> yang dikali bonus malam (<a href="SYS-03.html#rumus-angka">Rumus &amp; angka</a>, maks 1.0).</li>
+<li>Bonus malam ditentukan saat drop diundi (waktu mati atau patah), tidak dikunci saat monster muncul; ini berbeda dari stat monster.</li>
+<li>Entri yang berhasil: jumlah = bilangan bulat acak seragam <code>amount_min..amount_max</code>; menghasilkan satu item tanah ber-<code>amount</code> itu, ditaruh di titik acak dalam radius sebar dari monster (<a href="SYS-13.html#makhluk">Makhluk</a>).</li>
+<li>Drop biasa (<code>drops</code>, <code>bonus_drops</code> bagian tubuh) jatuh ke tanah di dekat monster sebagai item tanah.</li>
+<li>Drop unik langsung masuk tas: <code>first_kill_drops</code>, dan semua drop dari pertarungan melawan boss terakhir selama <code>game_cleared = false</code>, termasuk <code>bonus_drops</code> bagian yang patah di tengah pertarungan (<a href="SYS-16.html#ending">Ending</a>); item <code>key</code> masuk <code>held_keys</code>. Bila tas penuh (kecuali <code>key</code>, yang selalu masuk <code>held_keys</code>), atau drop unik hanya muat sebagian (<a href="SYS-11.html#tas-penuh-dan-menumpuk">Tas penuh dan menumpuk</a>), drop itu atau sisanya jatuh sebagai item tanah <strong>permanen</strong> (tanpa masa hidup, ikut disimpan di <code>persistent_ground_items</code>); saat dipungut, entrinya dihapus dari <code>persistent_ground_items</code>.</li>
+<li>Item tanah dipungut <strong>otomatis</strong> saat pemain berada dalam radius pungut; masuk tas lewat aturan tas biasa (<a href="SYS-11.html#tas-penuh-dan-menumpuk">Tas penuh dan menumpuk</a>).</li>
+<li>Tas penuh (<a href="SYS-11.html#tas-penuh-dan-menumpuk">Tas penuh dan menumpuk</a>): item, atau sisa yang tidak muat, tetap di tanah. Toast <code>sys.bag_full</code> (teks: "[SISTEM] Tas penuh.") muncul <strong>sekali per instance item tanah</strong> selama pemain tetap berada dalam radius pungut; muncul lagi setelah pemain keluar dari radius lalu masuk lagi.</li>
+<li>Item tanah biasa hilang setelah masa hidupnya habis dan <strong>tidak</strong> ikut disimpan (Sistem Save). Masa hidup berhenti selama game di-pause.</li>
+<li>Item tanah biasa di zona yang dibuang dari memori (Alur scene) ikut hilang; item tanah permanen (drop unik) tetap disimpan.</li>
+<li>Item tanah tidak menyimpan monster asalnya.</li>
+<li>XP diberikan ke pemain; Codex diperbarui (<a href="SYS-12.html">Penemuan &amp; Codex</a>).</li>
+</ul>
+<h2 id="rumus-angka">Rumus &amp; angka</h2>
+<h3 id="pemain">Pemain</h3>
+<p>Semua angka di bagian ini.</p>
+<table>
+<thead><tr><th>Aturan</th><th>Nilai</th></tr></thead>
+<tbody>
+<tr><td>Jeda serangan</td><td>1.0 dtk</td></tr>
+<tr><td>Jangkauan serang (jarak dekat)</td><td>8 px, antar-tepi collision</td></tr>
+<tr><td>Kecepatan jalan</td><td>80 px/dtk</td></tr>
+<tr><td>Lari</td><td>×1.6 kecepatan jalan, Stamina 8 / dtk</td></tr>
+<tr><td>Menghindar</td><td>Dash 64 px, Stamina 25, kebal 0.3 dtk</td></tr>
+<tr><td>Pengali crit</td><td>×1.5</td></tr>
+<tr><td>Radius pungut item tanah</td><td>48 px</td></tr>
+<tr><td>Masa hidup item tanah</td><td>120 dtk nyata</td></tr>
+</tbody>
+</table>
+<h3 id="monster">Monster</h3>
+<p>Semua angka di bagian ini.</p>
+<table>
+<thead><tr><th>Aturan</th><th>Nilai</th></tr></thead>
+<tbody>
+<tr><td>Jeda serangan default</td><td>1.5 dtk (<code>attack_interval_sec</code>)</td></tr>
+<tr><td>Radius aggro default</td><td>96 px</td></tr>
+<tr><td>Jarak kejar</td><td>320 px dari titik spawn</td></tr>
+<tr><td>Kecepatan jalan monster</td><td>60 px/dtk</td></tr>
+<tr><td>Kecepatan kejar monster</td><td>100 px/dtk (lebih lambat dari lari pemain)</td></tr>
+<tr><td>Kecepatan kembali</td><td>100 px/dtk</td></tr>
+<tr><td>Jangkauan serang monster</td><td>8 px, antar-tepi collision</td></tr>
+<tr><td>Radius jelajah idle</td><td>48 px dari titik spawn</td></tr>
+<tr><td>Jeda diam idle</td><td>2–4 dtk (acak)</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th><code>rank</code></th><th>HP</th><th>ATK</th><th>DEF</th></tr></thead>
+<tbody>
+<tr><td><code>normal</code></td><td>×1.0</td><td>×1.0</td><td>×1.0</td></tr>
+<tr><td><code>boss</code></td><td>×5.0</td><td>×1.3</td><td>×1.2</td></tr>
+</tbody>
+</table>
+<h3 id="makhluk">Makhluk</h3>
+<p>Berlaku untuk pemain dan monster. Semua angka di bagian ini.</p>
+<table>
+<thead><tr><th>Aturan</th><th>Nilai</th></tr></thead>
+<tbody>
+<tr><td>Ancang-ancang serangan pertama</td><td>0.3 dtk sejak masuk jangkauan</td></tr>
+<tr><td>Radius collision (hanya untuk mengukur jangkauan serang)</td><td>⅓ lebar ukuran badan: <code>asset.body_size</code> bila ada, selain itu <code>asset.size</code> sprite</td></tr>
+<tr><td>Radius sebar item tanah dari monster</td><td>16 px</td></tr>
+<tr><td>Radius body gerak monster (physics body untuk navigasi dan cek titik spawn)</td><td>6 px</td></tr>
+</tbody>
+</table>
+<p>Radius collision ini <strong>hanya</strong> dipakai mengukur jangkauan serang, bukan body gerak. Body gerak pemain tidak berubah dari F1 (berjari-jari 6 px) dan monster memakai ukuran yang sama (6 px), agar keduanya muat di celah selebar 1 petak.</p>
+<h3 id="xp-dari-kill">XP dari kill</h3>
+<p>Konstanta 25 dipilih agar pemain naik dari level awal ke level akhir sebuah zona dalam rata-rata ±70 kill monster selevel: Z1 ±40, Z2 ±57, Z3 ±67, Z4 ±85, Z5 ±92, Z6 ±85, Z7 ±63. Penyesuaian per zona dievaluasi saat uji main (Backlog).</p>
+<p>Semua angka di bagian ini.</p>
+<pre><code>XP = round(25 × level_monster ^ 1.2 × pengali_rank_xp × pengali_selisih_level)</code></pre>
+<p>Kedua pengali dikalikan.</p>
+<table>
+<thead><tr><th><code>rank</code></th><th><code>pengali_rank_xp</code></th></tr></thead>
+<tbody>
+<tr><td><code>normal</code></td><td>×1</td></tr>
+<tr><td><code>boss</code></td><td>×10</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>Kondisi</th><th><code>pengali_selisih_level</code></th></tr></thead>
+<tbody>
+<tr><td>Monster ≥ 6 level di bawah pemain</td><td>×0.2</td></tr>
+<tr><td>Lainnya</td><td>×1</td></tr>
+</tbody>
+</table>
+</div>
+</main>
+<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+</div>
+<script src="../assets/search.js"></script>
+</body>
+</html>

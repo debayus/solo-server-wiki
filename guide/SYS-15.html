@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spawn Monster - Solo Server Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css">
+</head>
+<body data-root="../">
+<a class="skip" href="#isi">Lewati ke isi</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<div class="wrap">
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Spawn Monster</li></ol></nav>
+<main id="isi">
+<div class="page-head"><h1>Spawn Monster</h1></div>
+<p class="muted num">SYS-15</p>
+<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
+<p>Monster muncul dari area spawn yang diletakkan tangan di peta, mengikuti tabel spawn tiap zona, siang/malam, dan aturan khusus boss.</p>
+<h2 id="aturan">Aturan</h2>
+<h3 id="area-spawn-biasa">Area spawn biasa</h3>
+<ul>
+<li>Setiap area spawn punya tabel <code>entries</code> (ditulis di katalog zona, SpawnAreaData): monster, bobot, waktu muncul (<code>any</code> / <code>day</code> / <code>night</code>).</li>
+<li>Saat zona dimuat, area langsung diisi sampai <code>max_alive</code>.</li>
+<li>Area menjaga jumlah monster hidup tidak lebih dari <code>max_alive</code>. Timer <code>respawn_sec</code> mulai saat jumlah hidup kurang dari <code>max_alive</code> dan berhenti saat game di-pause; tiap timer habis area memunculkan satu monster baru, diundi berdasarkan bobot dari entri yang sesuai waktu saat itu.</li>
+<li>Monster muncul di titik acak di dalam area, di luar layar pemain, dan yang bisa dilalui (tidak menimpa collision dunia). Cara memeriksa kedua syarat itu: Dunia dan peta. Bila tidak ada titik yang memenuhi, area mencoba lagi tiap interval coba ulang (<a href="SYS-15.html#rumus-angka">Rumus &amp; angka</a>).</li>
+<li>Posisi monster itu muncul menjadi titik spawn-nya (<a href="SYS-13.html#perilaku-monster">Perilaku monster</a>).</li>
+<li>Monster tidak disimpan (Sistem Save) dan dibuang bersama zonanya saat zona dibuang dari memori.</li>
+<li>Level monster tetap sesuai data; tidak menyesuaikan level pemain.</li>
+<li>Saat siang berganti malam (atau sebaliknya), monster yang tidak sesuai waktu tetap hidup sampai mati atau keluar layar, lalu tidak dimunculkan lagi.</li>
+</ul>
+<h3 id="boss">Boss</h3>
+<ul>
+<li>Setiap boss punya arena tetap di zonanya, satu boss per arena. Arena berbentuk lingkaran (pusat dan radius ditulis di katalog zona, mis. <a href="../zone/zone_forest.html">Peta</a>); pemain "di dalam arena" bila jarak pusat pemain ke pusat arena ≤ radius.</li>
+<li>Pintu arena tanpa penghalang: pemain bebas masuk dan keluar.</li>
+<li><strong>Ketersediaan</strong> boss: belum pernah dikalahkan, atau waktu game sekarang ≥ <code>boss_defeated_at</code> + <code>boss_respawn_game_days</code> (State pemain). Ketersediaan hanya diperiksa saat pemain masuk arena, dan saat zona dimuat bila pemain sudah berada di dalam arena. Boss tidak muncul tiba-tiba saat pemain sudah di dalam arena.</li>
+<li>Boss muncul di <strong>tengah arena</strong> bila tersedia saat diperiksa; titik itu juga menjadi titik spawn untuk jelajah idle (<a href="SYS-13.html#perilaku-monster">Perilaku monster</a>). Boss yang sudah muncul tetap ada (Idle, HP penuh) sampai zonanya dibuang dari memori; pemain masuk ulang arena tidak membuat boss baru dan tidak memancarkan <code>boss_spawned</code> lagi.</li>
+<li>Musik boss: aturan di Musik.</li>
+<li>Setelah dikalahkan, boss hilang dari arena; ia tersedia lagi setelah <code>boss_respawn_game_days</code> dan muncul lagi sesuai aturan ketersediaan di atas.</li>
+<li><code>first_kill_drops</code> hanya diberikan sekali per boss (dicatat di <code>boss_first_kills</code>).</li>
+<li>Setiap boss Z1–Z6 wajib punya di <code>first_kill_drops</code>: Fragmen Kunci Admin zonanya (<a href="SYS-16.html#fragmen-kunci-admin">Fragmen Kunci Admin</a>) dan <a href="../item/tool_reset_fragment.html">Fragmen Reset</a>. Di <code>drops</code> biasa, boss Z1–Z6 juga punya <a href="../item/tool_reset_fragment.html">Fragmen Reset</a> dengan peluang 0.05.</li>
+<li><strong>Fragmen Reset</strong>: <code>drops</code> biasa selalu diundi, termasuk saat kill pertama (kill pertama memberi satu dari <code>first_kill_drops</code> yang pasti, ditambah undian <code>drops</code>); bonus malam berlaku (5%, atau 6% malam; <a href="SYS-03.html#rumus-angka">Rumus &amp; angka</a>). Jadi sumbernya: 5% (6% malam) setiap kill, di luar drop pasti kill pertama.</li>
+<li>Pemain keluar arena: boss berstatus Kembali ke tengah arena (<a href="SYS-13.html#perilaku-monster">Perilaku monster</a>): kebal, tidak bisa ditarget, dan melepas target; setelah tiba, HP pulih penuh.</li>
+<li><code>boss_fight_active</code> (boss hidup dan pemain di dalam arena) didefinisikan di Autosave.</li>
+</ul>
+<h2 id="rumus-angka">Rumus &amp; angka</h2>
+<p>Semua angka di bagian ini.</p>
+<table>
+<thead><tr><th>Aturan</th><th>Nilai default</th></tr></thead>
+<tbody>
+<tr><td><code>max_alive</code> per area</td><td>4</td></tr>
+<tr><td><code>respawn_sec</code></td><td>20 dtk nyata</td></tr>
+<tr><td>Interval coba ulang bila tidak ada titik di luar layar</td><td>1 dtk nyata</td></tr>
+<tr><td><code>boss_respawn_game_days</code></td><td>1 hari game (= 24 menit nyata)</td></tr>
+</tbody>
+</table>
+</div>
+</main>
+<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+</div>
+<script src="../assets/search.js"></script>
+</body>
+</html>

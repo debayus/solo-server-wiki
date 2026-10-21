@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kontrol - Solo Server Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css">
+</head>
+<body data-root="../">
+<a class="skip" href="#isi">Lewati ke isi</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<div class="wrap">
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Kontrol</li></ol></nav>
+<main id="isi">
+<div class="page-head"><h1>Kontrol</h1></div>
+<p class="muted num">SYS-10</p>
+<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
+<p>Kontrol mobile ketuk-untuk-jalan dan ketuk-untuk-menyerang, plus tombol Menghindar.</p>
+<h2 id="aturan">Aturan</h2>
+<table>
+<thead><tr><th>Input</th><th>Hasil</th></tr></thead>
+<tbody>
+<tr><td>Ketuk tanah</td><td>Karakter berjalan ke titik itu (pathfinding <code>NavigationAgent2D</code>)</td></tr>
+<tr><td>Ketuk monster</td><td>Karakter mendekat sampai dalam jangkauan (<a href="SYS-13.html#pemain">Pemain</a>) lalu menyerang otomatis sampai target lepas (<a href="SYS-13.html#alur-serangan">Alur serangan</a>); target yang diketuk membidik tubuh. Monster berstatus Kembali tidak bisa ditarget: ketukan diabaikan (pemain tidak bergerak, bukan ketuk tanah)</td></tr>
+<tr><td>Ketuk tombol bagian di <code>TargetFrame</code> (saat ada target)</td><td>Serangan diarahkan ke bagian itu (untuk mematahkan); aturan: <a href="SYS-13.html#bagian-tubuh">Bagian tubuh</a>, tampilan: Komponen</td></tr>
+<tr><td>Ketuk objek (api unggun, landasan, titik bahan, gerbang)</td><td>Jalan ke objek lalu berinteraksi (<a href="SYS-09.html">Stasiun</a>, <a href="SYS-14.html">Pengumpulan Bahan</a>, <a href="SYS-16.html#fragmen-kunci-admin">Fragmen Kunci Admin</a>)</td></tr>
+<tr><td>Mendekati item di tanah</td><td>Dipungut otomatis (<a href="SYS-13.html#kematian-monster">Kematian monster</a>)</td></tr>
+<tr><td>Tombol <strong>Menghindar</strong></td><td>Dash singkat menjauhi target, memakai Stamina</td></tr>
+<tr><td>Tekan lama tanah</td><td>Lari menuju titik tekan selama ditekan, memakai Stamina</td></tr>
+</tbody>
+</table>
+<ul>
+<li>Desktop (uji coba): klik kiri = ketuk, <code>Space</code> = Menghindar.</li>
+<li>Ketukan pada elemen UI tidak boleh diteruskan ke dunia. Tekan yang dimulai di elemen UI tidak pernah menggerakkan karakter, juga bila jari kemudian bergeser ke dunia.</li>
+<li>Tekan lama = sentuhan/klik ditahan minimal selama ambang tekan lama; lebih singkat dari itu dihitung ketuk.</li>
+</ul>
+<h3 id="menghindar">Menghindar</h3>
+<ul>
+<li>Arah dash: menjauhi target bila ada; tanpa target = arah gerak saat ini; bila karakter diam = arah hadap terakhir (awal: bawah).</li>
+<li>Dash ditempuh selama durasi kebal (<a href="SYS-13.html#rumus-angka">Rumus &amp; angka</a>) dan berhenti bila menabrak collision atau mencapai tepi area yang bisa dilalui.</li>
+<li>Ditolak (tanpa biaya) bila Stamina kurang dari biaya Menghindar atau karakter sedang dash. Jarak, biaya, dan durasi kebal ada di <a href="SYS-13.html#rumus-angka">Rumus &amp; angka</a>.</li>
+<li>Setelah dash: bila tekan lama masih berlangsung dan Stamina &gt; 0, karakter lanjut lari menuju posisi jari; bila target masih ada, karakter otomatis mendekat lagi lalu menyerang; selain itu diam.</li>
+<li>Tekan lama (lari) melepas target (<a href="SYS-13.html#alur-serangan">Alur serangan</a>), jadi aturan "lanjut lari" menang atas "mendekat lagi".</li>
+</ul>
+<h3 id="tekan-lama-dan-lari">Tekan lama dan lari</h3>
+<ul>
+<li>Selama ditekan, karakter lari menuju titik tekan; tujuan diperbarui mengikuti posisi jari/kursor.</li>
+<li>Jari bergeser ke atas elemen UI: tujuan tetap pada posisi dunia terakhir sebelum masuk elemen itu.</li>
+<li>Lepas di mana pun (di dunia maupun di atas UI) menghentikan karakter.</li>
+<li>Stamina habis saat lari: karakter berjalan ke tujuan yang sama (kecepatan jalan).</li>
+</ul>
+<h2 id="rumus-angka">Rumus &amp; angka</h2>
+<table>
+<thead><tr><th>Aturan</th><th>Nilai</th></tr></thead>
+<tbody>
+<tr><td>Ambang tekan lama</td><td>0.35 dtk</td></tr>
+</tbody>
+</table>
+</div>
+</main>
+<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+</div>
+<script src="../assets/search.js"></script>
+</body>
+</html>
