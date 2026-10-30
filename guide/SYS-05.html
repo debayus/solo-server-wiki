@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Memasak - Solo Server Wiki</title>
+<title>Memasak - Negeri Sunyi Wiki</title>
 <link rel="stylesheet" href="../assets/wiki.css">
 </head>
 <body data-root="../">
 <a class="skip" href="#isi">Lewati ke isi</a>
-<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Negeri Sunyi Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
 <div class="wrap">
 <nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Memasak</li></ol></nav>
 <main id="isi">
 <div class="page-head"><h1>Memasak</h1></div>
 <p class="muted num">SYS-05</p>
 <div class="guide"><h2 id="ringkasan">Ringkasan</h2>
-<p>Dua atau tiga bahan dimasak di api unggun menjadi makanan yang mengisi Lapar dan memberi buff.</p>
+<p>Dua atau tiga bahan dimasak (di mana saja) menjadi makanan yang mengisi Lapar dan memberi buff.</p>
 <h2 id="aturan">Aturan</h2>
 <ul>
 <li>Slot 1–2 wajib, slot 3 opsional (slot 3 tanpa slot 2 tidak sah). Hanya item <code>MATERIAL</code>.</li>
@@ -28,8 +28,7 @@
 <li>Himpunan bahan yang tidak cocok resep mana pun → hasil <a href="../item/food_burnt.html">Makanan Gosong</a> (Makanan Gosong). Himpunan yang cocok resep tetapi jumlahnya kurang tidak termasuk (lihat di atas).</li>
 <li>Makanan Gosong memakai 1 item dari tiap slot yang terisi.</li>
 <li>Hasil memasak selalu 1 item dengan <code>upgrade_level</code> 0.</li>
-<li>Hasil tidak muat seluruhnya di tas → memasak ditolak; hasil yang bisa ditumpuk ke stack sejenis tetap boleh (<a href="SYS-11.html#tas-penuh-dan-menumpuk">Tas penuh dan menumpuk</a>).</li>
-<li>Butuh Api Unggun dalam jangkauan (<a href="SYS-09.html">Stasiun</a>). Kapan <code>respawn_point</code> diperbarui: <a href="SYS-08.html">Kematian &amp; Respawn</a>.</li>
+<li>Tidak butuh Api Unggun: memasak bisa dilakukan di mana saja lewat menu (<a href="SYS-09.html">Stasiun</a>). Hasil selalu masuk tas (<a href="SYS-11.html#menumpuk">Menumpuk</a>). Api Unggun tetap menentukan <code>respawn_point</code>: <a href="SYS-08.html">Kematian &amp; Respawn</a>.</li>
 <li>Penemuan resep masakan: <a href="SYS-12.html#penemuan-resep">Penemuan resep</a>.</li>
 <li>Buff dengan <code>id</code> sama <strong>tidak menumpuk</strong>: memakan lagi me-reset timer.</li>
 <li>Durasi buff memakai rumus INT di <a href="SYS-01.html#stat-turunan">Stat turunan</a>.</li>
@@ -44,7 +43,7 @@
 </ul>
 </div>
 </main>
-<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+<footer class="site-footer"><p>Wiki pemain Negeri Sunyi. Berisi spoiler penuh.</p></footer>
 </div>
 <script src="../assets/search.js"></script>
 </body>

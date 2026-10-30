@@ -3,45 +3,45 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Stasiun - Solo Server Wiki</title>
+<title>Stasiun - Negeri Sunyi Wiki</title>
 <link rel="stylesheet" href="../assets/wiki.css">
 </head>
 <body data-root="../">
 <a class="skip" href="#isi">Lewati ke isi</a>
-<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Negeri Sunyi Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
 <div class="wrap">
 <nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Stasiun</li></ol></nav>
 <main id="isi">
 <div class="page-head"><h1>Stasiun</h1></div>
 <p class="muted num">SYS-09</p>
 <div class="guide"><h2 id="ringkasan">Ringkasan</h2>
-<p>Api Unggun dan Landasan Data adalah objek dunia yang membuka fungsi memasak, crafting, dan upgrade.</p>
+<p>Api Unggun dan Landasan Rune adalah objek dunia. Sejak, crafting, upgrade, dan memasak tidak butuh stasiun: Api Unggun tetap menjadi titik respawn, dan kedua stasiun menjadi pintasan untuk membuka layarnya.</p>
 <h2 id="aturan">Aturan</h2>
 <ul>
-<li>Stasiun bisa sudah ada di peta, atau ditaruh pemain memakai <a href="../item/tool_campfire.html">Kit Api Unggun</a> / <a href="../item/tool_data_anvil.html">Kit Landasan Data</a> lewat Mode Taruh.</li>
-<li>Lokasi taruh valid bila: petak berada di zona tempat pemain berada (<code>current_zone</code>; petak di zona lain tidak valid, <code>sys.place_invalid_zone</code>), petak tanpa tabrakan, tidak ditempati titik bahan atau stasiun lain, bukan petak bahaya (<code>heat_zone</code>, air dalam), tidak di dalam arena boss, tidak di bagian dalam Inti Server sebelum gerbang terbuka, dan berjarak ≤ 96 px dari pemain (Euclid dari pusat pemain ke pusat petak, inklusif). Item tanah dan monster tidak memblokir petak.</li>
+<li>Stasiun bisa sudah ada di peta, atau ditaruh pemain memakai <a href="../item/tool_campfire.html">Kit Api Unggun</a> lewat Mode Taruh. Kit Landasan Rune dihapus; Landasan Rune yang sudah ditaruh di save lama tetap ada dan berfungsi seperti Landasan Rune bawaan peta.</li>
+<li>Sigil Pengrajin: kelana bisa merakit, meningkatkan, dan memasak di mana saja. Saat Main Baru, setelah dunia siap, toast Prasasti <code>sys.sigil_granted</code> muncul sekali ("[PRASASTI] Sigil Pengrajin menyala di telapak tanganmu. Merakit dan memasak kini bisa di mana saja.").</li>
+<li>Lokasi taruh valid bila: petak berada di zona tempat pemain berada (<code>current_zone</code>; petak di zona lain tidak valid, <code>sys.place_invalid_zone</code>), petak tanpa tabrakan, tidak ditempati titik bahan atau stasiun lain, bukan petak bahaya (<code>heat_zone</code>, air dalam), tidak di dalam arena boss, tidak di Ruang Takhta (bagian dalam Istana Hampa) sebelum Gerbang Istana terbuka, dan berjarak ≤ 96 px dari pemain (Euclid dari pusat pemain ke pusat petak, inklusif). Item tanah dan monster tidak memblokir petak.</li>
 <li>Alasan petak tidak valid ditampilkan sebagai toast: <code>sys.place_invalid_blocked</code> (tabrakan, titik bahan, atau stasiun lain), <code>sys.place_invalid_hazard</code>, <code>sys.place_invalid_arena</code>, <code>sys.place_invalid_core_locked</code>, <code>sys.place_invalid_too_far</code>, <code>sys.place_invalid_zone</code> (Interaksi).</li>
-<li>Bila petak gagal lebih dari satu syarat, toast menampilkan alasan pertama menurut prioritas: zona lain (<code>sys.place_invalid_zone</code>) &gt; terlalu jauh (<code>sys.place_invalid_too_far</code>) &gt; Inti terkunci (<code>sys.place_invalid_core_locked</code>) &gt; arena (<code>sys.place_invalid_arena</code>) &gt; bahaya (<code>sys.place_invalid_hazard</code>) &gt; terhalang (<code>sys.place_invalid_blocked</code>).</li>
+<li>Bila petak gagal lebih dari satu syarat, toast menampilkan alasan pertama menurut prioritas: zona lain (<code>sys.place_invalid_zone</code>) &gt; terlalu jauh (<code>sys.place_invalid_too_far</code>) &gt; Ruang Takhta tersegel (<code>sys.place_invalid_core_locked</code>) &gt; arena (<code>sys.place_invalid_arena</code>) &gt; bahaya (<code>sys.place_invalid_hazard</code>) &gt; terhalang (<code>sys.place_invalid_blocked</code>).</li>
 <li>"Petak valid terdekat" (Interaksi) memakai metrik jarak yang sama (pusat pemain ke pusat petak, Euclid); bila seri, dipilih <code>y</code> terkecil, lalu <code>x</code> terkecil.</li>
-<li>Maksimal 10 stasiun taruhan per zona (batas stasiun), dihitung total Api Unggun dan Landasan Data, tidak termasuk stasiun bawaan peta. Zona yang dihitung adalah <code>current_zone</code>. Batas diperiksa saat "Pakai" alat taruh (Inventory (Tas)) untuk <code>current_zone</code>: bila penuh, muncul toast <code>sys.station_limit</code> "Batas stasiun di zona ini tercapai.", mode taruh tidak dibuka, dan alat tidak terpakai. Bila saat "Pakai" tidak ada petak valid dalam jangkauan, muncul toast <code>sys.place_invalid_blocked</code>, mode taruh tidak dibuka, dan alat tidak terpakai. Zona taruhan dibatasi ke <code>current_zone</code>.</li>
+<li>Maksimal 10 stasiun taruhan per zona (batas stasiun), dihitung total Api Unggun dan Landasan Rune taruhan (Landasan Rune taruhan hanya ada dari save lama), tidak termasuk stasiun bawaan peta. Zona yang dihitung adalah <code>current_zone</code>. Batas diperiksa saat "Pakai" alat taruh (Inventory (Tas)) untuk <code>current_zone</code>: bila penuh, muncul toast <code>sys.station_limit</code> "Batas stasiun di zona ini tercapai.", mode taruh tidak dibuka, dan alat tidak terpakai. Bila saat "Pakai" tidak ada petak valid dalam jangkauan, muncul toast <code>sys.place_invalid_blocked</code>, mode taruh tidak dibuka, dan alat tidak terpakai. Zona taruhan dibatasi ke <code>current_zone</code>.</li>
 <li>Stasiun taruhan punya collision, permanen (tidak bisa dibongkar), dan berfungsi sama seperti stasiun bawaan peta.</li>
-<li>Mengetuk stasiun di dunia: pemain berjalan ke stasiun lalu layarnya terbuka langsung. Landasan Data → Crafting (Upgrade lewat tab navigasi), Api Unggun → Memasak.</li>
-<li>Di luar jangkauan, layar terkait tetap bisa dibuka dalam <strong>mode baca</strong>: daftar resep, isi otomatis, dan pemilih tetap aktif; hanya tombol aksi (CRAFT/MASAK) yang nonaktif. <code>near_campfire</code> / <code>near_anvil</code> dihitung saat layar dibuka.</li>
-<li>Prioritas teks status tombol aksi: "Butuh Landasan Data" (<code>ui.station.need_anvil</code>) / "Butuh api unggun" (<code>ui.station.need_campfire</code>) lebih dulu, lalu "Bahan kurang" (<code>ui.craft.missing</code>), lalu "Tas penuh" (<code>ui.craft.bag_full</code>). Prioritas di Upgrade / Evolusi: State khusus.</li>
-<li>Crafting yang dibuka dari Landasan Data memilih kategori Senjata, atau kategori terakhir yang dibuka dalam sesi permainan itu.</li>
+<li>Mengetuk stasiun di dunia: pemain berjalan ke stasiun lalu layarnya terbuka langsung (pintasan; layar yang sama juga bisa dibuka dari menu di mana saja). Landasan Rune → Crafting (Upgrade lewat tab navigasi), Api Unggun → Memasak.</li>
+<li>Tidak ada mode baca dan tidak ada syarat jangkauan (menggantikan): tombol aksi CRAFT/MASAK/UPGRADE/EVOLUSI tidak pernah dinonaktifkan karena jarak ke stasiun. Teks status "Butuh Landasan Rune" dan "Butuh api unggun" dihapus. <code>near_campfire</code> / <code>near_anvil</code> tidak lagi dipakai oleh layar.</li>
+<li>Crafting yang dibuka dari Landasan Rune memilih kategori Senjata, atau kategori terakhir yang dibuka dalam sesi permainan itu.</li>
 </ul>
 <h2 id="rumus-angka">Rumus &amp; angka</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Stasiun</th><th>Dibutuhkan untuk</th><th>Jarak aktif</th></tr></thead>
 <tbody>
-<tr><td>Api Unggun</td><td>Memasak (<a href="SYS-05.html">Memasak</a>), set <code>respawn_point</code> (<a href="SYS-08.html">Kematian &amp; Respawn</a>)</td><td>64 px, antar-tepi collision (pemain dan stasiun)</td></tr>
-<tr><td>Landasan Data</td><td>Crafting (<a href="SYS-04.html">Crafting</a>) &amp; Upgrade (<a href="SYS-06.html">Upgrade &amp; Evolusi</a>)</td><td>64 px, antar-tepi collision (pemain dan stasiun)</td></tr>
+<tr><td>Api Unggun</td><td>Set <code>respawn_point</code> (<a href="SYS-08.html">Kematian &amp; Respawn</a>); pintasan ke Memasak</td><td>64 px, antar-tepi collision (pemain dan stasiun)</td></tr>
+<tr><td>Landasan Rune</td><td>Pintasan ke Crafting</td><td>64 px, antar-tepi collision (pemain dan stasiun)</td></tr>
 </tbody>
 </table></div>
-<p>Radius collision untuk jarak antar-tepi = ⅓ lebar ukuran badan objek, sama dengan <a href="SYS-13.html#makhluk">Makhluk</a>: stasiun 32×32 → ≈ 10,7 px, pemain (48 px) → 16 px. Jarak antar-tepi = jarak pusat dikurangi kedua radius; nilai ≤ 64 px berarti dalam jangkauan, tanpa pembulatan.</p>
+<p>Radius collision untuk jarak antar-tepi = ⅓ lebar ukuran badan objek, sama dengan <a href="SYS-13.html#makhluk">Makhluk</a>: stasiun 32×32 → ≈ 10,7 px, ukuran badan pemain 48 px → 16 px. Jarak antar-tepi = jarak pusat dikurangi kedua radius; nilai ≤ 64 px berarti dalam jangkauan, tanpa pembulatan.</p>
 </div>
 </main>
-<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+<footer class="site-footer"><p>Wiki pemain Negeri Sunyi. Berisi spoiler penuh.</p></footer>
 </div>
 <script src="../assets/search.js"></script>
 </body>

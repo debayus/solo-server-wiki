@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Crafting - Solo Server Wiki</title>
+<title>Crafting - Negeri Sunyi Wiki</title>
 <link rel="stylesheet" href="../assets/wiki.css">
 </head>
 <body data-root="../">
 <a class="skip" href="#isi">Lewati ke isi</a>
-<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Negeri Sunyi Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
 <div class="wrap">
 <nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Crafting</li></ol></nav>
 <main id="isi">
 <div class="page-head"><h1>Crafting</h1></div>
 <p class="muted num">SYS-04</p>
 <div class="guide"><h2 id="ringkasan">Ringkasan</h2>
-<p>Tiga slot input (Bahan Inti, Bahan Pendukung, Batu Elemen) menghasilkan senjata, armor, atau alat. Hanya di dekat Landasan Data.</p>
+<p>Tiga slot input (Bahan Inti, Bahan Pendukung, Batu Elemen) menghasilkan senjata, armor, alat, atau ramuan. Bisa dilakukan di mana saja.</p>
 <h2 id="aturan">Aturan</h2>
 <ul>
-<li>Kategori: Senjata, Armor, Alat (<code>CraftCategory</code>).</li>
+<li>Kategori: Senjata, Armor, Alat, Ramuan (<code>CraftCategory</code>; Ramuan dari).</li>
 <li>Slot 1 menerima item <code>type = MATERIAL</code> dengan <code>role = core</code> atau <code>any</code>; slot 2 menerima item <code>type = MATERIAL</code> dengan <code>role = support</code> atau <code>any</code>; slot 3 hanya <code>ELEMENT_STONE</code> (opsional). Batu elemen tidak pernah masuk slot 1–2. Resep dengan <code>stone: null</code> hanya cocok bila slot 3 kosong.</li>
 <li>Pencocokan: <strong>item + jumlah minimal</strong> per slot, <strong>urutan slot penting</strong>, dan hanya resep dari <strong>kategori tab yang aktif</strong> (Crafting).</li>
 <li>Bila satu kombinasi memenuhi lebih dari satu resep, dipilih resep dengan total jumlah bahan terbesar; bila sama, jumlah Bahan Inti terbesar.</li>
@@ -30,13 +30,12 @@
 <li>Kombinasi tidak cocok resep apa pun → tidak bisa di-craft.</li>
 <li>Kombinasi cocok resep yang belum tahap Terbuka → boleh di-craft; hasil lalu terbuka (<a href="SYS-12.html#penemuan-resep">Penemuan resep</a>).</li>
 <li>Hasil selalu 1 item dengan <code>upgrade_level</code> 0.</li>
-<li>Butuh Landasan Data dalam jangkauan (<a href="SYS-09.html">Stasiun</a>).</li>
-<li>Hasil tidak muat seluruhnya di tas → craft ditolak; hasil yang bisa ditumpuk ke stack sejenis tetap boleh (<a href="SYS-11.html#tas-penuh-dan-menumpuk">Tas penuh dan menumpuk</a>).</li>
-<li>Data resep: katalog zona (<code>CNT-Z1</code> … <code>CNT-Z7</code>) dan resep alat di <a href="../recipe/index.html">Katalog Resep</a>. Layar: Crafting.</li>
+<li>Tidak butuh stasiun: crafting bisa dilakukan di mana saja lewat menu (<a href="SYS-09.html">Stasiun</a>). Hasil selalu masuk tas karena tas tanpa batas (<a href="SYS-11.html#menumpuk">Menumpuk</a>).</li>
+<li>Data resep: katalog zona (<code>CNT-Z1</code> … <code>CNT-Z7</code>, termasuk resep ramuan) dan resep alat di <a href="../recipe/index.html">Katalog Resep</a>. Layar: Crafting.</li>
 </ul>
 </div>
 </main>
-<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+<footer class="site-footer"><p>Wiki pemain Negeri Sunyi. Berisi spoiler penuh.</p></footer>
 </div>
 <script src="../assets/search.js"></script>
 </body>

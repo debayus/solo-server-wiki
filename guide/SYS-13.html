@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pertarungan - Solo Server Wiki</title>
+<title>Pertarungan - Negeri Sunyi Wiki</title>
 <link rel="stylesheet" href="../assets/wiki.css">
 </head>
 <body data-root="../">
 <a class="skip" href="#isi">Lewati ke isi</a>
-<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Negeri Sunyi Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
 <div class="wrap">
 <nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Pertarungan</li></ol></nav>
 <main id="isi">
@@ -97,11 +97,11 @@ DEF = round((2 × level)        × def_mult × pengali_rank_def)</code></pre>
 <li>Bonus malam ditentukan saat drop diundi (waktu mati atau patah), tidak dikunci saat monster muncul; ini berbeda dari stat monster.</li>
 <li>Entri yang berhasil: jumlah = bilangan bulat acak seragam <code>amount_min..amount_max</code>; menghasilkan satu item tanah ber-<code>amount</code> itu, ditaruh di titik acak dalam radius sebar dari monster (<a href="SYS-13.html#makhluk">Makhluk</a>).</li>
 <li>Drop biasa (<code>drops</code>, <code>bonus_drops</code> bagian tubuh) jatuh ke tanah di dekat monster sebagai item tanah.</li>
-<li>Drop unik langsung masuk tas: <code>first_kill_drops</code>, dan semua drop dari pertarungan melawan boss terakhir selama <code>game_cleared = false</code>, termasuk <code>bonus_drops</code> bagian yang patah di tengah pertarungan (<a href="SYS-16.html#ending">Ending</a>); item <code>key</code> masuk <code>held_keys</code>. Bila tas penuh (kecuali <code>key</code>, yang selalu masuk <code>held_keys</code>), atau drop unik hanya muat sebagian (<a href="SYS-11.html#tas-penuh-dan-menumpuk">Tas penuh dan menumpuk</a>), drop itu atau sisanya jatuh sebagai item tanah <strong>permanen</strong> (tanpa masa hidup, ikut disimpan di <code>persistent_ground_items</code>); saat dipungut, entrinya dihapus dari <code>persistent_ground_items</code>.</li>
-<li>Item tanah dipungut <strong>otomatis</strong> saat pemain berada dalam radius pungut; masuk tas lewat aturan tas biasa (<a href="SYS-11.html#tas-penuh-dan-menumpuk">Tas penuh dan menumpuk</a>).</li>
-<li>Tas penuh (<a href="SYS-11.html#tas-penuh-dan-menumpuk">Tas penuh dan menumpuk</a>): item, atau sisa yang tidak muat, tetap di tanah. Toast <code>sys.bag_full</code> (teks: "[SISTEM] Tas penuh.") muncul <strong>sekali per instance item tanah</strong> selama pemain tetap berada dalam radius pungut; muncul lagi setelah pemain keluar dari radius lalu masuk lagi.</li>
+<li>Drop unik langsung masuk tas: <code>first_kill_drops</code>, dan semua drop dari pertarungan melawan boss terakhir selama <code>game_cleared = false</code>, termasuk <code>bonus_drops</code> bagian yang patah di tengah pertarungan (<a href="SYS-16.html#ending">Ending</a>); item <code>key</code> masuk <code>held_keys</code>. Tas tanpa batas, jadi drop unik selalu masuk seluruhnya (<a href="SYS-11.html#menumpuk">Menumpuk</a>).</li>
+<li>Item tanah dipungut <strong>otomatis</strong> saat pemain berada dalam radius pungut dan selalu masuk tas seluruhnya (<a href="SYS-11.html#menumpuk">Menumpuk</a>). Toast <code>sys.bag_full</code> dihapus.</li>
+<li>Item tanah <strong>permanen</strong> tidak punya masa hidup dan ikut disimpan di <code>persistent_ground_items</code> (State pemain); saat dipungut, entrinya dihapus. Sumbernya Peninggalan Kerajaan (<a href="../zone/zone_forest.html">Peninggalan</a>); drop unik tidak lagi menjadi item tanah permanen karena tas tidak pernah penuh.</li>
 <li>Item tanah biasa hilang setelah masa hidupnya habis dan <strong>tidak</strong> ikut disimpan (Sistem Save). Masa hidup berhenti selama game di-pause.</li>
-<li>Item tanah biasa di zona yang dibuang dari memori (Alur scene) ikut hilang; item tanah permanen (drop unik) tetap disimpan.</li>
+<li>Item tanah biasa di zona yang dibuang dari memori (Alur scene) ikut hilang; item tanah permanen tetap disimpan.</li>
 <li>Item tanah tidak menyimpan monster asalnya.</li>
 <li>XP diberikan ke pemain; Codex diperbarui (<a href="SYS-12.html">Penemuan &amp; Codex</a>).</li>
 </ul>
@@ -157,10 +157,10 @@ DEF = round((2 × level)        × def_mult × pengali_rank_def)</code></pre>
 </table></div>
 <p>Radius collision ini <strong>hanya</strong> dipakai mengukur jangkauan serang, bukan body gerak. Body gerak pemain tidak berubah dari F1 (berjari-jari 6 px) dan monster memakai ukuran yang sama (6 px), agar keduanya muat di celah selebar 1 petak.</p>
 <h3 id="xp-dari-kill">XP dari kill</h3>
-<p>Konstanta 25 dipilih agar pemain naik dari level awal ke level akhir sebuah zona dalam rata-rata ±70 kill monster selevel: Z1 ±40, Z2 ±57, Z3 ±67, Z4 ±85, Z5 ±92, Z6 ±85, Z7 ±63. Penyesuaian per zona dievaluasi saat uji main (Backlog).</p>
+<p>Konstanta 25 dipilih agar pemain naik dari level awal ke level akhir sebuah zona dalam rata-rata ±70 kill monster selevel. Dengan tabel XP awal <a href="SYS-01.html#level-xp">Level &amp; XP</a> dan tambahan tetap 10, hitungannya (jumlah XP ke level berikutnya ÷ XP monster selevel, dari level awal sampai level akhir zona): Z1 ±33 (Lv 1→2 cukup 2 kill), Z2 ±56, Z3 ±66, Z4 ±84, Z5 ±91, Z6 ±85, Z7 ±63. Z1 sengaja lebih cepat agar pemain baru cepat merasakan naik level. Penyesuaian per zona dievaluasi saat uji main (Backlog).</p>
 <p>Semua angka di bagian ini.</p>
-<pre><code>XP = round(25 × level_monster ^ 1.2 × pengali_rank_xp × pengali_selisih_level)</code></pre>
-<p>Kedua pengali dikalikan.</p>
+<pre><code>XP = round((25 × level_monster ^ 1.2 + 10) × pengali_rank_xp × pengali_selisih_level)</code></pre>
+<p>Kedua pengali dikalikan. Tambahan tetap 10 ditambahkan <strong>sebelum</strong> kedua pengali: boss tetap tepat ×10 monster <code>normal</code> selevel, dan pengali selisih level tetap memotong seluruh XP sehingga memburu monster jauh di bawah level tidak menjadi untung. Pengaruhnya besar di level rendah (Lv 1: 25 → 35) dan hampir hilang di level tinggi (Lv 50: 2733 → 2743).</p>
 <div class="table-wrap"><table>
 <thead><tr><th><code>rank</code></th><th><code>pengali_rank_xp</code></th></tr></thead>
 <tbody>
@@ -177,7 +177,7 @@ DEF = round((2 × level)        × def_mult × pengali_rank_def)</code></pre>
 </table></div>
 </div>
 </main>
-<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+<footer class="site-footer"><p>Wiki pemain Negeri Sunyi. Berisi spoiler penuh.</p></footer>
 </div>
 <script src="../assets/search.js"></script>
 </body>

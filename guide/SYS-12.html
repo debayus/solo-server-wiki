@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Penemuan &amp; Codex - Solo Server Wiki</title>
+<title>Penemuan &amp; Codex - Negeri Sunyi Wiki</title>
 <link rel="stylesheet" href="../assets/wiki.css">
 </head>
 <body data-root="../">
 <a class="skip" href="#isi">Lewati ke isi</a>
-<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Negeri Sunyi Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
 <div class="wrap">
 <nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Penemuan &amp; Codex</li></ol></nav>
 <main id="isi">
@@ -18,7 +18,7 @@
 <p>Resep dan info monster terbuka otomatis saat pemain menemukannya; semua tercatat di Codex.</p>
 <h2 id="aturan">Aturan</h2>
 <h3 id="penemuan-resep">Penemuan resep</h3>
-<p>Berlaku untuk resep crafting dan resep masakan. Bahan dianggap "pernah didapat" jika ada di <code>codex_items</code>, yaitu pernah masuk tas (<a href="SYS-12.html#bahan">Bahan</a>). Batu elemen (slot 3) dihitung sebagai bahan untuk tahap Petunjuk dan Bahan lengkap; resep dengan <code>stone: null</code> tidak punya bahan slot 3.</p>
+<p>Berlaku untuk resep crafting (termasuk resep ramuan) dan resep masakan. Bahan dianggap "pernah didapat" jika ada di <code>codex_items</code>, yaitu pernah masuk tas (<a href="SYS-12.html#bahan">Bahan</a>). Batu elemen (slot 3) dihitung sebagai bahan untuk tahap Petunjuk dan Bahan lengkap; resep dengan <code>stone: null</code> tidak punya bahan slot 3.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Tahap</th><th>Syarat</th><th>Tampilan di daftar resep</th></tr></thead>
 <tbody>
@@ -29,7 +29,7 @@
 </tbody>
 </table></div>
 <ul>
-<li>Resep masuk <code>known_recipes</code> hanya saat tahap <strong>Terbuka</strong>, yaitu setelah pertama kali berhasil dibuat. Notifikasi: toast <code>sys.recipe_discovered</code> (<code>[SISTEM] Resep baru ditemukan: {name}</code>).</li>
+<li>Resep masuk <code>known_recipes</code> hanya saat tahap <strong>Terbuka</strong>, yaitu setelah pertama kali berhasil dibuat. Notifikasi: toast <code>sys.recipe_discovered</code> (<code>[PRASASTI] Resep baru ditemukan: {name}</code>).</li>
 <li>Kombinasi yang cocok dengan resep tahap apa pun boleh dibuat; hasilnya baru terlihat setelah dibuat (coba-coba).</li>
 <li>Tahap Petunjuk dan Bahan lengkap dihitung dari <code>codex_items</code>, tidak perlu disimpan.</li>
 </ul>
@@ -45,7 +45,7 @@
 </table></div>
 <p>Monster "terlihat" bila node monster itu pertama kali masuk area layar kamera dan tidak tersembunyi oleh bahaya jarak pandang (<a href="SYS-16.html#bahaya-lingkungan">Bahaya lingkungan</a>), atau saat pemain menyerang atau diserang monster itu. Saat itu entri <code>CodexMonsterEntry</code> dibuat; adanya entri berarti monster itu sudah terlihat.</p>
 <h3 id="kunci">Kunci</h3>
-<p>Tab Kunci di Codex menampilkan 6 slot Fragmen Kunci Admin (boss Z1–Z6). Slot terisi bila boss itu ada di <code>boss_first_kills</code>, beserta nama boss dan zonanya; slot kosong menampilkan <code>???</code> dan nama zona bila zona itu ada di <code>visited_zones</code>. Status di bawah slot: "Gerbang terkunci (n/6)", atau "Gerbang terbuka" setelah <code>gate_opened</code>.</p>
+<p>Tab Kunci di Codex menampilkan 6 slot Kepingan Kunci Istana (boss Z1–Z6). Slot terisi bila boss itu ada di <code>boss_first_kills</code>, beserta nama boss dan zonanya; slot kosong menampilkan <code>???</code> dan nama zona bila zona itu ada di <code>visited_zones</code>. Status di bawah slot: "Gerbang Istana tersegel (n/6)", atau "Gerbang Istana terbuka" setelah <code>gate_opened</code>.</p>
 <h3 id="kelengkapan">Kelengkapan</h3>
 <p>Persentase kelengkapan Codex = (monster yang pernah terlihat + bahan dan batu di <code>codex_items</code> + resep tahap Terbuka) ÷ (total monster + total bahan dan batu + total resep crafting dan masakan) × 100, dibulatkan ke bawah. Ditampilkan di Codex dan Ending.</p>
 <h3 id="bahan">Bahan</h3>
@@ -60,7 +60,7 @@
 <p>Layar: Codex.</p>
 </div>
 </main>
-<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+<footer class="site-footer"><p>Wiki pemain Negeri Sunyi. Berisi spoiler penuh.</p></footer>
 </div>
 <script src="../assets/search.js"></script>
 </body>

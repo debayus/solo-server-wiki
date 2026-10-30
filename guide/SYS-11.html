@@ -3,44 +3,48 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Inventory &amp; Alat - Solo Server Wiki</title>
+<title>Inventory &amp; Alat - Negeri Sunyi Wiki</title>
 <link rel="stylesheet" href="../assets/wiki.css">
 </head>
 <body data-root="../">
 <a class="skip" href="#isi">Lewati ke isi</a>
-<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Solo Server Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Negeri Sunyi Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
 <div class="wrap">
 <nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Inventory &amp; Alat</li></ol></nav>
 <main id="isi">
 <div class="page-head"><h1>Inventory &amp; Alat</h1></div>
 <p class="muted num">SYS-11</p>
 <div class="guide"><h2 id="ringkasan">Ringkasan</h2>
-<p>Kapasitas tas, urutan item, slot cepat, dan efek pemakaian alat.</p>
+<p>Tas tanpa batas slot, tumpukan, urutan item, slot cepat, dan efek pemakaian alat dan ramuan.</p>
 <h2 id="aturan">Aturan</h2>
 <ul>
 <li>Item yang sedang dipakai <strong>tidak</strong> ada di tas (ada di perlengkapan).</li>
 </ul>
-<h3 id="tas-penuh-dan-menumpuk">Tas penuh dan menumpuk</h3>
+<h3 id="menumpuk">Menumpuk</h3>
 <ul>
-<li>Tas penuh = jumlah slot terpakai sama dengan <code>inventory_capacity</code>.</li>
-<li>Item masuk ke stack sejenis (<code>id</code> dan <code>upgrade_level</code> sama) yang belum mencapai <code>max_stack</code> (ItemData), lalu ke slot kosong.</li>
-<li>Bila hanya muat sebagian, sisanya tetap di tempat asal: item tanah tetap di tanah; hasil crafting atau memasak ditolak bila tidak muat seluruhnya.</li>
-<li>Daya tampung hasil crafting atau memasak diperiksa setelah bahan resep dikurangi (simulasi), sehingga slot yang kosong karena bahan habis ikut dihitung.</li>
+<li>Tas <strong>tidak punya batas slot</strong>: setiap item yang masuk tas selalu diterima seluruhnya. Tidak ada keadaan "Tas penuh".</li>
+<li>Item masuk ke stack sejenis (<code>id</code> dan <code>upgrade_level</code> sama) yang belum mencapai <code>max_stack</code> (ItemData); sisanya membuka slot baru.</li>
 </ul>
 <h3 id="urutan-slot-cepat-dan-buang">Urutan, slot cepat, dan buang</h3>
 <ul>
-<li>Urutan tas: jenis (Senjata, Armor, Makanan, Alat, Batu, Bahan) → rarity tinggi → nama (<code>tr</code> dari kunci nama) → <code>upgrade_level</code> tinggi → <code>amount</code> besar → <code>uid</code>. Tas selalu terurut otomatis; tidak ada pengurutan manual.</li>
-<li>Slot cepat: 4, hanya untuk makanan; setiap slot menyimpan <strong>ID item</strong>, bukan salinan item. Satu ID hanya boleh ada di satu slot: memasang ID ke slot lain memindahkannya dari slot sebelumnya. Slot yang terisi bisa dikosongkan (Inventory (Tas)). Memakai slot mengurangi 1 dari stack sejenis di tas (urutan tas di atas). Bila item itu tidak ada lagi di tas, slot tetap menyimpan ID dan tampil dengan jumlah 0 (tidak bisa dipakai) sampai item sejenis masuk lagi atau pemain mengganti isinya.</li>
-<li>Mengurangi satu ID (makan, memakai alat, bahan resep) mengambil dari stack <strong>terakhir</strong> dalam urutan tas, yaitu stack terkecil, lalu mundur ke stack sebelumnya bila kurang. Contoh: stack 99 dan 3, dikurangi 2 → 99 dan 1; dikurangi 5 → 97. Pengecualian: <a href="SYS-06.html#aturan">Aturan</a>.</li>
+<li>Urutan tas: jenis (Senjata, Armor, Makanan, Ramuan, Alat, Batu, Bahan) → rarity tinggi → nama (<code>tr</code> dari kunci nama) → <code>upgrade_level</code> tinggi → <code>amount</code> besar → <code>uid</code>. Tas selalu terurut otomatis; tidak ada pengurutan manual.</li>
+<li>Slot cepat: 4, untuk makanan dan ramuan; setiap slot menyimpan <strong>ID item</strong>, bukan salinan item. Satu ID hanya boleh ada di satu slot: memasang ID ke slot lain memindahkannya dari slot sebelumnya. Slot yang terisi bisa dikosongkan (Inventory (Tas)). Memakai slot mengurangi 1 dari stack sejenis di tas (urutan tas di atas). Bila item itu tidak ada lagi di tas, slot tetap menyimpan ID dan tampil dengan jumlah 0 (tidak bisa dipakai) sampai item sejenis masuk lagi atau pemain mengganti isinya.</li>
+<li>Mengurangi satu ID (makan, minum ramuan, memakai alat, bahan resep) mengambil dari stack <strong>terakhir</strong> dalam urutan tas, yaitu stack terkecil, lalu mundur ke stack sebelumnya bila kurang. Contoh: stack 99 dan 3, dikurangi 2 → 99 dan 1; dikurangi 5 → 97. Pengecualian: <a href="SYS-06.html#aturan">Aturan</a>.</li>
 <li>Item berjenis <code>MATERIAL</code>/<code>ELEMENT_STONE</code> tercatat di <code>codex_items</code> setiap kali benar-benar masuk tas, dari sumber apa pun (dipungut, dikumpulkan, dibuat, hadiah), tanpa duplikat (<a href="SYS-12.html#bahan">Bahan</a>). Memindahkan item antara tas dan perlengkapan bukan "masuk tas".</li>
 <li>Membuang item selalu meminta konfirmasi.</li>
+</ul>
+<h3 id="memakai-ramuan">Memakai ramuan</h3>
+<ul>
+<li>Minum ramuan (dari tas atau slot cepat) memakai 1 item <code>PotionData</code> (PotionData) dan tidak mengubah Lapar. Tidak ada jeda antar-ramuan.</li>
+<li>Buff ramuan: buff dengan <code>id</code> sama tidak menumpuk, meminum lagi me-reset timernya; durasi memakai rumus INT di <a href="SYS-01.html#stat-turunan">Stat turunan</a>.</li>
+<li>Urutan efek (sama dengan makan, <a href="SYS-05.html#makan-di-luar-memasak">Makan (di luar memasak)</a>): item dikurangi 1 (stack terkecil), buff diterapkan, lalu HP bertambah <code>hp_restore_pct</code> % dari HP maks dan Stamina bertambah <code>stamina_restore_pct</code> % dari Stamina maks, masing-masing dibulatkan ke bawah lalu dipotong ke nilai maks <strong>setelah buff</strong>.</li>
+<li>Boleh saat HP dan Stamina penuh: item tetap terpakai (sama dengan makan saat Lapar 100).</li>
 </ul>
 <h3 id="efek-alat">Efek alat</h3>
 <div class="table-wrap"><table>
 <thead><tr><th><code>ToolEffect</code></th><th>Saat dipakai</th></tr></thead>
 <tbody>
-<tr><td><code>expand_inventory</code></td><td><code>inventory_capacity += value</code>, hasil dipotong ke kapasitas maksimum; ditolak jika sudah maksimum: item tidak terpakai dan muncul toast <code>sys.bag_max</code> ("Kapasitas tas sudah maksimum.")</td></tr>
-<tr><td><code>place_campfire</code> / <code>place_anvil</code></td><td>Bila batas stasiun <code>current_zone</code> belum tercapai dan ada petak valid dalam jangkauan: menu ditutup, masuk mode taruh di dunia (<a href="SYS-09.html">Stasiun</a>). Bila penuh: toast <code>sys.station_limit</code>; bila tanpa petak valid: toast <code>sys.place_invalid_blocked</code>. Dalam kedua kasus mode taruh tidak dibuka dan alat tidak terpakai</td></tr>
+<tr><td><code>place_campfire</code></td><td>Bila batas stasiun <code>current_zone</code> belum tercapai dan ada petak valid dalam jangkauan: menu ditutup, masuk mode taruh di dunia (<a href="SYS-09.html">Stasiun</a>). Bila penuh: toast <code>sys.station_limit</code>; bila tanpa petak valid: toast <code>sys.place_invalid_blocked</code>. Dalam kedua kasus mode taruh tidak dibuka dan alat tidak terpakai</td></tr>
 <tr><td><code>reset_stats</code></td><td>Respec (<a href="SYS-01.html#respec">Respec</a>); ditolak tanpa terpakai bila <code>allocated_points</code> semua 0 (toast <code>sys.respec_nothing</code>)</td></tr>
 </tbody>
 </table></div>
@@ -48,15 +52,13 @@
 <div class="table-wrap"><table>
 <thead><tr><th>Aturan</th><th>Nilai</th></tr></thead>
 <tbody>
-<tr><td>Kapasitas awal</td><td>40</td></tr>
-<tr><td>Tambahan per <a href="../item/tool_pouch.html">Kantong Data</a></td><td>+8</td></tr>
-<tr><td>Kapasitas maksimum</td><td>80</td></tr>
-<tr><td>Batas tumpuk bahan, batu elemen, makanan, alat</td><td>99</td></tr>
+<tr><td>Batas slot tas</td><td>Tanpa batas</td></tr>
+<tr><td>Batas tumpuk bahan, batu elemen, makanan, alat, ramuan</td><td>999</td></tr>
 </tbody>
 </table></div>
 </div>
 </main>
-<footer class="site-footer"><p>Wiki pemain Solo Server. Berisi spoiler penuh.</p></footer>
+<footer class="site-footer"><p>Wiki pemain Negeri Sunyi. Berisi spoiler penuh.</p></footer>
 </div>
 <script src="../assets/search.js"></script>
 </body>

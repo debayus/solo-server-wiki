@@ -2,8 +2,8 @@
    Warna hanya didefinisikan di :root; selebihnya memakai var(--token). */
 
 @font-face {
-	font-family: "Orbitron";
-	src: url("fonts/orbitron.ttf") format("truetype");
+	font-family: "Cinzel";
+	src: url("fonts/cinzel.ttf") format("truetype");
 	font-weight: 400 900;
 	font-display: swap;
 }
@@ -14,25 +14,31 @@
 	font-display: swap;
 }
 @font-face {
-	font-family: "JetBrains Mono";
-	src: url("fonts/jetbrains_mono.ttf") format("truetype");
-	font-weight: 100 800;
+	font-family: "Pixelify Sans";
+	src: url("fonts/pixelify_sans.ttf") format("truetype");
+	font-weight: 400 700;
 	font-display: swap;
 }
 
 :root {
-	--bg_base: #0A0B12;
-	--bg_panel: #12141F;
-	--bg_panel_alt: #1A1D2B;
-	--border_default: #2A2F45;
+	--bg_base: #1E150F;
+	--bg_panel: #3B2A1E;
+	--bg_panel_alt: #5A3E2B;
+	--parchment: #E8D9B5;
+	--stone: #4A4E5A;
+	--world_void: #07120F;
+	--border_default: #B08A5A;
+	--accent_gold: #D9A441;
 	--accent_cyan: #22E5FF;
 	--accent_purple: #A855F7;
-	--text_primary: #E6E9F5;
-	--text_secondary: #8A90A8;
-	--text_disabled: #4A4F66;
+	--text_primary: #F2E6C9;
+	--text_secondary: #CDB894;
+	--text_disabled: #A08F78;
+	--text_on_parchment: #2B1D12;
 	--positive: #4ADE80;
-	--negative: #F43F5E;
+	--negative: #FB7185;
 	--warning: #FBBF24;
+	--warning_on_parchment: #7A4500;
 	--elem_fire: #FF5A1F;
 	--elem_water: #3B82F6;
 	--elem_lightning: #FACC15;
@@ -45,9 +51,9 @@
 	--rarity_rare: #3B82F6;
 	--rarity_epic: #A855F7;
 	--rarity_legendary: #F5B700;
-	--font_title: "Orbitron", "Segoe UI", sans-serif;
+	--font_title: "Cinzel", Georgia, serif;
 	--font_body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-	--font_mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+	--font_mono: "Pixelify Sans", ui-monospace, monospace;
 	--radius: 6px;
 	--gap: 16px;
 	--touch_min: 48px;
@@ -78,7 +84,7 @@ a:focus-visible, input:focus-visible { outline: 2px solid var(--accent_cyan); ou
 /* Header dan navigasi */
 .site-header { background: var(--bg_panel); border-bottom: 1px solid var(--border_default); position: sticky; top: 0; z-index: 10; }
 .header-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px var(--gap); padding-top: 8px; padding-bottom: 8px; }
-.brand { font-family: var(--font_title); font-weight: 700; font-size: 20px; color: var(--accent_purple); white-space: nowrap; }
+.brand { font-family: var(--font_title); font-weight: 700; font-size: 20px; color: var(--accent_gold); white-space: nowrap; }
 .brand:hover { text-decoration: none; color: var(--accent_cyan); }
 .site-nav { flex: 1 1 auto; min-width: 0; overflow-x: auto; }
 .nav-links { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; white-space: nowrap; }
@@ -130,14 +136,14 @@ a:focus-visible, input:focus-visible { outline: 2px solid var(--accent_cyan); ou
 
 /* Isi */
 main { padding: 8px 0 32px; min-height: 60vh; }
-h1, h2, h3, h4 { font-family: var(--font_title); color: var(--accent_purple); line-height: 1.25; }
+h1, h2, h3, h4 { font-family: var(--font_title); color: var(--accent_gold); line-height: 1.25; }
 h1 { font-size: 28px; margin: 16px 0 12px; }
 h2 { font-size: 20px; margin: 28px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border_default); }
 h3 { font-size: 17px; margin: 20px 0 8px; }
 h4 { font-size: 15px; margin: 16px 0 6px; }
 p { margin: 0 0 12px; }
 ul, ol { padding-left: 24px; margin: 0 0 12px; }
-blockquote { margin: 0 0 12px; padding: 8px 14px; background: var(--bg_panel); border-left: 3px solid var(--accent_purple); color: var(--text_secondary); }
+blockquote { margin: 0 0 12px; padding: 8px 14px; background: var(--bg_panel); border-left: 3px solid var(--accent_gold); color: var(--text_secondary); }
 code { overflow-wrap: break-word; font-family: var(--font_mono); font-size: 0.9em; background: var(--bg_panel_alt); padding: 1px 5px; border-radius: 4px; }
 pre { font-family: var(--font_mono); background: var(--bg_panel); border: 1px solid var(--border_default); border-radius: var(--radius); padding: 12px; overflow-x: auto; }
 pre code { background: none; padding: 0; }
