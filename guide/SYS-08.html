@@ -47,7 +47,7 @@
 <ul>
 <li>The player is invulnerable to all damage: monsters, Hunger (HP drops at Hunger 0), heat, and lightning (<a href="SYS-03.html">Survival</a>, <a href="SYS-16.html#environmental-hazards">Environmental Hazards</a>). Player input is ignored.</li>
 <li>The game clock and spawn timers keep running (they are not paused); the duration of the sequence uses real time.</li>
-<li>The Death Sequence uses no glitch effect (removed); the fade always plays, even when <code>reduce_effects</code> is on (Effects).</li>
+<li>The Death Sequence uses no glitch effect; the fade always plays, even when <code>reduce_effects</code> is on (Effects).</li>
 <li>The HUD is hidden during the sequence and appears again after <code>player_respawned</code> (HUD).</li>
 </ul>
 <p>Respawn into another zone: if <code>respawn_point</code> is in a different zone from where the player died, the respawn is treated like a normal zone entry (<a href="SYS-16.html#entering-a-zone">Entering a Zone</a>): that zone is loaded, the zone entry toast appears, the zone is recorded in <code>visited_zones</code>, and the <code>entered_zone</code> autosave is attempted (Autosave). The zone entry signal is emitted after <code>player_respawned</code> so the autosave is not held back; the mechanism is in Scene flow.</p>

@@ -26,13 +26,12 @@
 <li>"Element stone" in the upgrade table = any element stone (<code>type: element_stone</code>); the player chooses, and a ×N cost may mix kinds of stone. A stone named in <code>evolve_cost</code> must match by ID.</li>
 <li>Data authors must make the rarity of <code>evolves_to</code> exactly one tier higher. Legendary items must not have <code>evolves_to</code>.</li>
 <li>"Higher-rarity material" at +4 and +5 = material with a rarity <strong>exactly one tier above</strong> the item's rarity (Common → Rare, Rare → Epic, Epic → Legendary), not just any higher rarity. For Legendary items, the material is Legendary material.</li>
-<li>The upgrade cost is taken from the stack chosen in each cost slot on Upgrade screen (it stores the stack <code>uid</code>; an exception to the smallest-stack rule in <a href="SYS-11.html#order-quick-slots-and-discarding">Order, Quick Slots, and Discarding</a>). If the filling stack shrinks so that it is not enough for all the slots that use it, slots are emptied starting from the rightmost one and then auto-filled again; the evolution cost follows the same rule.</li>
+<li>The upgrade cost is taken from the stack chosen in each cost slot on Upgrade screen (it stores the stack <code>uid</code>; an exception to the smallest-stack rule in <a href="SYS-11.html#order-quick-slots-and-discarding">Order, Quick Slots, and Discarding</a>). If the filling stack shrinks so that it is not enough for all the slots that use it, slots are emptied starting from the rightmost one and then auto-filled again; the evolution cost follows the smallest-stack rule.</li>
 <li>No station is needed: upgrade and evolution can be done anywhere through the menu (<a href="SYS-09.html">Stations</a>).</li>
 <li>Screen: Upgrade screen.</li>
 </ul>
 <h2 id="formulas-numbers">Formulas &amp; Numbers</h2>
 <h3 id="upgrade-table">Upgrade Table</h3>
-<p>All numbers in this section.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Level</th><th>Base stat multiplier</th><th>Materials</th></tr></thead>
 <tbody>

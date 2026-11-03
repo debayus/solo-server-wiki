@@ -55,7 +55,7 @@
 <li>When the ending starts: <code>game_cleared = true</code>, then autosave (Autosave).</li>
 <li>At the end, the player chooses:
 <ul>
-<li><strong>Go Home</strong>: return to the Title Screen.</li>
+<li><strong>Go Home</strong>: the game is saved first, then returns to the Title Screen. If saving fails, the player stays in the Ending, the <code>sys.save_failed</code> toast (warning) appears, and Go Home can be tried again; Stay can still be chosen.</li>
 <li><strong>Stay</strong>: keep playing (the post-game) from the Throne Room Campfire (<a href="../zone/zone_server_core.html">Zone 7 map</a>). <code>respawn_point</code> is set automatically to the Throne Room Campfire respawn point (<a href="../zone/zone_server_core.html">Zone 7 map</a>) without needing to tap it (an exception to the update rule in <a href="SYS-08.html">Death &amp; Respawn</a>).</li>
 </ul>
 </li>
@@ -63,7 +63,6 @@
 <li>Choosing Go Home and then loading the save: the game continues as the post-game.</li>
 </ul>
 <h2 id="formulas-numbers">Formulas &amp; Numbers</h2>
-<p>All numbers in this section.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Rule</th><th>Value</th></tr></thead>
 <tbody>
