@@ -3,16 +3,16 @@
 	"use strict";
 
 	var MAX_RESULTS = 20;
-	var FAIL_TEXT = "Pencarian butuh situs dibuka lewat server.";
-	var EMPTY_TEXT = "Tidak ada hasil.";
+	var FAIL_TEXT = "Search needs the site to be opened through a server.";
+	var EMPTY_TEXT = "No results.";
 	var KIND_LABELS = {
-		zone: "Zona",
+		zone: "Zone",
 		monster: "Monster",
 		item: "Item",
-		recipe: "Resep",
+		recipe: "Recipe",
 		buff: "Buff",
-		node: "Titik Bahan",
-		guide: "Panduan"
+		node: "Gather Node",
+		guide: "Guide"
 	};
 
 	var input = document.getElementById("wiki-search");

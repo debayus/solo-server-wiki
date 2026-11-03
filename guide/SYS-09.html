@@ -1,47 +1,47 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Stasiun - Negeri Sunyi Wiki</title>
+<title>Stations - Hushwood Wiki</title>
 <link rel="stylesheet" href="../assets/wiki.css">
 </head>
 <body data-root="../">
-<a class="skip" href="#isi">Lewati ke isi</a>
-<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Negeri Sunyi Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<a class="skip" href="#isi">Skip to content</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Hushwood Wiki</a><nav class="site-nav" aria-label="main"><ul class="nav-links"><li><a href="../index.html">Home</a></li><li><a href="../zone/index.html">Zones</a></li><li><a href="../monster/index.html">Monsters</a></li><li><a href="../item/index.html">Items</a></li><li><a href="../recipe/index.html">Recipes</a></li><li><a href="../buff/index.html">Buffs</a></li><li><a href="../node/index.html">Gather Nodes</a></li><li><a href="../guide/index.html" aria-current="page">Guides</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Search zones, monsters, items, recipes..." aria-label="Search"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
 <div class="wrap">
-<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Stasiun</li></ol></nav>
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../guide/index.html">Guides</a></li><li aria-current="page">Stations</li></ol></nav>
 <main id="isi">
-<div class="page-head"><h1>Stasiun</h1></div>
+<div class="page-head"><h1>Stations</h1></div>
 <p class="muted num">SYS-09</p>
-<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
-<p>Api Unggun dan Landasan Rune adalah objek dunia. Sejak, crafting, upgrade, dan memasak tidak butuh stasiun: Api Unggun tetap menjadi titik respawn, dan kedua stasiun menjadi pintasan untuk membuka layarnya.</p>
-<h2 id="aturan">Aturan</h2>
+<div class="guide"><h2 id="summary">Summary</h2>
+<p>The Campfire and the Rune Anvil are world objects. Crafting, upgrading, and cooking do not need a station: the Campfire remains the respawn point, and both stations are shortcuts for opening their screens.</p>
+<h2 id="rules">Rules</h2>
 <ul>
-<li>Stasiun bisa sudah ada di peta, atau ditaruh pemain memakai <a href="../item/tool_campfire.html">Kit Api Unggun</a> lewat Mode Taruh. Kit Landasan Rune dihapus; Landasan Rune yang sudah ditaruh di save lama tetap ada dan berfungsi seperti Landasan Rune bawaan peta.</li>
-<li>Sigil Pengrajin: kelana bisa merakit, meningkatkan, dan memasak di mana saja. Saat Main Baru, setelah dunia siap, toast Prasasti <code>sys.sigil_granted</code> muncul sekali ("[PRASASTI] Sigil Pengrajin menyala di telapak tanganmu. Merakit dan memasak kini bisa di mana saja.").</li>
-<li>Lokasi taruh valid bila: petak berada di zona tempat pemain berada (<code>current_zone</code>; petak di zona lain tidak valid, <code>sys.place_invalid_zone</code>), petak tanpa tabrakan, tidak ditempati titik bahan atau stasiun lain, bukan petak bahaya (<code>heat_zone</code>, air dalam), tidak di dalam arena boss, tidak di Ruang Takhta (bagian dalam Istana Hampa) sebelum Gerbang Istana terbuka, dan berjarak ≤ 96 px dari pemain (Euclid dari pusat pemain ke pusat petak, inklusif). Item tanah dan monster tidak memblokir petak.</li>
-<li>Alasan petak tidak valid ditampilkan sebagai toast: <code>sys.place_invalid_blocked</code> (tabrakan, titik bahan, atau stasiun lain), <code>sys.place_invalid_hazard</code>, <code>sys.place_invalid_arena</code>, <code>sys.place_invalid_core_locked</code>, <code>sys.place_invalid_too_far</code>, <code>sys.place_invalid_zone</code> (Interaksi).</li>
-<li>Bila petak gagal lebih dari satu syarat, toast menampilkan alasan pertama menurut prioritas: zona lain (<code>sys.place_invalid_zone</code>) &gt; terlalu jauh (<code>sys.place_invalid_too_far</code>) &gt; Ruang Takhta tersegel (<code>sys.place_invalid_core_locked</code>) &gt; arena (<code>sys.place_invalid_arena</code>) &gt; bahaya (<code>sys.place_invalid_hazard</code>) &gt; terhalang (<code>sys.place_invalid_blocked</code>).</li>
-<li>"Petak valid terdekat" (Interaksi) memakai metrik jarak yang sama (pusat pemain ke pusat petak, Euclid); bila seri, dipilih <code>y</code> terkecil, lalu <code>x</code> terkecil.</li>
-<li>Maksimal 10 stasiun taruhan per zona (batas stasiun), dihitung total Api Unggun dan Landasan Rune taruhan (Landasan Rune taruhan hanya ada dari save lama), tidak termasuk stasiun bawaan peta. Zona yang dihitung adalah <code>current_zone</code>. Batas diperiksa saat "Pakai" alat taruh (Inventory (Tas)) untuk <code>current_zone</code>: bila penuh, muncul toast <code>sys.station_limit</code> "Batas stasiun di zona ini tercapai.", mode taruh tidak dibuka, dan alat tidak terpakai. Bila saat "Pakai" tidak ada petak valid dalam jangkauan, muncul toast <code>sys.place_invalid_blocked</code>, mode taruh tidak dibuka, dan alat tidak terpakai. Zona taruhan dibatasi ke <code>current_zone</code>.</li>
-<li>Stasiun taruhan punya collision, permanen (tidak bisa dibongkar), dan berfungsi sama seperti stasiun bawaan peta.</li>
-<li>Mengetuk stasiun di dunia: pemain berjalan ke stasiun lalu layarnya terbuka langsung (pintasan; layar yang sama juga bisa dibuka dari menu di mana saja). Landasan Rune → Crafting (Upgrade lewat tab navigasi), Api Unggun → Memasak.</li>
-<li>Tidak ada mode baca dan tidak ada syarat jangkauan (menggantikan): tombol aksi CRAFT/MASAK/UPGRADE/EVOLUSI tidak pernah dinonaktifkan karena jarak ke stasiun. Teks status "Butuh Landasan Rune" dan "Butuh api unggun" dihapus. <code>near_campfire</code> / <code>near_anvil</code> tidak lagi dipakai oleh layar.</li>
-<li>Crafting yang dibuka dari Landasan Rune memilih kategori Senjata, atau kategori terakhir yang dibuka dalam sesi permainan itu.</li>
+<li>A station can already exist on the map, or the player can place one using <a href="../item/tool_campfire.html">Campfire Kit</a> through Place Mode screen. The Rune Anvil kit was removed; a Rune Anvil already placed in an old save remains and works like a built-in map Rune Anvil.</li>
+<li>Crafter's Sigil: the wanderer can craft, upgrade, and cook anywhere. On New Game, once the world is ready, the Inscription toast <code>sys.sigil_granted</code> appears once ("[INSCRIPTION] The Crafter's Sigil glows in your palm. You can now craft and cook anywhere.").</li>
+<li>A placement location is valid when: the tile is in the zone where the player is (<code>current_zone</code>; a tile in another zone is invalid, <code>sys.place_invalid_zone</code>), the tile has no collision, it is not occupied by a gather node or another station, it is not a hazard tile (<code>heat_zone</code>, deep water), it is not inside a boss arena, it is not in the Throne Room (the inner part of the Hollow Palace) before the Palace Gate opens, and it is within 96 px of the player (Euclidean, from the player's center to the tile's center, inclusive). Ground items and monsters do not block a tile.</li>
+<li>The reason a tile is invalid is shown as a toast: <code>sys.place_invalid_blocked</code> (collision, gather node, or another station), <code>sys.place_invalid_hazard</code>, <code>sys.place_invalid_arena</code>, <code>sys.place_invalid_core_locked</code>, <code>sys.place_invalid_too_far</code>, <code>sys.place_invalid_zone</code> (Place Mode interactions).</li>
+<li>If a tile fails more than one condition, the toast shows the first reason by priority: another zone (<code>sys.place_invalid_zone</code>) &gt; too far (<code>sys.place_invalid_too_far</code>) &gt; Throne Room sealed (<code>sys.place_invalid_core_locked</code>) &gt; arena (<code>sys.place_invalid_arena</code>) &gt; hazard (<code>sys.place_invalid_hazard</code>) &gt; blocked (<code>sys.place_invalid_blocked</code>).</li>
+<li>The "nearest valid tile" (Place Mode interactions) uses the same distance metric (player's center to tile's center, Euclidean); on a tie, the smallest <code>y</code> is chosen, then the smallest <code>x</code>.</li>
+<li>At most 10 player-placed stations per zone (the Station Limit), counted as the total of placed Campfires and placed Rune Anvils (a placed Rune Anvil exists only from old saves), not counting built-in map stations. The zone counted is <code>current_zone</code>. The limit is checked when the player uses the placement tool (Bag screen) for <code>current_zone</code>: if it is full, the toast <code>sys.station_limit</code> "Station limit for this zone reached." appears, Place Mode does not open, and the tool is not consumed. If, when the tool is used, there is no valid tile within range, the toast <code>sys.place_invalid_blocked</code> appears, Place Mode does not open, and the tool is not consumed. The placement zone is restricted to <code>current_zone</code>.</li>
+<li>A placed station has collision, is permanent (it cannot be dismantled), and works the same as a built-in map station.</li>
+<li>Tapping a station in the world: the player walks to the station and its screen opens immediately (a shortcut; the same screen can also be opened from the menu anywhere). Rune Anvil → Crafting screen (Upgrade through the navigation tab), Campfire → Cooking screen.</li>
+<li>There is no read mode and no range requirement (this replaces the old rule): the CRAFT/COOK/UPGRADE/EVOLVE action buttons are never disabled because of the distance to a station. The status texts "Needs a Rune Anvil" and "Needs a campfire" were removed. <code>near_campfire</code> / <code>near_anvil</code> are no longer used by the screens.</li>
+<li>Crafting screen opened from a Rune Anvil selects the Weapon category, or the last category opened in that play session.</li>
 </ul>
-<h2 id="rumus-angka">Rumus &amp; angka</h2>
+<h2 id="formulas-numbers">Formulas &amp; Numbers</h2>
 <div class="table-wrap"><table>
-<thead><tr><th>Stasiun</th><th>Dibutuhkan untuk</th><th>Jarak aktif</th></tr></thead>
+<thead><tr><th>Station</th><th>Needed for</th><th>Active distance</th></tr></thead>
 <tbody>
-<tr><td>Api Unggun</td><td>Set <code>respawn_point</code> (<a href="SYS-08.html">Kematian &amp; Respawn</a>); pintasan ke Memasak</td><td>64 px, antar-tepi collision (pemain dan stasiun)</td></tr>
-<tr><td>Landasan Rune</td><td>Pintasan ke Crafting</td><td>64 px, antar-tepi collision (pemain dan stasiun)</td></tr>
+<tr><td>Campfire</td><td>Sets <code>respawn_point</code> (<a href="SYS-08.html">Death &amp; Respawn</a>); shortcut to Cooking screen</td><td>64 px, edge-to-edge between collisions (player and station)</td></tr>
+<tr><td>Rune Anvil</td><td>Shortcut to Crafting screen</td><td>64 px, edge-to-edge between collisions (player and station)</td></tr>
 </tbody>
 </table></div>
-<p>Radius collision untuk jarak antar-tepi = ⅓ lebar ukuran badan objek, sama dengan <a href="SYS-13.html#makhluk">Makhluk</a>: stasiun 32×32 → ≈ 10,7 px, ukuran badan pemain 48 px → 16 px. Jarak antar-tepi = jarak pusat dikurangi kedua radius; nilai ≤ 64 px berarti dalam jangkauan, tanpa pembulatan.</p>
+<p>The collision radius for edge-to-edge distance = ⅓ of the object's body size width, the same as <a href="SYS-13.html#creatures">Creatures</a>: a 32×32 station → ≈ 10.7 px, a 48 px player body size → 16 px. Edge-to-edge distance = center distance minus both radii; a value ≤ 64 px means within range, with no rounding.</p>
 </div>
 </main>
-<footer class="site-footer"><p>Wiki pemain Negeri Sunyi. Berisi spoiler penuh.</p></footer>
+<footer class="site-footer"><p>Hushwood player wiki. Contains full spoilers.</p></footer>
 </div>
 <script src="../assets/search.js"></script>
 </body>

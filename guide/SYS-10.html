@@ -1,64 +1,76 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kontrol - Negeri Sunyi Wiki</title>
+<title>Controls - Hushwood Wiki</title>
 <link rel="stylesheet" href="../assets/wiki.css">
 </head>
 <body data-root="../">
-<a class="skip" href="#isi">Lewati ke isi</a>
-<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Negeri Sunyi Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<a class="skip" href="#isi">Skip to content</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Hushwood Wiki</a><nav class="site-nav" aria-label="main"><ul class="nav-links"><li><a href="../index.html">Home</a></li><li><a href="../zone/index.html">Zones</a></li><li><a href="../monster/index.html">Monsters</a></li><li><a href="../item/index.html">Items</a></li><li><a href="../recipe/index.html">Recipes</a></li><li><a href="../buff/index.html">Buffs</a></li><li><a href="../node/index.html">Gather Nodes</a></li><li><a href="../guide/index.html" aria-current="page">Guides</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Search zones, monsters, items, recipes..." aria-label="Search"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
 <div class="wrap">
-<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Kontrol</li></ol></nav>
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../guide/index.html">Guides</a></li><li aria-current="page">Controls</li></ol></nav>
 <main id="isi">
-<div class="page-head"><h1>Kontrol</h1></div>
+<div class="page-head"><h1>Controls</h1></div>
 <p class="muted num">SYS-10</p>
-<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
-<p>Kontrol mobile ketuk-untuk-jalan dan ketuk-untuk-menyerang, plus tombol Menghindar.</p>
-<h2 id="aturan">Aturan</h2>
+<div class="guide"><h2 id="summary">Summary</h2>
+<p>Twin-thumb mobile controls: an analog joystick under the left thumb for movement, HUD buttons under the right thumb for Dodge and Attack. A quick tap still works on either half of the screen.</p>
+<h2 id="rules">Rules</h2>
 <div class="table-wrap"><table>
-<thead><tr><th>Input</th><th>Hasil</th></tr></thead>
+<thead><tr><th>Input</th><th>Result</th></tr></thead>
 <tbody>
-<tr><td>Ketuk tanah</td><td>Karakter berjalan ke titik itu (pathfinding <code>NavigationAgent2D</code>)</td></tr>
-<tr><td>Ketuk monster</td><td>Karakter mendekat sampai dalam jangkauan (<a href="SYS-13.html#pemain">Pemain</a>) lalu menyerang otomatis sampai target lepas (<a href="SYS-13.html#alur-serangan">Alur serangan</a>); target yang diketuk membidik tubuh. Monster berstatus Kembali tidak bisa ditarget: ketukan diabaikan (pemain tidak bergerak, bukan ketuk tanah)</td></tr>
-<tr><td>Ketuk tombol bagian di <code>TargetFrame</code> (saat ada target)</td><td>Serangan diarahkan ke bagian itu (untuk mematahkan); aturan: <a href="SYS-13.html#bagian-tubuh">Bagian tubuh</a>, tampilan: Komponen</td></tr>
-<tr><td>Ketuk objek (api unggun, landasan, titik bahan, gerbang)</td><td>Jalan ke objek lalu berinteraksi (<a href="SYS-09.html">Stasiun</a>, <a href="SYS-14.html">Pengumpulan Bahan</a>, <a href="SYS-16.html#kepingan-kunci-istana">Kepingan Kunci Istana</a>)</td></tr>
-<tr><td>Mendekati item di tanah</td><td>Dipungut otomatis (<a href="SYS-13.html#kematian-monster">Kematian monster</a>)</td></tr>
-<tr><td>Tombol <strong>Menghindar</strong></td><td>Dash singkat menjauhi target, memakai Stamina</td></tr>
-<tr><td>Tekan lama tanah</td><td>Lari menuju titik tekan selama ditekan, memakai Stamina</td></tr>
+<tr><td>Tap the ground (anywhere)</td><td>The character walks to that point (<code>NavigationAgent2D</code> pathfinding)</td></tr>
+<tr><td>Tap a monster</td><td>The character moves in until within range (<a href="SYS-13.html#player">Player</a>) and then attacks automatically until the target is released (<a href="SYS-13.html#attack-flow">Attack Flow</a>); a tapped target aims at the body. A monster in the Return state cannot be targeted: the tap is ignored (the player does not move, and it is not treated as a ground tap)</td></tr>
+<tr><td>Tap a part button on the <code>TargetFrame</code> (while there is a target)</td><td>The attack is aimed at that part (to break it); rules: <a href="SYS-13.html#body-parts">Body Parts</a>, display: HUD components</td></tr>
+<tr><td>Tap an object (campfire, anvil, gather node, gate)</td><td>Walk to the object and then interact (<a href="SYS-09.html">Stations</a>, <a href="SYS-14.html">Gathering Materials</a>, <a href="SYS-16.html#palace-key-shards">Palace Key Shards</a>)</td></tr>
+<tr><td>Approach an item on the ground</td><td>Picked up automatically (<a href="SYS-13.html#monster-death">Monster Death</a>)</td></tr>
+<tr><td><strong>Dodge</strong> button</td><td>A short dash away from the target, using Stamina</td></tr>
+<tr><td><strong>Attack</strong> button</td><td>Find the nearest enemy within the <code>TARGET_RADIUS_PX</code> radius (center to center), make it the target, and then approach-and-attack (<a href="SYS-13.html#attack-flow">Attack Flow</a>). No enemy in the radius = no-op. The attack range stays at 8 px edge to edge</td></tr>
+<tr><td>Hold a finger on the <strong>left</strong> half of the screen</td><td>Analog joystick: direction = the vector from the initial touch point to the finger's current position (screen coordinates); speed is proportional to the push distance. Lifting the finger stops analog movement</td></tr>
+<tr><td>Hold a finger on the <strong>right</strong> half of the screen</td><td>Does not move the character (HUD button zone)</td></tr>
 </tbody>
 </table></div>
 <ul>
-<li>Desktop (uji coba): klik kiri = ketuk, <code>Space</code> = Menghindar.</li>
-<li>Ketukan pada elemen UI tidak boleh diteruskan ke dunia. Tekan yang dimulai di elemen UI tidak pernah menggerakkan karakter, juga bila jari kemudian bergeser ke dunia.</li>
-<li>Tekan lama = sentuhan/klik ditahan minimal selama ambang tekan lama; lebih singkat dari itu dihitung ketuk.</li>
+<li>The screen is split in two vertically; the boundary is at <code>viewport_width / 2</code>. A finger on a HUD button (<code>mouse_filter = STOP</code>) is consumed by the GUI before world input.</li>
+<li>Desktop (for testing): left click = tap; left click held on the left half = analog; <code>Space</code> = Dodge.</li>
+<li>Multi-touch is supported: the left finger drives the analog stick while the right finger presses HUD buttons, at the same time (twin-thumb).</li>
+<li>A tap on a UI element must not be passed through to the world. A press that starts on a UI element never moves the character, even if the finger later slides into the world.</li>
 </ul>
-<h3 id="menghindar">Menghindar</h3>
+<h3 id="left-analog-joystick">Left Analog Joystick</h3>
 <ul>
-<li>Arah dash: menjauhi target bila ada; tanpa target = arah gerak saat ini; bila karakter diam = arah hadap terakhir (awal: bawah).</li>
-<li>Dash ditempuh selama durasi kebal (<a href="SYS-13.html#rumus-angka">Rumus &amp; angka</a>) dan berhenti bila menabrak collision atau mencapai tepi area yang bisa dilalui.</li>
-<li>Ditolak (tanpa biaya) bila Stamina kurang dari biaya Menghindar atau karakter sedang dash. Jarak, biaya, dan durasi kebal ada di <a href="SYS-13.html#rumus-angka">Rumus &amp; angka</a>.</li>
-<li>Setelah dash: bila tekan lama masih berlangsung dan Stamina &gt; 0, karakter lanjut lari menuju posisi jari; bila target masih ada, karakter otomatis mendekat lagi lalu menyerang; selain itu diam.</li>
-<li>Tekan lama (lari) melepas target (<a href="SYS-13.html#alur-serangan">Alur serangan</a>), jadi aturan "lanjut lari" menang atas "mendekat lagi".</li>
+<li>Movement direction = <code>current_screen − origin_screen</code> (screen coordinates), stable even when the camera moves.</li>
+<li><code>len</code> = the length of that screen direction vector.</li>
+<li><code>len ≤ DEAD_ZONE_PX</code> → stand still.</li>
+<li><code>DEAD_ZONE_PX &lt; len &lt; FULL_PUSH_PX</code> → speed is linearly interpolated between walking speed (at the edge of the dead zone) and full running speed (at <code>FULL_PUSH_PX</code>).</li>
+<li><code>len ≥ FULL_PUSH_PX</code> → full running speed.</li>
+<li>Movement goes through <code>_move_sliding</code> directly (not <code>NavigationAgent2D</code>).</li>
+<li>Starting analog movement releases the attack target (consistent with target release in <a href="SYS-13.html#attack-flow">Attack Flow</a>).</li>
+<li>Stamina is consumed only when the target speed exceeds walking speed; when Stamina runs out, speed is capped at walking speed.</li>
+<li>Analog mode lasts until the finger is lifted, even if the finger crosses into the right half. A second finger in the left zone while analog is active is ignored for analog.</li>
+<li>After a Dodge: if the left finger is still pressed, analog movement resumes (twin-thumb).</li>
 </ul>
-<h3 id="tekan-lama-dan-lari">Tekan lama dan lari</h3>
+<h3 id="dodge">Dodge</h3>
 <ul>
-<li>Selama ditekan, karakter lari menuju titik tekan; tujuan diperbarui mengikuti posisi jari/kursor.</li>
-<li>Jari bergeser ke atas elemen UI: tujuan tetap pada posisi dunia terakhir sebelum masuk elemen itu.</li>
-<li>Lepas di mana pun (di dunia maupun di atas UI) menghentikan karakter.</li>
-<li>Stamina habis saat lari: karakter berjalan ke tujuan yang sama (kecepatan jalan).</li>
+<li>Dash direction: away from the target if there is one; with no target = the current movement direction; if the character is standing still = the last facing direction (initially: down).</li>
+<li>The dash lasts for the invulnerability duration (<a href="SYS-13.html#formulas-numbers">Formulas &amp; Numbers</a>) and stops if it hits a collision or reaches the edge of the walkable area.</li>
+<li>Rejected (at no cost) if Stamina is below the Dodge cost or the character is already dashing. The distance, cost, and invulnerability duration are in <a href="SYS-13.html#formulas-numbers">Formulas &amp; Numbers</a>.</li>
+<li>After the dash: if the left analog is still active, the character continues analog movement; if the target still exists and analog is not active, the character automatically moves in again and then attacks; otherwise it stands still.</li>
+<li>Analog movement (including after a dash) releases the attack target, so the "continue analog" rule wins over "move in again".</li>
 </ul>
-<h2 id="rumus-angka">Rumus &amp; angka</h2>
+<h2 id="formulas-numbers">Formulas &amp; Numbers</h2>
 <div class="table-wrap"><table>
-<thead><tr><th>Aturan</th><th>Nilai</th></tr></thead>
+<thead><tr><th>Rule</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Ambang tekan lama</td><td>0.35 dtk</td></tr>
+<tr><td>Long-press threshold (tap vs hold)</td><td>0.35 s</td></tr>
+<tr><td><code>DEAD_ZONE_PX</code> (joystick dead-zone radius)</td><td>16 px</td></tr>
+<tr><td><code>FULL_PUSH_PX</code> (push radius for full speed)</td><td>96 px</td></tr>
+<tr><td><code>TARGET_RADIUS_PX</code> (target selection radius of the Attack button, center to center)</td><td>See <a href="SYS-13.html#formulas-numbers">Formulas &amp; Numbers</a> (single reading point)</td></tr>
 </tbody>
 </table></div>
 </div>
 </main>
-<footer class="site-footer"><p>Wiki pemain Negeri Sunyi. Berisi spoiler penuh.</p></footer>
+<footer class="site-footer"><p>Hushwood player wiki. Contains full spoilers.</p></footer>
 </div>
 <script src="../assets/search.js"></script>
 </body>

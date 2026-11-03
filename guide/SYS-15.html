@@ -1,63 +1,63 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Spawn Monster - Negeri Sunyi Wiki</title>
+<title>Monster Spawning - Hushwood Wiki</title>
 <link rel="stylesheet" href="../assets/wiki.css">
 </head>
 <body data-root="../">
-<a class="skip" href="#isi">Lewati ke isi</a>
-<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Negeri Sunyi Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<a class="skip" href="#isi">Skip to content</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Hushwood Wiki</a><nav class="site-nav" aria-label="main"><ul class="nav-links"><li><a href="../index.html">Home</a></li><li><a href="../zone/index.html">Zones</a></li><li><a href="../monster/index.html">Monsters</a></li><li><a href="../item/index.html">Items</a></li><li><a href="../recipe/index.html">Recipes</a></li><li><a href="../buff/index.html">Buffs</a></li><li><a href="../node/index.html">Gather Nodes</a></li><li><a href="../guide/index.html" aria-current="page">Guides</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Search zones, monsters, items, recipes..." aria-label="Search"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
 <div class="wrap">
-<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Spawn Monster</li></ol></nav>
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../guide/index.html">Guides</a></li><li aria-current="page">Monster Spawning</li></ol></nav>
 <main id="isi">
-<div class="page-head"><h1>Spawn Monster</h1></div>
+<div class="page-head"><h1>Monster Spawning</h1></div>
 <p class="muted num">SYS-15</p>
-<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
-<p>Monster muncul dari area spawn yang diletakkan tangan di peta, mengikuti tabel spawn tiap zona, siang/malam, dan aturan khusus boss.</p>
-<h2 id="aturan">Aturan</h2>
-<h3 id="area-spawn-biasa">Area spawn biasa</h3>
+<div class="guide"><h2 id="summary">Summary</h2>
+<p>Monsters spawn from spawn areas placed by hand on the map, following each zone's spawn table, day/night, and special boss rules.</p>
+<h2 id="rules">Rules</h2>
+<h3 id="regular-spawn-areas">Regular Spawn Areas</h3>
 <ul>
-<li>Setiap area spawn punya tabel <code>entries</code> (ditulis di katalog zona, SpawnAreaData): monster, bobot, waktu muncul (<code>any</code> / <code>day</code> / <code>night</code>).</li>
-<li>Saat zona dimuat, area langsung diisi sampai <code>max_alive</code>.</li>
-<li>Area menjaga jumlah monster hidup tidak lebih dari <code>max_alive</code>. Timer <code>respawn_sec</code> mulai saat jumlah hidup kurang dari <code>max_alive</code> dan berhenti saat game di-pause; tiap timer habis area memunculkan satu monster baru, diundi berdasarkan bobot dari entri yang sesuai waktu saat itu.</li>
-<li>Monster muncul di titik acak di dalam area, di luar layar pemain, dan yang bisa dilalui (tidak menimpa collision dunia). Cara memeriksa kedua syarat itu: Dunia dan peta. Bila tidak ada titik di luar layar (layar lebih luas dari area, mis. zoom ×2), dipakai titik acak yang bisa dilalui dan berjarak minimal jarak spawn cadangan dari pemain. Bila tetap tidak ada titik yang memenuhi, area mencoba lagi tiap interval coba ulang (<a href="SYS-15.html#rumus-angka">Rumus &amp; angka</a>).</li>
-<li>Posisi monster itu muncul menjadi titik spawn-nya (<a href="SYS-13.html#perilaku-monster">Perilaku monster</a>).</li>
-<li>Monster tidak disimpan (Sistem Save) dan dibuang bersama zonanya saat zona dibuang dari memori.</li>
-<li>Level monster tetap sesuai data; tidak menyesuaikan level pemain.</li>
-<li>Saat siang berganti malam (atau sebaliknya), monster yang tidak sesuai waktu tetap hidup sampai mati atau keluar layar, lalu tidak dimunculkan lagi.</li>
+<li>Each Spawn Area has an <code>entries</code> table (written in the zone catalog, SpawnAreaData): monster, weight, and spawn time (<code>any</code> / <code>day</code> / <code>night</code>).</li>
+<li>When a zone is loaded, the area is filled right away up to <code>max_alive</code>.</li>
+<li>An area keeps the number of living monsters at no more than <code>max_alive</code>. The <code>respawn_sec</code> timer starts when the living count is below <code>max_alive</code> and stops while the game is paused; each time the timer runs out the area spawns one new monster, rolled by weight from the entries that match the current time.</li>
+<li>A monster spawns at a random point inside the area, off the player's screen, and walkable (not overlapping world collision). How to check both conditions: World and map. If there is no point off screen (the screen is wider than the area, for example at ×2 zoom), a random walkable point at least the fallback spawn distance from the player is used. If there is still no point that qualifies, the area tries again every retry interval (<a href="SYS-15.html#formulas-numbers">Formulas &amp; Numbers</a>).</li>
+<li>The position where that monster spawned becomes its Spawn Point (<a href="SYS-13.html#monster-behavior">Monster Behavior</a>).</li>
+<li>Monsters are not saved (Save system) and are discarded together with their zone when the zone is dropped from memory.</li>
+<li>Monster levels follow the data; they do not adjust to the player's level.</li>
+<li>When day turns to night (or the reverse), monsters that do not match the time stay alive until they die or leave the screen, and are then not spawned again.</li>
 </ul>
 <h3 id="boss">Boss</h3>
 <ul>
-<li>Setiap boss punya arena tetap di zonanya, satu boss per arena. Arena berbentuk lingkaran (pusat dan radius ditulis di katalog zona, mis. <a href="../zone/zone_forest.html">Peta</a>); pemain "di dalam arena" bila jarak pusat pemain ke pusat arena ≤ radius.</li>
-<li>Pintu arena tanpa penghalang: pemain bebas masuk dan keluar.</li>
-<li><strong>Ketersediaan</strong> boss: belum pernah dikalahkan, atau waktu game sekarang ≥ <code>boss_defeated_at</code> + <code>boss_respawn_game_days</code> (State pemain). Ketersediaan hanya diperiksa saat pemain masuk arena, dan saat zona dimuat bila pemain sudah berada di dalam arena. Boss tidak muncul tiba-tiba saat pemain sudah di dalam arena.</li>
-<li>Boss muncul di <strong>tengah arena</strong> bila tersedia saat diperiksa; titik itu juga menjadi titik spawn untuk jelajah idle (<a href="SYS-13.html#perilaku-monster">Perilaku monster</a>). Boss yang sudah muncul tetap ada (Idle, HP penuh) sampai zonanya dibuang dari memori; pemain masuk ulang arena tidak membuat boss baru dan tidak memancarkan <code>boss_spawned</code> lagi.</li>
-<li>Musik boss: aturan di Musik.</li>
-<li>Setelah dikalahkan, boss hilang dari arena; ia tersedia lagi setelah <code>boss_respawn_game_days</code> dan muncul lagi sesuai aturan ketersediaan di atas.</li>
-<li><code>first_kill_drops</code> hanya diberikan sekali per boss (dicatat di <code>boss_first_kills</code>).</li>
-<li>Setiap boss Z1–Z6 wajib punya di <code>first_kill_drops</code>: Kepingan Kunci Istana zonanya (<a href="SYS-16.html#kepingan-kunci-istana">Kepingan Kunci Istana</a>) dan <a href="../item/tool_reset_fragment.html">Kristal Lahir Ulang</a>. Di <code>drops</code> biasa, boss Z1–Z6 juga punya <a href="../item/tool_reset_fragment.html">Kristal Lahir Ulang</a> dengan peluang 0.05.</li>
-<li><strong>Kristal Lahir Ulang</strong>: <code>drops</code> biasa selalu diundi, termasuk saat kill pertama (kill pertama memberi satu dari <code>first_kill_drops</code> yang pasti, ditambah undian <code>drops</code>); bonus malam berlaku (5%, atau 6% malam; <a href="SYS-03.html#rumus-angka">Rumus &amp; angka</a>). Jadi sumbernya: 5% (6% malam) setiap kill, di luar drop pasti kill pertama.</li>
-<li>Pemain keluar arena: boss berstatus Kembali ke tengah arena (<a href="SYS-13.html#perilaku-monster">Perilaku monster</a>): kebal, tidak bisa ditarget, dan melepas target; setelah tiba, HP pulih penuh.</li>
-<li><code>boss_fight_active</code> (boss hidup dan pemain di dalam arena) didefinisikan di Autosave.</li>
+<li>Each boss has a fixed arena in its zone, one boss per arena. An arena is a circle (the center and radius are written in the zone catalog, for example <a href="../zone/zone_forest.html">Zone 1 map</a>); the player is "inside the arena" when the distance from the player to the arena center is ≤ the radius.</li>
+<li>An arena entrance has no barrier: the player is free to enter and leave.</li>
+<li>Boss <strong>availability</strong>: never defeated, or the current game time ≥ <code>boss_defeated_at</code> + <code>boss_respawn_game_days</code> (Player state). Availability is only checked when the player enters the arena, and when the zone is loaded if the player is already inside the arena. A boss does not suddenly appear while the player is already inside the arena.</li>
+<li>The boss spawns at the <strong>center of the arena</strong> if it is available when checked; that point also becomes the Spawn Point for idle wandering (<a href="SYS-13.html#monster-behavior">Monster Behavior</a>). A boss that has already spawned stays (Idle, full HP) until its zone is dropped from memory; re-entering the arena does not create a new boss and does not emit <code>boss_spawned</code> again.</li>
+<li>Boss music: the rules are in Music.</li>
+<li>After being defeated, the boss disappears from the arena; it becomes available again after <code>boss_respawn_game_days</code> and spawns again following the availability rule above.</li>
+<li><code>first_kill_drops</code> are given only once per boss (recorded in <code>boss_first_kills</code>).</li>
+<li>Every Z1–Z6 boss must have in <code>first_kill_drops</code>: the Palace Key Shard of its zone (<a href="SYS-16.html#palace-key-shards">Palace Key Shards</a>) and <a href="../item/tool_reset_fragment.html">Rebirth Crystal</a>. In its regular <code>drops</code>, a Z1–Z6 boss also has <a href="../item/tool_reset_fragment.html">Rebirth Crystal</a> with a chance of 0.05.</li>
+<li><strong>Rebirth Crystal</strong>: regular <code>drops</code> are always rolled, including on the First Kill (the First Kill gives one guaranteed item from <code>first_kill_drops</code>, plus the <code>drops</code> roll); the night bonus applies (5%, or 6% at night; <a href="SYS-03.html#formulas-numbers">Formulas &amp; Numbers</a>). So its source is: 5% (6% at night) on every kill, apart from the guaranteed First Kill drop.</li>
+<li>The player leaves the arena: the boss goes to the Return state toward the arena center (<a href="SYS-13.html#monster-behavior">Monster Behavior</a>): invulnerable, cannot be targeted, and releases its target; once it arrives, its HP fully recovers.</li>
+<li><code>boss_fight_active</code> (the boss is alive and the player is inside the arena) is defined in Autosave.</li>
 </ul>
-<h2 id="rumus-angka">Rumus &amp; angka</h2>
-<p>Semua angka di bagian ini.</p>
+<h2 id="formulas-numbers">Formulas &amp; Numbers</h2>
+<p>All numbers in this section.</p>
 <div class="table-wrap"><table>
-<thead><tr><th>Aturan</th><th>Nilai default</th></tr></thead>
+<thead><tr><th>Rule</th><th>Default value</th></tr></thead>
 <tbody>
 <tr><td><code>max_alive</code> per area</td><td>4</td></tr>
-<tr><td><code>respawn_sec</code></td><td>20 dtk nyata</td></tr>
-<tr><td>Interval coba ulang bila tidak ada titik di luar layar</td><td>1 dtk nyata</td></tr>
-<tr><td>Jarak spawn cadangan dari pemain (bila tidak ada titik di luar layar)</td><td>192 px (12 petak)</td></tr>
-<tr><td><code>boss_respawn_game_days</code></td><td>1 hari game (= 24 menit nyata)</td></tr>
+<tr><td><code>respawn_sec</code></td><td>20 real sec</td></tr>
+<tr><td>Retry interval when there is no point off screen</td><td>1 real sec</td></tr>
+<tr><td>Fallback spawn distance from the player (when there is no point off screen)</td><td>192 px (12 tiles)</td></tr>
+<tr><td><code>boss_respawn_game_days</code></td><td>1 game day (= 24 real minutes)</td></tr>
 </tbody>
 </table></div>
-<p>Nilai default <code>max_alive</code> dan <code>respawn_sec</code> dipakai bila blok spawn tidak menulis nilai lain. Katalog zona boleh menimpa default per blok spawn (mis. <a href="../zone/zone_forest.html">Spawn</a>).</p>
+<p>The default values of <code>max_alive</code> and <code>respawn_sec</code> are used when a spawn block does not write other values. A zone catalog may override the defaults per spawn block (for example <a href="../zone/zone_forest.html">Zone 1 spawns</a>).</p>
 </div>
 </main>
-<footer class="site-footer"><p>Wiki pemain Negeri Sunyi. Berisi spoiler penuh.</p></footer>
+<footer class="site-footer"><p>Hushwood player wiki. Contains full spoilers.</p></footer>
 </div>
 <script src="../assets/search.js"></script>
 </body>

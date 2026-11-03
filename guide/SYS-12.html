@@ -1,66 +1,66 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Penemuan &amp; Codex - Negeri Sunyi Wiki</title>
+<title>Discovery &amp; Codex - Hushwood Wiki</title>
 <link rel="stylesheet" href="../assets/wiki.css">
 </head>
 <body data-root="../">
-<a class="skip" href="#isi">Lewati ke isi</a>
-<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Negeri Sunyi Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<a class="skip" href="#isi">Skip to content</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Hushwood Wiki</a><nav class="site-nav" aria-label="main"><ul class="nav-links"><li><a href="../index.html">Home</a></li><li><a href="../zone/index.html">Zones</a></li><li><a href="../monster/index.html">Monsters</a></li><li><a href="../item/index.html">Items</a></li><li><a href="../recipe/index.html">Recipes</a></li><li><a href="../buff/index.html">Buffs</a></li><li><a href="../node/index.html">Gather Nodes</a></li><li><a href="../guide/index.html" aria-current="page">Guides</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Search zones, monsters, items, recipes..." aria-label="Search"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
 <div class="wrap">
-<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Penemuan &amp; Codex</li></ol></nav>
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../guide/index.html">Guides</a></li><li aria-current="page">Discovery &amp; Codex</li></ol></nav>
 <main id="isi">
-<div class="page-head"><h1>Penemuan &amp; Codex</h1></div>
+<div class="page-head"><h1>Discovery &amp; Codex</h1></div>
 <p class="muted num">SYS-12</p>
-<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
-<p>Resep dan info monster terbuka otomatis saat pemain menemukannya; semua tercatat di Codex.</p>
-<h2 id="aturan">Aturan</h2>
-<h3 id="penemuan-resep">Penemuan resep</h3>
-<p>Berlaku untuk resep crafting (termasuk resep ramuan) dan resep masakan. Bahan dianggap "pernah didapat" jika ada di <code>codex_items</code>, yaitu pernah masuk tas (<a href="SYS-12.html#bahan">Bahan</a>). Batu elemen (slot 3) dihitung sebagai bahan untuk tahap Petunjuk dan Bahan lengkap; resep dengan <code>stone: null</code> tidak punya bahan slot 3.</p>
+<div class="guide"><h2 id="summary">Summary</h2>
+<p>Recipes and monster info unlock automatically when the player discovers them; everything is recorded in the Codex.</p>
+<h2 id="rules">Rules</h2>
+<h3 id="recipe-discovery">Recipe Discovery</h3>
+<p>Applies to crafting recipes (including Potion recipes) and food recipes. A material counts as "obtained" if it is in <code>codex_items</code>, that is, it has entered the Bag at least once (<a href="SYS-12.html#materials">Materials</a>). An Element Stone (slot 3) counts as a material for the Hint and Ingredients Known stages; a recipe with <code>stone: null</code> has no slot 3 material.</p>
 <div class="table-wrap"><table>
-<thead><tr><th>Tahap</th><th>Syarat</th><th>Tampilan di daftar resep</th></tr></thead>
+<thead><tr><th>Stage</th><th>Requirement</th><th>Display in the recipe list</th></tr></thead>
 <tbody>
-<tr><td>Tersembunyi</td><td>Belum ada bahan resep yang pernah didapat</td><td>Hanya <code>???</code></td></tr>
-<tr><td>Petunjuk</td><td>Sebagian bahan pernah didapat</td><td>Ikon bahan yang pernah didapat; sisanya <code>???</code>; nama <code>???</code></td></tr>
-<tr><td>Bahan lengkap</td><td>Semua item slot 1–3 resep ada di <code>codex_items</code> (tidak harus bersamaan)</td><td>Semua ikon bahan tampil, bisa diisi otomatis; nama <code>???</code></td></tr>
-<tr><td>Terbuka</td><td>Pernah berhasil dibuat</td><td>Bahan dan hasil tampil</td></tr>
+<tr><td>Hidden</td><td>No material of the recipe has been obtained yet</td><td>Only <code>???</code></td></tr>
+<tr><td>Hint</td><td>Some materials have been obtained</td><td>Icons of the materials obtained; the rest <code>???</code>; name <code>???</code></td></tr>
+<tr><td>Ingredients Known</td><td>All slot 1–3 items of the recipe are in <code>codex_items</code> (not necessarily at the same time)</td><td>All material icons shown, can be auto-filled; name <code>???</code></td></tr>
+<tr><td>Unlocked</td><td>Has been successfully made</td><td>Materials and result shown</td></tr>
 </tbody>
 </table></div>
 <ul>
-<li>Resep masuk <code>known_recipes</code> hanya saat tahap <strong>Terbuka</strong>, yaitu setelah pertama kali berhasil dibuat. Notifikasi: toast <code>sys.recipe_discovered</code> (<code>[PRASASTI] Resep baru ditemukan: {name}</code>).</li>
-<li>Kombinasi yang cocok dengan resep tahap apa pun boleh dibuat; hasilnya baru terlihat setelah dibuat (coba-coba).</li>
-<li>Tahap Petunjuk dan Bahan lengkap dihitung dari <code>codex_items</code>, tidak perlu disimpan.</li>
+<li>A recipe enters <code>known_recipes</code> only at the <strong>Unlocked</strong> stage, that is, after it is made successfully for the first time. Notification: toast <code>sys.recipe_discovered</code> (<code>[INSCRIPTION] New recipe discovered: {name}</code>).</li>
+<li>A combination that matches a recipe at any stage may be made; the result is only revealed after it is made (trial and error).</li>
+<li>The Hint and Ingredients Known stages are computed from <code>codex_items</code> and do not need to be stored.</li>
 </ul>
-<h3 id="pembukaan-info-monster">Pembukaan info monster</h3>
+<h3 id="unlocking-monster-info">Unlocking Monster Info</h3>
 <div class="table-wrap"><table>
-<thead><tr><th>Info</th><th>Terbuka saat</th></tr></thead>
+<thead><tr><th>Info</th><th>Unlocked when</th></tr></thead>
 <tbody>
-<tr><td>Nama, art, elemen, level, habitat</td><td>Monster pertama kali terlihat (lihat di bawah)</td></tr>
-<tr><td>Kelemahan</td><td>Pemain pernah memberi damage "kuat" (<a href="SYS-02.html">Elemen</a>) ke monster itu, ATAU kill ≥ 5</td></tr>
-<tr><td>Drop tertentu</td><td>Item itu pernah didapat dari monster itu, yaitu pernah keluar saat drop diundi ketika monster itu mati atau bagiannya patah (<a href="SYS-13.html#kematian-monster">Kematian monster</a>), meski belum dipungut; dicatat di <code>seen_drops</code> (peluang <strong>dasar</strong> tampil setelah kill ≥ 10, ditambah ikon bulan "×1.2 saat malam" dari <a href="SYS-03.html#rumus-angka">Rumus &amp; angka</a>)</td></tr>
-<tr><td>Bagian tubuh</td><td>Nama terlihat sejak awal; bonus drop tampil setelah pernah dipatahkan</td></tr>
+<tr><td>Name, art, element, level, habitat</td><td>The monster is seen for the first time (see below)</td></tr>
+<tr><td>Weakness</td><td>The player has dealt "strong" damage (<a href="SYS-02.html">Elements</a>) to that monster, OR kills ≥ 5</td></tr>
+<tr><td>Specific drop</td><td>That item has been obtained from that monster, meaning it came out when the drop was rolled as that monster died or its part broke (<a href="SYS-13.html#monster-death">Monster Death</a>), even if not yet picked up; recorded in <code>seen_drops</code> (the <strong>base</strong> chance is shown after kills ≥ 10, plus the moon icon "×1.2 at night" from <a href="SYS-03.html#formulas-numbers">Formulas &amp; Numbers</a>)</td></tr>
+<tr><td>Body part</td><td>The name is visible from the start; the drop bonus is shown after it has been broken</td></tr>
 </tbody>
 </table></div>
-<p>Monster "terlihat" bila node monster itu pertama kali masuk area layar kamera dan tidak tersembunyi oleh bahaya jarak pandang (<a href="SYS-16.html#bahaya-lingkungan">Bahaya lingkungan</a>), atau saat pemain menyerang atau diserang monster itu. Saat itu entri <code>CodexMonsterEntry</code> dibuat; adanya entri berarti monster itu sudah terlihat.</p>
-<h3 id="kunci">Kunci</h3>
-<p>Tab Kunci di Codex menampilkan 6 slot Kepingan Kunci Istana (boss Z1–Z6). Slot terisi bila boss itu ada di <code>boss_first_kills</code>, beserta nama boss dan zonanya; slot kosong menampilkan <code>???</code> dan nama zona bila zona itu ada di <code>visited_zones</code>. Status di bawah slot: "Gerbang Istana tersegel (n/6)", atau "Gerbang Istana terbuka" setelah <code>gate_opened</code>.</p>
-<h3 id="kelengkapan">Kelengkapan</h3>
-<p>Persentase kelengkapan Codex = (monster yang pernah terlihat + bahan dan batu di <code>codex_items</code> + resep tahap Terbuka) ÷ (total monster + total bahan dan batu + total resep crafting dan masakan) × 100, dibulatkan ke bawah. Ditampilkan di Codex dan Ending.</p>
-<h3 id="bahan">Bahan</h3>
-<p>Bahan dan batu elemen masuk <code>codex_items</code> saat pertama kali <strong>masuk tas</strong> (dipungut, dikumpulkan, dibuat, atau diterima sebagai hadiah). Drop yang belum dipungut hanya tercatat di <code>seen_drops</code> monster (<a href="SYS-12.html#pembukaan-info-monster">Pembukaan info monster</a>), belum di <code>codex_items</code>.</p>
-<h3 id="sumber-item">Sumber item</h3>
-<p>Daftar "Didapat dari" sebuah item hanya menampilkan sumber yang sudah diketahui:</p>
+<p>A monster is "seen" when that monster's node first enters the camera's screen area and is not hidden by a sight hazard (<a href="SYS-16.html#environmental-hazards">Environmental Hazards</a>), or when the player attacks or is attacked by that monster. At that moment a <code>CodexMonsterEntry</code> is created; the existence of the entry means the monster has been seen.</p>
+<h3 id="keys">Keys</h3>
+<p>The Keys tab in the Codex shows 6 Palace Key Shard slots (bosses of Z1–Z6). A slot is filled when that boss is in <code>boss_first_kills</code>, together with the boss name and its zone; an empty slot shows <code>???</code> and the zone name if that zone is in <code>visited_zones</code>. The status below the slots: "Palace Gate sealed (n/6)", or "Palace Gate open" after <code>gate_opened</code>.</p>
+<h3 id="completion">Completion</h3>
+<p>Codex Completion percentage = (monsters ever seen + materials and stones in <code>codex_items</code> + recipes at the Unlocked stage) ÷ (total monsters + total materials and stones + total crafting and food recipes) × 100, rounded down. Shown on Codex screen and Ending screen.</p>
+<h3 id="materials">Materials</h3>
+<p>Materials and Element Stones enter <code>codex_items</code> the first time they <strong>enter the Bag</strong> (picked up, gathered, crafted, or received as a reward). A drop that has not been picked up is only recorded in the monster's <code>seen_drops</code> (<a href="SYS-12.html#unlocking-monster-info">Unlocking Monster Info</a>), not yet in <code>codex_items</code>.</p>
+<h3 id="item-sources">Item Sources</h3>
+<p>The "Found in" list of an item shows only sources that are already known:</p>
 <ul>
-<li>monster yang <code>seen_drops</code>-nya memuat item itu;</li>
-<li>titik bahan (<a href="SYS-14.html">Pengumpulan Bahan</a>) yang <code>yields</code>-nya memuat item itu, bila zonanya ada di <code>visited_zones</code>.</li>
+<li>monsters whose <code>seen_drops</code> contains that item;</li>
+<li>gather nodes (<a href="SYS-14.html">Gathering Materials</a>) whose <code>yields</code> contains that item, if their zone is in <code>visited_zones</code>.</li>
 </ul>
-<p>Sumber lain tampil <code>???</code>.</p>
-<p>Layar: Codex.</p>
+<p>Other sources show <code>???</code>.</p>
+<p>Screen: Codex screen.</p>
 </div>
 </main>
-<footer class="site-footer"><p>Wiki pemain Negeri Sunyi. Berisi spoiler penuh.</p></footer>
+<footer class="site-footer"><p>Hushwood player wiki. Contains full spoilers.</p></footer>
 </div>
 <script src="../assets/search.js"></script>
 </body>

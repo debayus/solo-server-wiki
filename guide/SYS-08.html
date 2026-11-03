@@ -1,60 +1,60 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kematian &amp; Respawn - Negeri Sunyi Wiki</title>
+<title>Death &amp; Respawn - Hushwood Wiki</title>
 <link rel="stylesheet" href="../assets/wiki.css">
 </head>
 <body data-root="../">
-<a class="skip" href="#isi">Lewati ke isi</a>
-<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Negeri Sunyi Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<a class="skip" href="#isi">Skip to content</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Hushwood Wiki</a><nav class="site-nav" aria-label="main"><ul class="nav-links"><li><a href="../index.html">Home</a></li><li><a href="../zone/index.html">Zones</a></li><li><a href="../monster/index.html">Monsters</a></li><li><a href="../item/index.html">Items</a></li><li><a href="../recipe/index.html">Recipes</a></li><li><a href="../buff/index.html">Buffs</a></li><li><a href="../node/index.html">Gather Nodes</a></li><li><a href="../guide/index.html" aria-current="page">Guides</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Search zones, monsters, items, recipes..." aria-label="Search"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
 <div class="wrap">
-<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Kematian &amp; Respawn</li></ol></nav>
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../guide/index.html">Guides</a></li><li aria-current="page">Death &amp; Respawn</li></ol></nav>
 <main id="isi">
-<div class="page-head"><h1>Kematian &amp; Respawn</h1></div>
+<div class="page-head"><h1>Death &amp; Respawn</h1></div>
 <p class="muted num">SYS-08</p>
-<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
-<p>Mati tidak menghilangkan item; pemain hidup kembali di api unggun terakhir.</p>
-<h2 id="aturan">Aturan</h2>
+<div class="guide"><h2 id="summary">Summary</h2>
+<p>Dying does not remove items; the player comes back to life at the last Campfire.</p>
+<h2 id="rules">Rules</h2>
 <ul>
-<li>Terjadi saat <code>hp ≤ 0</code>. Urutan lengkapnya: <a href="SYS-08.html#urutan-kematian">Urutan kematian</a>.</li>
-<li><code>respawn_point</code> diperbarui setiap kali pemain mengetuk Api Unggun di dunia, dengan nilai posisi pemain saat tiba dalam jarak aktif (<a href="SYS-09.html#rumus-angka">Rumus &amp; angka</a>) dan layar Memasak terbuka, disertai notifikasi <code>sys.respawn_saved</code> (<code>[PRASASTI] Api unggun ini akan membangkitkanmu.</code>) Memasak tidak diperlukan.</li>
-<li>Pengecualian aturan pembaruan: memilih "Tetap tinggal" di akhir ending otomatis mengeset <code>respawn_point</code> ke titik respawn api unggun Ruang Takhta (<a href="../zone/zone_server_core.html">Peta</a>, <a href="SYS-16.html#ending">Ending</a>).</li>
-<li>Respawn di <code>respawn_point</code>. Nilai awal: titik awal Z1 (<a href="../zone/zone_forest.html">Peta</a>, Keadaan awal).</li>
-<li>Setelah respawn: HP penuh, Stamina penuh, Lapar = 50 (walau sebelumnya lebih tinggi), <strong>semua buff hilang</strong>. Urutan reset: <a href="SYS-08.html#urutan-kematian">Urutan kematian</a>.</li>
-<li><strong>Tidak ada item, XP, atau level yang hilang.</strong></li>
-<li>Penyimpanan otomatis tidak terjadi saat pemain mati; <code>player_respawned</code> hanya membersihkan <code>player_dead</code> dan tidak menyimpan (Autosave).</li>
+<li>Happens when <code>hp ≤ 0</code>. The full sequence: <a href="SYS-08.html#death-sequence">Death Sequence</a>.</li>
+<li><code>respawn_point</code> is updated every time the player taps a Campfire in the world, with the player's position when arriving within active distance (<a href="SYS-09.html#formulas-numbers">Formulas &amp; Numbers</a>) and the Cooking screen open, together with the notification <code>sys.respawn_saved</code> (<code>[INSCRIPTION] This campfire will revive you.</code>). Cooking is not required.</li>
+<li>Exception to the update rule: choosing "Stay" at the end of the automatic ending sets <code>respawn_point</code> to the Throne Room Campfire respawn point (<a href="../zone/zone_server_core.html">Zone 7 map</a>, <a href="SYS-16.html#ending">Ending</a>).</li>
+<li>Respawn happens at <code>respawn_point</code>. Initial value: the Z1 starting point (<a href="../zone/zone_forest.html">Zone 1 map</a>, Initial state).</li>
+<li>After respawn: full HP, full Stamina, Hunger = 50 (even if it was higher before), and <strong>all buffs are removed</strong>. Reset order: <a href="SYS-08.html#death-sequence">Death Sequence</a>.</li>
+<li><strong>No items, XP, or levels are lost.</strong></li>
+<li>Autosave does not happen while the player is dead; <code>player_respawned</code> only clears <code>player_dead</code> and does not save (Autosave).</li>
 </ul>
-<h2 id="urutan-kematian">Urutan kematian</h2>
+<h2 id="death-sequence">Death Sequence</h2>
 <ol>
-<li><code>hp ≤ 0</code>: <code>player_died</code> dipancarkan. Pemain langsung kebal dan input dikunci.</li>
-<li><strong>Pudar keluar</strong> (<code>death_fade_out</code>): layar memudar ke hitam. Monster yang sedang Kejar atau Serang melepas target dan Kembali (<a href="SYS-13.html#perilaku-monster">Perilaku monster</a>). Boss di arena ikut Kembali dan pulih; <code>boss_fight_active</code> menjadi false (Autosave).</li>
-<li><strong>Tahan</strong> (<code>death_hold</code>): layar hitam, teks Prasasti <code>sys.disconnected</code> ("[PRASASTI] Tubuhmu runtuh... api unggun memanggilmu kembali.").</li>
-<li><strong>Teleport + reset</strong> (tepat di akhir tahan, layar masih hitam): pemain dipindahkan ke <code>respawn_point</code>. Urutan reset nilai:
+<li><code>hp ≤ 0</code>: <code>player_died</code> is emitted. The player is immediately invulnerable and input is locked.</li>
+<li><strong>Fade out</strong> (<code>death_fade_out</code>): the screen fades to black. Monsters that are in Chase or Attack release their target and go to Return (<a href="SYS-13.html#monster-behavior">Monster Behavior</a>). A boss in its arena also goes to Return and recovers; <code>boss_fight_active</code> becomes false (Autosave).</li>
+<li><strong>Hold</strong> (<code>death_hold</code>): black screen, with the Inscription text <code>sys.disconnected</code> ("[INSCRIPTION] Your body collapses... the campfire calls you back.").</li>
+<li><strong>Teleport + reset</strong> (exactly at the end of the hold, while the screen is still black): the player is moved to <code>respawn_point</code>. Order of the value reset:
 <ol>
-<li>hapus semua buff;</li>
-<li>hitung ulang stat turunan (<a href="SYS-01.html#stat-turunan">Stat turunan</a>);</li>
-<li>HP = HP maks baru, Stamina = Stamina maks baru, Lapar = 50;</li>
-<li><code>stats_changed</code> dipancarkan sekali.</li>
+<li>remove all buffs;</li>
+<li>recalculate derived stats (<a href="SYS-01.html#derived-stats">Derived Stats</a>);</li>
+<li>HP = the new max HP, Stamina = the new max Stamina, Hunger = 50;</li>
+<li><code>stats_changed</code> is emitted once.</li>
 </ol>
 </li>
-<li><code>player_respawned</code> dipancarkan; <code>player_dead</code> dibersihkan (tanpa menyimpan).</li>
-<li><strong>Pudar masuk</strong> (<code>death_fade_in</code>): layar kembali terlihat. Kebal dan kunci input berakhir tepat saat pudar masuk selesai; tidak ada kebal tambahan setelah respawn.</li>
+<li><code>player_respawned</code> is emitted; <code>player_dead</code> is cleared (without saving).</li>
+<li><strong>Fade in</strong> (<code>death_fade_in</code>): the screen becomes visible again. Invulnerability and the input lock end exactly when the fade in finishes; there is no extra invulnerability after respawn.</li>
 </ol>
-<p>Durasi ketiga tahap adalah token <code>death_fade_out</code>, <code>death_hold</code>, dan <code>death_fade_in</code> di Token alfa dan durasi (angka hanya ada di sana).</p>
-<p>Aturan selama urutan (dari <code>player_died</code> sampai pudar masuk selesai):</p>
+<p>The durations of the three phases are the tokens <code>death_fade_out</code>, <code>death_hold</code>, and <code>death_fade_in</code> in Alpha and duration tokens (the numbers exist only there).</p>
+<p>Rules during the sequence (from <code>player_died</code> until the fade in finishes):</p>
 <ul>
-<li>Pemain kebal terhadap semua damage: monster, Lapar (HP turun saat Lapar 0), panas, dan petir (<a href="SYS-03.html">Survival</a>, <a href="SYS-16.html#bahaya-lingkungan">Bahaya lingkungan</a>). Input pemain diabaikan.</li>
-<li>Jam game dan timer spawn tetap berjalan (tidak di-pause); durasi urutan memakai waktu nyata.</li>
-<li>Urutan kematian tidak memakai efek glitch (dihapus); pudar selalu berlangsung, juga bila <code>reduce_effects</code> aktif (Efek).</li>
-<li>HUD disembunyikan selama urutan dan muncul lagi setelah <code>player_respawned</code> (HUD).</li>
+<li>The player is invulnerable to all damage: monsters, Hunger (HP drops at Hunger 0), heat, and lightning (<a href="SYS-03.html">Survival</a>, <a href="SYS-16.html#environmental-hazards">Environmental Hazards</a>). Player input is ignored.</li>
+<li>The game clock and spawn timers keep running (they are not paused); the duration of the sequence uses real time.</li>
+<li>The Death Sequence uses no glitch effect (removed); the fade always plays, even when <code>reduce_effects</code> is on (Effects).</li>
+<li>The HUD is hidden during the sequence and appears again after <code>player_respawned</code> (HUD).</li>
 </ul>
-<p>Respawn ke zona lain: bila <code>respawn_point</code> berada di zona yang berbeda dari tempat pemain mati, respawn diperlakukan seperti masuk zona biasa (<a href="SYS-16.html#masuk-zona">Masuk zona</a>): zona itu dimuat, toast masuk zona muncul, zona dicatat di <code>visited_zones</code>, dan autosave <code>entered_zone</code> dicoba (Autosave). Penanda masuk zona dipancarkan setelah <code>player_respawned</code> agar autosave tidak tertahan; mekanismenya di Alur scene.</p>
-<p>Layar: HUD (HUD). Api Unggun yang ditaruh lewat Mode Taruh (Interaksi) berfungsi sama seperti Api Unggun bawaan peta, termasuk memperbarui <code>respawn_point</code> saat diketuk (<a href="SYS-09.html#aturan">Aturan</a>).</p>
+<p>Respawn into another zone: if <code>respawn_point</code> is in a different zone from where the player died, the respawn is treated like a normal zone entry (<a href="SYS-16.html#entering-a-zone">Entering a Zone</a>): that zone is loaded, the zone entry toast appears, the zone is recorded in <code>visited_zones</code>, and the <code>entered_zone</code> autosave is attempted (Autosave). The zone entry signal is emitted after <code>player_respawned</code> so the autosave is not held back; the mechanism is in Scene flow.</p>
+<p>Screen: HUD (HUD). A Campfire placed through Place Mode (Place Mode interactions) works the same as a built-in map Campfire, including updating <code>respawn_point</code> when tapped (<a href="SYS-09.html#rules">Rules</a>).</p>
 </div>
 </main>
-<footer class="site-footer"><p>Wiki pemain Negeri Sunyi. Berisi spoiler penuh.</p></footer>
+<footer class="site-footer"><p>Hushwood player wiki. Contains full spoilers.</p></footer>
 </div>
 <script src="../assets/search.js"></script>
 </body>

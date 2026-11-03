@@ -1,85 +1,85 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Zona, Bahaya &amp; Ending - Negeri Sunyi Wiki</title>
+<title>Zones, Hazards &amp; Ending - Hushwood Wiki</title>
 <link rel="stylesheet" href="../assets/wiki.css">
 </head>
 <body data-root="../">
-<a class="skip" href="#isi">Lewati ke isi</a>
-<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Negeri Sunyi Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<a class="skip" href="#isi">Skip to content</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Hushwood Wiki</a><nav class="site-nav" aria-label="main"><ul class="nav-links"><li><a href="../index.html">Home</a></li><li><a href="../zone/index.html">Zones</a></li><li><a href="../monster/index.html">Monsters</a></li><li><a href="../item/index.html">Items</a></li><li><a href="../recipe/index.html">Recipes</a></li><li><a href="../buff/index.html">Buffs</a></li><li><a href="../node/index.html">Gather Nodes</a></li><li><a href="../guide/index.html" aria-current="page">Guides</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Search zones, monsters, items, recipes..." aria-label="Search"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
 <div class="wrap">
-<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Zona, Bahaya &amp; Ending</li></ol></nav>
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../guide/index.html">Guides</a></li><li aria-current="page">Zones, Hazards &amp; Ending</li></ol></nav>
 <main id="isi">
-<div class="page-head"><h1>Zona, Bahaya &amp; Ending</h1></div>
+<div class="page-head"><h1>Zones, Hazards &amp; Ending</h1></div>
 <p class="muted num">SYS-16</p>
-<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
-<p>Batas zona dan peringatannya, bahaya lingkungan tiap zona, Kepingan Kunci Istana yang membuka Ruang Takhta di Istana Hampa, dan ending "Pulang". Daftar zona: <a href="../zone/index.html">Katalog Zona</a>.</p>
-<h2 id="aturan">Aturan</h2>
-<h3 id="masuk-zona">Masuk zona</h3>
+<div class="guide"><h2 id="summary">Summary</h2>
+<p>Zone borders and their warnings, each zone's environmental hazards, the Palace Key Shards that open the Throne Room in the Hollow Palace, and the "Go Home" ending. List of zones: <a href="../zone/index.html">Zones</a>.</p>
+<h2 id="rules">Rules</h2>
+<h3 id="entering-a-zone">Entering a Zone</h3>
 <ul>
-<li>Batas zona digambar tangan di peta. Saat pemain masuk zona baru: toast <code>[PRASASTI] Memasuki: &lt;nama zona&gt; (Lv a–b)</code>.</li>
-<li>Toast yang sama juga muncul saat sesi dimulai, untuk zona tempat pemain berada (zona awal). Zona itu sudah ada di <code>visited_zones</code>, sehingga tanpa awalan <code>Zona baru:</code>.</li>
-<li>Jika level pemain di bawah batas bawah zona, toast berwarna <code>warning</code> dengan teks tambahan <code>. Bahaya: level terlalu rendah</code>.</li>
-<li>Zona yang pertama kali dimasuki dicatat di <code>visited_zones</code>; toast masuk zona pertama kali diberi awalan <code>Zona baru: </code>.</li>
-<li>Format teks: [awalan <code>Zona baru: </code> bila pertama kali] + <code>Memasuki: &lt;nama&gt; (Lv a–b)</code> + [bila level di bawah batas bawah: <code>. Bahaya: level terlalu rendah</code>]. Teks ada di <code>strings_ui.csv</code>, kunci berawalan <code>sys.zone</code>: satu untuk teks masuk, satu untuk varian bahaya (sudah memuat akhirannya), dan satu untuk awalan zona baru.</li>
+<li>Zone borders are drawn by hand on the map. When the player enters a new zone: the toast <code>[INSCRIPTION] Entering: &lt;zone name&gt; (Lv a–b)</code>.</li>
+<li>The same toast also appears when a session starts, for the zone the player is in (the starting zone). That zone is already in <code>visited_zones</code>, so it has no <code>New zone:</code> prefix.</li>
+<li>If the player's level is below the zone's lower bound, the toast is colored <code>warning</code> with the extra text <code>. Hazard: level too low</code>.</li>
+<li>A zone entered for the first time is recorded in <code>visited_zones</code>; the first-time zone entry toast gets the prefix <code>New zone: </code>.</li>
+<li>Text format: [the prefix <code>New zone: </code> if first time] + <code>Entering: &lt;name&gt; (Lv a–b)</code> + [if the level is below the lower bound: <code>. Hazard: level too low</code>]. The text lives in <code>strings_ui.csv</code>, with keys prefixed <code>sys.zone</code>: one for the entry text, one for the hazard variant (it already includes the suffix), and one for the new zone prefix.</li>
 </ul>
-<h3 id="bahaya-lingkungan">Bahaya lingkungan</h3>
+<h3 id="environmental-hazards">Environmental Hazards</h3>
 <div class="table-wrap"><table>
-<thead><tr><th>Bahaya</th><th>Zona</th><th>Efek</th><th>Penangkal</th></tr></thead>
+<thead><tr><th>Hazard</th><th>Zone</th><th>Effect</th><th>Counter</th></tr></thead>
 <tbody>
-<tr><td>Air dalam</td><td>Rawa</td><td>Kecepatan ×0.6, tidak bisa menghindar</td><td>— (hindari petak air dalam)</td></tr>
-<tr><td>Gelap</td><td>Gua Kristal</td><td>Jarak pandang dibatasi radius 128 px di sekitar pemain</td><td>Kristal bercahaya di peta memberi area terang</td></tr>
-<tr><td>Panas</td><td>Kawah Lava</td><td>Lihat <a href="SYS-03.html#zona-panas-lava">Zona panas (lava)</a></td><td>Resist Api</td></tr>
-<tr><td>Sambaran petir</td><td>Puncak Badai, hanya malam</td><td>Penanda muncul di dekat pemain, 1.5 dtk kemudian petir menyambar radius 48 px: damage elemen Petir 15% HP maks</td><td>Menghindar keluar dari penanda; Resist Petir</td></tr>
-<tr><td>Silau</td><td>Reruntuhan Cahaya, hanya siang</td><td>Monster lebih dari 96 px dari pemain tidak terlihat</td><td>—</td></tr>
-<tr><td>Gerbang tersegel</td><td>Istana Hampa</td><td>Ruang Takhta (bagian dalam) hanya bisa dimasuki lewat Gerbang Istana dengan 6 Kepingan Kunci Istana</td><td><a href="SYS-16.html#kepingan-kunci-istana">Kepingan Kunci Istana</a></td></tr>
+<tr><td>Deep water</td><td>Swamp</td><td>Speed ×0.6, cannot dodge</td><td>— (avoid deep water tiles)</td></tr>
+<tr><td>Darkness</td><td>Crystal Cave</td><td>Vision is limited to a 128 px radius around the player</td><td>Glowing crystals on the map give a lit area</td></tr>
+<tr><td>Heat</td><td>Lava Crater</td><td>See <a href="SYS-03.html#heat-zone-lava">Heat Zone (lava)</a></td><td>Fire Resist</td></tr>
+<tr><td>Lightning strike</td><td>Storm Peak, night only</td><td>A marker appears near the player, 1.5 sec later lightning strikes a 48 px radius: Lightning element damage of 15% max HP</td><td>Dodge out of the marker; Lightning Resist</td></tr>
+<tr><td>Glare</td><td>Light Ruins, day only</td><td>Monsters more than 96 px from the player are not visible</td><td>—</td></tr>
+<tr><td>Sealed gate</td><td>Hollow Palace</td><td>The Throne Room (the inner part) can only be entered through the Palace Gate with 6 Palace Key Shards</td><td><a href="SYS-16.html#palace-key-shards">Palace Key Shards</a></td></tr>
 </tbody>
 </table></div>
-<p>Bahaya jarak pandang (gelap dan silau) tidak berlaku di dalam arena boss; arena selalu terlihat penuh.</p>
-<p>Damage sambaran petir memakai resist pemain seperti serangan monster (<a href="SYS-13.html#damage">Damage</a>), tanpa DEF.</p>
-<h3 id="kepingan-kunci-istana">Kepingan Kunci Istana</h3>
+<p>Sight hazards (darkness and glare) do not apply inside a boss arena; the arena is always fully visible.</p>
+<p>Lightning strike damage uses the player's resist like a monster attack (<a href="SYS-13.html#damage">Damage</a>), without DEF.</p>
+<h3 id="palace-key-shards">Palace Key Shards</h3>
 <ul>
-<li>Enam keping kunci Istana Hampa yang dititipkan raja ke penjaga tiap negeri, satu per boss Z1–Z6, dijatuhkan saat kill pertama boss itu (<a href="SYS-15.html#boss">Boss</a>).</li>
-<li>Jenis item <code>key</code>: tidak bisa dibuang, tidak menumpuk, tidak memakan slot tas (disimpan di <code>held_keys</code>).</li>
-<li>Mengetuk Gerbang Istana dengan keenam keping: keping dipasang (dihapus dari <code>held_keys</code>), gerbang terbuka permanen, toast <code>[PRASASTI] Keenam keping menyatu. Gerbang Istana terbuka.</code>.</li>
-<li>Mengetuk Gerbang Istana tanpa keping lengkap: toast <code>[PRASASTI] Gerbang tersegel. Kepingan: n/6.</code>.</li>
+<li>The six key shards of the Hollow Palace, entrusted by the king to the guardians of each land, one per Z1–Z6 boss, dropped on the First Kill of that boss (<a href="SYS-15.html#boss">Boss</a>).</li>
+<li>Item type <code>key</code>: cannot be discarded, does not stack, takes no Bag slot (kept in <code>held_keys</code>).</li>
+<li>Tapping the Palace Gate with all six shards: the shards are set in (removed from <code>held_keys</code>), the gate opens permanently, toast <code>[INSCRIPTION] All six shards unite. The Palace Gate opens.</code>.</li>
+<li>Tapping the Palace Gate without the full set of shards: toast <code>[INSCRIPTION] The gate is sealed. Shards: n/6.</code>.</li>
 </ul>
 <h3 id="ending">Ending</h3>
 <ul>
-<li>Semua drop dari pertarungan melawan boss terakhir selama <code>game_cleared = false</code> (termasuk <code>bonus_drops</code> bagian tubuh, juga dari percobaan yang gagal) langsung masuk tas sebelum ending dimulai (tas tanpa batas,; <a href="SYS-13.html#kematian-monster">Kematian monster</a>). Kill berikutnya di post-game memakai aturan drop biasa.</li>
-<li>Hanya <strong>kill pertama</strong> boss terakhir (saat <code>game_cleared</code> masih <code>false</code>) yang memulai ending; kill berikutnya di post-game tidak.</li>
-<li>Layar: Ending. Layar Judul: Layar Judul.</li>
-<li>Mengalahkan boss terakhir (Raja Terkutuk) memulai urutan ending berupa <strong>teks Prasasti saja</strong> (bukan cutscene, sesuai <a href="../index.html">Di luar cakupan</a>): layar memudar, catatan Prasasti muncul baris demi baris (kutukan terangkat, Jalan Pulang terbuka), daftar kredit.</li>
-<li>Saat ending dimulai: <code>game_cleared = true</code>, lalu autosave (Autosave).</li>
-<li>Di akhir, pemain memilih:
+<li>Every drop from the fight against the final boss while <code>game_cleared = false</code> (including the <code>bonus_drops</code> of body parts, also from failed attempts) goes straight into the Bag before the ending starts (the Bag is unlimited; <a href="SYS-13.html#monster-death">Monster Death</a>). Later kills in the post-game use the regular drop rules.</li>
+<li>Only the <strong>First Kill</strong> of the final boss (while <code>game_cleared</code> is still <code>false</code>) starts the ending; later kills in the post-game do not.</li>
+<li>Screen: Ending screen. Title Screen: Title screen.</li>
+<li>Defeating the final boss (the Cursed King) starts an ending sequence made of <strong>Inscription text only</strong> (not a cutscene, per <a href="../index.html">Out of scope</a>): the screen fades, Inscription notes appear line by line (the curse lifts, the Way Home opens), then the credits roll.</li>
+<li>When the ending starts: <code>game_cleared = true</code>, then autosave (Autosave).</li>
+<li>At the end, the player chooses:
 <ul>
-<li><strong>Pulang</strong>: kembali ke Layar Judul.</li>
-<li><strong>Tetap tinggal</strong>: lanjut bermain (post-game) dari api unggun Ruang Takhta (<a href="../zone/zone_server_core.html">Peta</a>). <code>respawn_point</code> otomatis diset ke titik respawn api unggun Ruang Takhta (<a href="../zone/zone_server_core.html">Peta</a>) tanpa perlu mengetuknya (pengecualian aturan pembaruan di <a href="SYS-08.html">Kematian &amp; Respawn</a>).</li>
+<li><strong>Go Home</strong>: return to the Title Screen.</li>
+<li><strong>Stay</strong>: keep playing (the post-game) from the Throne Room Campfire (<a href="../zone/zone_server_core.html">Zone 7 map</a>). <code>respawn_point</code> is set automatically to the Throne Room Campfire respawn point (<a href="../zone/zone_server_core.html">Zone 7 map</a>) without needing to tap it (an exception to the update rule in <a href="SYS-08.html">Death &amp; Respawn</a>).</li>
 </ul>
 </li>
-<li>Post-game: semua boss tetap bisa dilawan ulang (<a href="SYS-15.html#boss">Boss</a>); Codex menampilkan persentase kelengkapan.</li>
-<li>Memilih Pulang lalu memuat save: permainan lanjut sebagai post-game.</li>
+<li>Post-game: every boss can still be fought again (<a href="SYS-15.html#boss">Boss</a>); the Codex shows its Completion percentage.</li>
+<li>Choosing Go Home and then loading the save: the game continues as the post-game.</li>
 </ul>
-<h2 id="rumus-angka">Rumus &amp; angka</h2>
-<p>Semua angka di bagian ini.</p>
+<h2 id="formulas-numbers">Formulas &amp; Numbers</h2>
+<p>All numbers in this section.</p>
 <div class="table-wrap"><table>
-<thead><tr><th>Aturan</th><th>Nilai</th></tr></thead>
+<thead><tr><th>Rule</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Kecepatan di air dalam</td><td>×0.6</td></tr>
-<tr><td>Radius pandang di Gua Kristal</td><td>128 px</td></tr>
-<tr><td>Radius terang kristal bercahaya</td><td>64 px</td></tr>
-<tr><td>Jeda antar sambaran petir</td><td>Acak 20–40 dtk</td></tr>
-<tr><td>Peringatan sambaran</td><td>1.5 dtk</td></tr>
-<tr><td>Radius sambaran</td><td>48 px</td></tr>
-<tr><td>Damage sambaran</td><td>15% HP maks, elemen Petir</td></tr>
-<tr><td>Radius terlihat saat silau</td><td>96 px</td></tr>
+<tr><td>Speed in deep water</td><td>×0.6</td></tr>
+<tr><td>Vision radius in Crystal Cave</td><td>128 px</td></tr>
+<tr><td>Lit radius of a glowing crystal</td><td>64 px</td></tr>
+<tr><td>Interval between lightning strikes</td><td>Random 20–40 sec</td></tr>
+<tr><td>Strike warning</td><td>1.5 sec</td></tr>
+<tr><td>Strike radius</td><td>48 px</td></tr>
+<tr><td>Strike damage</td><td>15% max HP, Lightning element</td></tr>
+<tr><td>Visible radius during glare</td><td>96 px</td></tr>
 </tbody>
 </table></div>
 </div>
 </main>
-<footer class="site-footer"><p>Wiki pemain Negeri Sunyi. Berisi spoiler penuh.</p></footer>
+<footer class="site-footer"><p>Hushwood player wiki. Contains full spoilers.</p></footer>
 </div>
 <script src="../assets/search.js"></script>
 </body>

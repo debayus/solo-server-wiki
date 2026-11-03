@@ -1,58 +1,58 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pengumpulan Bahan - Negeri Sunyi Wiki</title>
+<title>Gathering Materials - Hushwood Wiki</title>
 <link rel="stylesheet" href="../assets/wiki.css">
 </head>
 <body data-root="../">
-<a class="skip" href="#isi">Lewati ke isi</a>
-<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Negeri Sunyi Wiki</a><nav class="site-nav" aria-label="utama"><ul class="nav-links"><li><a href="../index.html">Beranda</a></li><li><a href="../zone/index.html">Zona</a></li><li><a href="../monster/index.html">Monster</a></li><li><a href="../item/index.html">Item</a></li><li><a href="../recipe/index.html">Resep</a></li><li><a href="../buff/index.html">Buff</a></li><li><a href="../node/index.html">Titik Bahan</a></li><li><a href="../guide/index.html" aria-current="page">Panduan</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Cari zona, monster, item, resep..." aria-label="Cari"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
+<a class="skip" href="#isi">Skip to content</a>
+<header class="site-header"><div class="wrap header-row"><a class="brand" href="../index.html">Hushwood Wiki</a><nav class="site-nav" aria-label="main"><ul class="nav-links"><li><a href="../index.html">Home</a></li><li><a href="../zone/index.html">Zones</a></li><li><a href="../monster/index.html">Monsters</a></li><li><a href="../item/index.html">Items</a></li><li><a href="../recipe/index.html">Recipes</a></li><li><a href="../buff/index.html">Buffs</a></li><li><a href="../node/index.html">Gather Nodes</a></li><li><a href="../guide/index.html" aria-current="page">Guides</a></li></ul></nav><form class="search" role="search" onsubmit="return false"><input type="search" id="wiki-search" class="search-input" autocomplete="off" placeholder="Search zones, monsters, items, recipes..." aria-label="Search"><ul id="wiki-results" class="search-results" hidden></ul></form></div></header>
 <div class="wrap">
-<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Beranda</a></li><li><a href="../guide/index.html">Panduan</a></li><li aria-current="page">Pengumpulan Bahan</li></ol></nav>
+<nav class="breadcrumb" aria-label="breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../guide/index.html">Guides</a></li><li aria-current="page">Gathering Materials</li></ol></nav>
 <main id="isi">
-<div class="page-head"><h1>Pengumpulan Bahan</h1></div>
+<div class="page-head"><h1>Gathering Materials</h1></div>
 <p class="muted num">SYS-14</p>
-<div class="guide"><h2 id="ringkasan">Ringkasan</h2>
-<p>Titik bahan (tambang, tanaman, kayu) di peta memberi bahan yang tidak berasal dari monster, lalu tumbuh kembali setelah beberapa waktu. Mendukung pilar Survival dan Crafting.</p>
-<h2 id="aturan">Aturan</h2>
+<div class="guide"><h2 id="summary">Summary</h2>
+<p>Gather Nodes (mines, plants, trees) on the map give materials that do not come from monsters, then grow back after some time. Supports the Survival and Crafting pillars.</p>
+<h2 id="rules">Rules</h2>
 <ul>
-<li>Titik bahan diletakkan tangan di peta tiap zona. Jenis dan jumlahnya ditulis di katalog zona (<code>CNT-Z1</code> … <code>CNT-Z7</code>).</li>
-<li>Pengumpulan <strong>tidak butuh alat</strong>.</li>
-<li>Pemain mengetuk titik bahan → berjalan ke sana → bilah progres selama <code>gather_time_sec</code> → hasil diundi dari <code>yields</code> lalu masuk tas.</li>
-<li>Titik bahan <strong>bukan penghalang navigasi</strong>, kecuali titik dengan <code>footprint_cells</code> &gt; 0 (GatherNodeData): petak sebanyak itu di baris pangkal (berpusat di pangkal) ber-collision seperti pohon, dan tepi collision titik itu = tepi persegi footprint-nya. Pemain berhenti begitu masuk jarak interaksi (<a href="SYS-14.html#rumus-angka">Rumus &amp; angka</a>); progres mulai saat itu.</li>
-<li>Stamina dicek saat pemain tiba (awal progres) dan dipotong saat progres selesai. Bila kurang, pengumpulan ditolak dengan toast <code>sys.stamina_low</code> ("Stamina tidak cukup.").</li>
-<li>Bila Stamina turun di bawah biaya selama progres (mis. akibat Lapar atau lari sebelumnya), pengumpulan tetap selesai dan Stamina dipotong ke minimum 0.</li>
-<li>Setelah dikumpulkan, titik bahan habis sampai waktu tumbuh kembali lewat. Tampilannya mengikuti <code>depleted_visual</code>: <code>hide</code> = sprite, bayangan, dan area ketuk disembunyikan sampai pulih (tidak bisa diketuk), tetapi tempatnya tetap menghalangi penaruhan stasiun (<a href="SYS-09.html#aturan">Aturan</a>) agar titik yang pulih tidak tertimpa; <code>dim</code> = tetap di tempat dengan alpha 0.35 (bayangan ikut alpha itu; collision footprint tetap); <code>stump</code> = sprite diganti aset <code>depleted_sprite</code> (GatherNodeData, mis. tunggul <code>obj_data_tree_stump</code>) dengan alpha penuh sampai pulih: bayangan ikut bentuk tunggul, collision footprint menyusut ke <code>depleted_footprint_cells</code> petak di pangkal (default 1, GatherNodeData), area ketuk = sprite tunggul, dan tunggul tidak ikut kanopi tembus pandang (Dunia dan peta). Seluruh petak footprint asal tetap menghalangi penaruhan stasiun (<a href="SYS-09.html#aturan">Aturan</a>). Bila <code>depleted_sprite</code> kosong, <code>stump</code> berlaku seperti <code>dim</code>.</li>
-<li>Titik <code>stump</code> yang pulih kembali ke footprint penuh; bila pemain atau monster sedang berada di petak footprint yang akan ber-collision lagi, pulih ditunda sampai pemeriksaan berikutnya (<a href="SYS-14.html#pertumbuhan-kembali">Pertumbuhan kembali</a>) saat petak itu kosong, agar tidak ada yang terjebak di dalam collision.</li>
-<li>Mengetuk titik bahan <code>dim</code> atau <code>stump</code> yang habis: pemain tidak berjalan, muncul toast <code>sys.node_depleted</code> ("Titik bahan belum pulih."), dan target lepas.</li>
-<li>Undian <code>yields</code>: tiap entri diundi <strong>independen</strong> dengan aturan jumlah yang sama seperti drop monster (<a href="SYS-13.html#kematian-monster">Kematian monster</a>), tanpa bonus malam (<a href="SYS-03.html#rumus-angka">Rumus &amp; angka</a>). Bila semua entri gagal (hasil kosong), Stamina tetap terpakai, titik tetap habis, dan muncul toast <code>sys.gather_empty</code> ("Tidak ada yang didapat.").</li>
-<li>Hasil selalu masuk tas seluruhnya karena tas tanpa batas (<a href="SYS-11.html#menumpuk">Menumpuk</a>).</li>
-<li>Bahan yang masuk tas tercatat di <code>codex_items</code> (<a href="SYS-12.html#bahan">Bahan</a>).</li>
-<li>Progres batal tanpa memakai Stamina bila pemain bergerak atau diserang. "Diserang" hanya berarti menerima damage dari serangan monster; damage Lapar 0, Zona Panas, dan petir tidak membatalkan.</li>
-<li>Menu dibuka saat progres: progres dijeda bersama game, lalu dilanjutkan saat menu ditutup.</li>
-<li>Stamina tidak pulih selama progres pengumpulan.</li>
+<li>Gather Nodes are placed by hand on the map of each zone. Their types and counts are written in the zone catalog (<code>CNT-Z1</code> … <code>CNT-Z7</code>).</li>
+<li>Gathering <strong>needs no tool</strong>.</li>
+<li>The player taps a Gather Node → walks there → a progress bar runs for <code>gather_time_sec</code> → the result is rolled from <code>yields</code> and goes into the Bag.</li>
+<li>A Gather Node is <strong>not a navigation obstacle</strong>, except a node with <code>footprint_cells</code> &gt; 0 (GatherNodeData): that many tiles in the base row (centered on the base) have collision like a tree, and the collision edge of that node = the edge of its footprint square. The player stops as soon as they are within the Interact Distance (<a href="SYS-14.html#formulas-numbers">Formulas &amp; Numbers</a>); progress starts at that moment.</li>
+<li>Stamina is checked when the player arrives (the start of progress) and deducted when progress finishes. If it is too low, gathering is refused with the toast <code>sys.stamina_low</code> ("Not enough stamina.").</li>
+<li>If Stamina drops below the cost during progress (for example because of Hunger or an earlier sprint), gathering still finishes and Stamina is deducted down to a minimum of 0.</li>
+<li>After being gathered, the Gather Node is Depleted until the regrowth time passes. Its appearance follows <code>depleted_visual</code>: <code>hide</code> = the sprite, shadow, and tap area are hidden until it recovers (it cannot be tapped), but its place still blocks placing stations (<a href="SYS-09.html#rules">Rules</a>) so a node that recovers is not overwritten; <code>dim</code> = stays in place at alpha 0.35 (the shadow follows that alpha; the footprint collision stays); <code>stump</code> = the sprite is replaced by the <code>depleted_sprite</code> asset (GatherNodeData, for example the stump <code>obj_data_tree_stump</code>) at full alpha until it recovers: an elliptical shadow at the base of the stump, raised by 0.35 × the ellipse height, the footprint collision shrinks to <code>depleted_footprint_cells</code> tiles at the base (default 1, GatherNodeData), the tap area = the stump sprite, and the stump does not take part in the see-through canopy (World and map). All tiles of the original footprint still block placing stations (<a href="SYS-09.html#rules">Rules</a>). If <code>depleted_sprite</code> is empty, <code>stump</code> behaves like <code>dim</code>.</li>
+<li>A <code>stump</code> node that recovers returns to its full footprint; if the player or a monster is standing on a footprint tile that is about to have collision again, recovery is postponed to the next check (<a href="SYS-14.html#regrowth">Regrowth</a>) when that tile is empty, so nobody gets trapped inside collision.</li>
+<li>Tapping a Depleted <code>dim</code> or <code>stump</code> Gather Node: the player does not walk, the toast <code>sys.node_depleted</code> ("Gather node has not recovered yet.") appears, and the target is released.</li>
+<li>Rolling <code>yields</code>: each entry is rolled <strong>independently</strong> with the same amount rules as monster drops (<a href="SYS-13.html#monster-death">Monster Death</a>), without the night bonus (<a href="SYS-03.html#formulas-numbers">Formulas &amp; Numbers</a>). If every entry fails (an empty result), Stamina is still spent, the node is still Depleted, and the toast <code>sys.gather_empty</code> ("Nothing gathered.") appears.</li>
+<li>The result always enters the Bag in full because the Bag is unlimited (<a href="SYS-11.html#stacking">Stacking</a>).</li>
+<li>Materials that enter the Bag are recorded in <code>codex_items</code> (<a href="SYS-12.html#materials">Materials</a>).</li>
+<li>Progress is cancelled without spending Stamina if the player moves or is attacked. "Attacked" only means taking damage from a monster attack; Hunger 0 damage, Heat Zone damage, and lightning do not cancel it.</li>
+<li>A menu opened during progress: progress is paused together with the game, then resumed when the menu closes.</li>
+<li>Stamina does not recover during gathering progress.</li>
 </ul>
-<h3 id="pertumbuhan-kembali">Pertumbuhan kembali</h3>
+<h3 id="regrowth">Regrowth</h3>
 <ul>
-<li>Pertumbuhan kembali dicek saat zona dimuat dan setiap 1 menit game.</li>
-<li>Titik pulih bila <code>waktu_absolut ≥ depleted_at + respawn_game_min</code>, dengan <code>depleted_at</code> = nilai di <code>depleted_nodes</code> (State pemain); lalu entrinya dihapus dari <code>depleted_nodes</code>.</li>
+<li>Regrowth is checked when a zone is loaded and every 1 game minute.</li>
+<li>A node recovers when <code>absolute_time ≥ depleted_at + respawn_game_min</code>, where <code>depleted_at</code> = the value in <code>depleted_nodes</code> (Player state); then its entry is removed from <code>depleted_nodes</code>.</li>
 </ul>
-<h2 id="rumus-angka">Rumus &amp; angka</h2>
-<p>Semua angka di bagian ini.</p>
+<h2 id="formulas-numbers">Formulas &amp; Numbers</h2>
+<p>All numbers in this section.</p>
 <div class="table-wrap"><table>
-<thead><tr><th>Aturan</th><th>Nilai default</th></tr></thead>
+<thead><tr><th>Rule</th><th>Default value</th></tr></thead>
 <tbody>
-<tr><td><code>gather_time_sec</code></td><td>1.5 dtk</td></tr>
-<tr><td>Stamina per pengumpulan</td><td>5</td></tr>
-<tr><td><code>respawn_game_min</code></td><td>120 menit game (= 2 menit nyata, <a href="SYS-03.html#rumus-angka">Rumus &amp; angka</a>)</td></tr>
-<tr><td>Jarak interaksi titik bahan</td><td>32 px, antar-tepi collision (pemain dan titik bahan)</td></tr>
+<tr><td><code>gather_time_sec</code></td><td>1.5 sec</td></tr>
+<tr><td>Stamina per gather</td><td>5</td></tr>
+<tr><td><code>respawn_game_min</code></td><td>120 game minutes (= 2 real minutes, <a href="SYS-03.html#formulas-numbers">Formulas &amp; Numbers</a>)</td></tr>
+<tr><td>Gather Node Interact Distance</td><td>32 px, edge to edge of the collision shapes (player and Gather Node)</td></tr>
 </tbody>
 </table></div>
 </div>
 </main>
-<footer class="site-footer"><p>Wiki pemain Negeri Sunyi. Berisi spoiler penuh.</p></footer>
+<footer class="site-footer"><p>Hushwood player wiki. Contains full spoilers.</p></footer>
 </div>
 <script src="../assets/search.js"></script>
 </body>
